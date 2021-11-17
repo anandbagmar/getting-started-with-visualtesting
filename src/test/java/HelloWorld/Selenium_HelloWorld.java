@@ -29,8 +29,7 @@ public class Selenium_HelloWorld extends BaseTest {
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
         try {
             // Start the test by setting AUT's name, window or the page name that's being tested, viewport width and height
-            eyes.open(driver, "Hello world", "Hello world test - " + i, new RectangleSize(800,
-                    800));
+            eyes.open(driver, "Hello world", "Hello world test - " + i, new RectangleSize(800, 800));
 
             driver.get("https://applitools.com/helloworld");
             eyes.checkWindow("home");
@@ -62,6 +61,6 @@ public class Selenium_HelloWorld extends BaseTest {
 
     public static void main(String[] args) {
         new Selenium_HelloWorld().verifyHelloWorld(1);
-        new Selenium_HelloWorld().verifyHelloWorld(3);
+//        new Selenium_HelloWorld().verifyHelloWorld(3);
     }
 }
