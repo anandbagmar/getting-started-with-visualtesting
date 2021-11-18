@@ -12,6 +12,9 @@ with
 ## Samples included:
 
 >> Selenium_HelloWorld_Base -> basic selenium test
+> 
 >> Selenium_HelloWorld -> selenium test with Applitools integrated
+> 
 >> Appium_Native_HelloWorld_Base -> basic appium test, *without* Applitools
+> 
 >> Appium_Native_HelloWorld -> appium test, *with* Applitools integrated
