@@ -8,35 +8,32 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.remote.*;
 
 import java.net.*;
-import java.util.*;
 
 class Appium_Native_HelloWorld extends BaseTest {
 
     public static void main(String[] args) throws MalformedURLException {
-        String batchName = "appium_native_test-Anand-" + new Date().toString();
-        String appName = "Calculator";
-        String testName = "Test ";
+        AppiumDriver<WebElement> driver = createAppiumDriver();
 
         // Initialize the eyes SDK and set your private API key.
+        String batchName = "appium_native_test";
+        String appName = "Calculator";
+        String testName = "Test ";
         Eyes eyes = new Eyes();
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
 
         eyes.setMatchLevel(MatchLevel.STRICT);
         eyes.setBatch(new BatchInfo(batchName));
+        eyes.setLogHandler(new StdoutLogHandler(true));
 
-        runNativeTest(eyes, appName, testName + 1, 2, 3, createAppiumDriver());
+        eyes.setForceFullPageScreenshot(false);
+        // Start the test.
+        eyes.open(driver, appName, testName);
+        runNativeTest(eyes, 2, 3, driver);
     }
 
-    protected static void runNativeTest(Eyes eyes, String appName, String testName, int p1, int p2, AppiumDriver driver) {
+    protected static void runNativeTest(Eyes eyes, int p1, int p2, AppiumDriver driver) {
         try {
-            eyes.setLogHandler(new StdoutLogHandler(true));
-
-            eyes.setForceFullPageScreenshot(false);
-            // Start the test.
-            eyes.open(driver, appName, testName);
-
             eyes.checkWindow("Hello!");
-
             driver.findElement(By.id("digit_" + p1)).click();
             eyes.checkWindow("digit_" + p1);
             driver.findElement(By.id("op_add")).click();
@@ -46,15 +43,11 @@ class Appium_Native_HelloWorld extends BaseTest {
             driver.findElement(By.id("eq")).click();
             eyes.checkWindow("Calc works!");
             checkResults(eyes);
-
         } finally {
-
             // Close the browser.
             driver.quit();
-
             // If the test was aborted before eyes.close was called, ends the test as aborted.
             eyes.abort();
-
         }
     }
 
