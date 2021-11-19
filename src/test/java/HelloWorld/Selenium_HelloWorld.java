@@ -1,15 +1,10 @@
 package HelloWorld;
 
-import Utilities.DriverUtils;
-import com.applitools.eyes.BatchInfo;
-import com.applitools.eyes.RectangleSize;
-import com.applitools.eyes.StdoutLogHandler;
-import com.applitools.eyes.TestResults;
-import com.applitools.eyes.selenium.Eyes;
-import com.applitools.eyes.selenium.StitchMode;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import Utilities.*;
+import com.applitools.eyes.*;
+import com.applitools.eyes.selenium.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.*;
 
 public class Selenium_HelloWorld extends BaseTest {
 
@@ -37,7 +32,6 @@ public class Selenium_HelloWorld extends BaseTest {
             for (int stepNumber = 0; stepNumber < i; stepNumber++) {
                 driver.findElement(By.linkText("?diff1")).click();
                 eyes.checkWindow("click-" + stepNumber);
-                Thread.sleep(1000);
             }
             // Click the "Click me!" button.
             driver.findElement(By.tagName("button")).click();
@@ -61,6 +55,5 @@ public class Selenium_HelloWorld extends BaseTest {
 
     public static void main(String[] args) {
         new Selenium_HelloWorld().verifyHelloWorld(1);
-//        new Selenium_HelloWorld().verifyHelloWorld(3);
     }
 }

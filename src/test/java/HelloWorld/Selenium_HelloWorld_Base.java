@@ -1,9 +1,8 @@
 package HelloWorld;
 
-import Utilities.DriverUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import Utilities.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.*;
 
 public class Selenium_HelloWorld_Base extends BaseTest {
 
@@ -16,7 +15,6 @@ public class Selenium_HelloWorld_Base extends BaseTest {
 
             for (int stepNumber = 0; stepNumber < numOfSteps; stepNumber++) {
                 driver.findElement(By.linkText("?diff1")).click();
-                Thread.sleep(1000);
             }
 
             // Click the "Click me!" button.

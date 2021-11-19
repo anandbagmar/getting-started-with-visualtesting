@@ -1,14 +1,10 @@
 package HelloWorld;
 
-import com.applitools.eyes.BatchInfo;
-import com.applitools.eyes.TestResults;
-import com.applitools.eyes.selenium.Eyes;
-import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import com.applitools.eyes.*;
+import com.applitools.eyes.selenium.*;
+import io.appium.java_client.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
 
 public class BaseTest {
     protected static BatchInfo batch;
@@ -39,10 +35,12 @@ public class BaseTest {
     }
 
     protected WebElement waitForElementToBePresent(By elementId, AppiumDriver driver) {
-        return (new WebDriverWait(driver, 30)).until(ExpectedConditions.presenceOfElementLocated(elementId));
+        return (new WebDriverWait(driver, 30))
+                .until(ExpectedConditions.presenceOfElementLocated(elementId));
     }
 
     protected WebElement waitForElementToBePresent(By elementId) {
-        return (new WebDriverWait(driver, 30)).until(ExpectedConditions.presenceOfElementLocated(elementId));
+        return (new WebDriverWait(driver, 30))
+                .until(ExpectedConditions.presenceOfElementLocated(elementId));
     }
 }
