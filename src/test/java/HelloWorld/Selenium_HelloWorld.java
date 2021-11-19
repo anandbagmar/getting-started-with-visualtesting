@@ -8,6 +8,10 @@ import org.openqa.selenium.chrome.*;
 
 public class Selenium_HelloWorld extends BaseTest {
 
+    public static void main(String[] args) {
+        new Selenium_HelloWorld().verifyHelloWorld(1);
+    }
+
     public void verifyHelloWorld(int i) {
         DriverUtils.getPathForChromeDriverFromMachine();
         WebDriver driver = new ChromeDriver();
@@ -41,7 +45,6 @@ public class Selenium_HelloWorld extends BaseTest {
             System.out.println("Visual Test results: " + testResults);
 
         } catch (Exception e) {
-            System.out.println(e.toString());
             e.printStackTrace();
         } finally {
             // Close the browser.
@@ -51,9 +54,5 @@ public class Selenium_HelloWorld extends BaseTest {
             TestResults testResults = eyes.abortIfNotClosed();
             System.out.println("Visual Test results (finally): " + testResults);
         }
-    }
-
-    public static void main(String[] args) {
-        new Selenium_HelloWorld().verifyHelloWorld(1);
     }
 }
