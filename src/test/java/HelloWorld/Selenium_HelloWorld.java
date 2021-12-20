@@ -2,17 +2,17 @@ package HelloWorld;
 
 import Utilities.*;
 import com.applitools.eyes.*;
+import com.applitools.eyes.appium.*;
+import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.*;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 
-public class Selenium_HelloWorld extends BaseTest {
+public class Selenium_HelloWorld {
 
-    public static void main(String[] args) {
-        new Selenium_HelloWorld().verifyHelloWorld(1);
-    }
-
-    public void verifyHelloWorld(int i) {
+    @Test
+    public void seleniumTest() {
         DriverUtils.getPathForChromeDriverFromMachine();
         WebDriver driver = new ChromeDriver();
 
@@ -20,7 +20,7 @@ public class Selenium_HelloWorld extends BaseTest {
         Eyes eyes = new Eyes();
         BatchInfo batch = new BatchInfo("helloworld");
         eyes.setBatch(batch);
-        eyes.setLogHandler(new StdoutLogHandler(true));
+        eyes.setLogHandler(new StdoutLogHandler(false));
         eyes.setForceFullPageScreenshot(false);
         eyes.setStitchMode(StitchMode.CSS);
 
@@ -28,22 +28,23 @@ public class Selenium_HelloWorld extends BaseTest {
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
         try {
             // Start the test by setting AUT's name, window or the page name that's being tested, viewport width and height
-            eyes.open(driver, "Hello world", "Hello world test - " + i, new RectangleSize(800, 800));
+            double counter = 3;
+            eyes.open(driver, "Hello world", "Hello world test - " + counter, new RectangleSize(800, 800));
 
             driver.get("https://applitools.com/helloworld");
             eyes.checkWindow("home");
 
-            for (int stepNumber = 0; stepNumber < i; stepNumber++) {
-                driver.findElement(By.linkText("?diff1")).click();
+            for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
+                By linkText = By.linkText("?diff1");
+                driver.findElement(linkText).click();
                 eyes.checkWindow("click-" + stepNumber);
+                eyes.check("click", Target.region(linkText).matchLevel(MatchLevel.CONTENT));
             }
             // Click the "Click me!" button.
             driver.findElement(By.tagName("button")).click();
             eyes.checkWindow("After click");
             // End the test.
-            TestResults testResults = eyes.close(false);
-            System.out.println("Visual Test results: " + testResults);
-
+            BaseTest.checkResults(eyes);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -52,7 +53,7 @@ public class Selenium_HelloWorld extends BaseTest {
 
             // If the test was aborted before eyes.close was called, ends the test as aborted.
             TestResults testResults = eyes.abortIfNotClosed();
-            System.out.println("Visual Test results (finally): " + testResults);
+            BaseTest.printResults(testResults);
         }
     }
 }

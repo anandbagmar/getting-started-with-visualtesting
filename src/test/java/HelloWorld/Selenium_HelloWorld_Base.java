@@ -1,12 +1,15 @@
 package HelloWorld;
 
 import Utilities.*;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 
-public class Selenium_HelloWorld_Base extends BaseTest {
+public class Selenium_HelloWorld_Base {
 
-    private void verifyHelloWorld(int numOfSteps) {
+    @Test
+    public void seleniumBaseTest() {
+        int numOfSteps = 2;
         DriverUtils.getPathForChromeDriverFromMachine();
         WebDriver driver = new ChromeDriver();
 
@@ -15,6 +18,7 @@ public class Selenium_HelloWorld_Base extends BaseTest {
 
             for (int stepNumber = 0; stepNumber < numOfSteps; stepNumber++) {
                 driver.findElement(By.linkText("?diff1")).click();
+                Thread.sleep(1000);
             }
 
             // Click the "Click me!" button.
@@ -26,9 +30,5 @@ public class Selenium_HelloWorld_Base extends BaseTest {
             // Close the browser.
             driver.close();
         }
-    }
-
-    public static void main(String[] args) {
-        new Selenium_HelloWorld_Base().verifyHelloWorld(2);
     }
 }

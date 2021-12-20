@@ -1,19 +1,21 @@
 package HelloWorld;
 
 import io.appium.java_client.*;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.*;
 
 import java.net.*;
 
-class Appium_Native_HelloWorld_Base extends BaseTest {
+class Appium_Native_HelloWorld_Base {
 
-    public static void main(String[] args) throws MalformedURLException {
+    @Test
+    public void appiumBaseTest() {
         String testName = "Appium Native App test";
-        basicTest(testName + 1, 2, 0, setupNative());
-    }
+        AppiumDriver driver = setupNative();
 
-    protected static void basicTest(String testName, int p1, int p2, AppiumDriver driver) {
+        int p1 = 3;
+        int p2 = 5;
         try {
             System.out.println("Running test - " + testName);
             driver.findElement(By.id("digit_" + p1)).click();
@@ -26,7 +28,7 @@ class Appium_Native_HelloWorld_Base extends BaseTest {
         }
     }
 
-    private static AppiumDriver setupNative() throws MalformedURLException {
+    private AppiumDriver setupNative() {
         DesiredCapabilities dc = new DesiredCapabilities();
         dc.setCapability("automationName", "uiautomator2");
         dc.setCapability("deviceName", "Google Nexus 5");
@@ -34,7 +36,12 @@ class Appium_Native_HelloWorld_Base extends BaseTest {
         dc.setCapability("appPackage", "com.google.android.calculator");
         dc.setCapability("appActivity", "com.android.calculator2.Calculator");
         dc.setCapability("browserName", "");
-        AppiumDriver driver = new AppiumDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), dc);
+        AppiumDriver driver = null;
+        try {
+            driver = new AppiumDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"), dc);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         return driver;
     }
 }

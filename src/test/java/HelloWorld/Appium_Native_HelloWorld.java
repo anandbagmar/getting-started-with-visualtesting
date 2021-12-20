@@ -4,14 +4,16 @@ import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.*;
 import io.appium.java_client.*;
 import io.appium.java_client.remote.*;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.*;
 
 import java.net.*;
 
-class Appium_Native_HelloWorld extends BaseTest {
+class Appium_Native_HelloWorld {
 
-    public static void main(String[] args) throws MalformedURLException {
+    @Test
+    public void appiumTest() {
         AppiumDriver<WebElement> driver = createAppiumDriver();
 
         // Initialize the eyes SDK and set your private API key.
@@ -23,15 +25,12 @@ class Appium_Native_HelloWorld extends BaseTest {
 
         eyes.setMatchLevel(MatchLevel.STRICT);
         eyes.setBatch(new BatchInfo(batchName));
-        eyes.setLogHandler(new StdoutLogHandler(true));
-
-        eyes.setForceFullPageScreenshot(false);
         // Start the test.
         eyes.open(driver, appName, testName);
         runNativeTest(eyes, 2, 3, driver);
     }
 
-    protected static void runNativeTest(Eyes eyes, int p1, int p2, AppiumDriver driver) {
+    protected void runNativeTest(Eyes eyes, int p1, int p2, AppiumDriver driver) {
         try {
             eyes.checkWindow("Hello!");
             driver.findElement(By.id("digit_" + p1)).click();
@@ -42,16 +41,17 @@ class Appium_Native_HelloWorld extends BaseTest {
             eyes.checkWindow("digit_" + p2);
             driver.findElement(By.id("eq")).click();
             eyes.checkWindow("Calc works!");
-            checkResults(eyes);
+            BaseTest.checkResults(eyes);
         } finally {
             // Close the browser.
             driver.quit();
             // If the test was aborted before eyes.close was called, ends the test as aborted.
-            eyes.abort();
+            TestResults testResults = eyes.abortIfNotClosed();
+            BaseTest.printResults(testResults);
         }
     }
 
-    private static AppiumDriver<WebElement> createAppiumDriver() {
+    private AppiumDriver<WebElement> createAppiumDriver() {
         String appiumPort = "4723";
         Integer systemPort = 8201;
         String deviceId = "";

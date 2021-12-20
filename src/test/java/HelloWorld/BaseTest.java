@@ -1,19 +1,22 @@
 package HelloWorld;
 
 import com.applitools.eyes.*;
-import com.applitools.eyes.selenium.*;
-import io.appium.java_client.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.*;
 
 public class BaseTest {
-    protected static BatchInfo batch;
-    protected Eyes eyes;
-    protected WebDriver driver;
 
-    protected static void checkResults(Eyes eyes) {
+    protected static void checkResults(com.applitools.eyes.selenium.Eyes eyes) {
         Boolean throwtTestCompleteException = false;
         TestResults result = eyes.close(throwtTestCompleteException);
+        printResults(result);
+    }
+
+    protected static void checkResults(com.applitools.eyes.appium.Eyes eyes) {
+        Boolean throwtTestCompleteException = false;
+        TestResults result = eyes.close(throwtTestCompleteException);
+        printResults(result);
+    }
+
+    static void printResults(TestResults result) {
         System.out.println("Visual Testing results - " + result);
         String url = result.getUrl();
         if (result.isNew()) {
@@ -32,15 +35,5 @@ public class BaseTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    protected WebElement waitForElementToBePresent(By elementId, AppiumDriver driver) {
-        return (new WebDriverWait(driver, 30))
-                .until(ExpectedConditions.presenceOfElementLocated(elementId));
-    }
-
-    protected WebElement waitForElementToBePresent(By elementId) {
-        return (new WebDriverWait(driver, 30))
-                .until(ExpectedConditions.presenceOfElementLocated(elementId));
     }
 }
