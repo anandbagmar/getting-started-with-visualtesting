@@ -7,14 +7,12 @@ import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
 
 public class Selenium_HelloWorld {
 
     @Test
     public void seleniumTest() {
-        DriverUtils.getPathForChromeDriverFromMachine();
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = DriverUtils.createChromeDriver();
 
         // Initialize the eyes SDK and set your private 378355API key.
         Eyes eyes = new Eyes();

@@ -2,30 +2,28 @@ package Utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.ArrayUtils;
+import org.openqa.selenium.*;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 public class DriverUtils {
-    public static String getPathForChromeDriverFromMachine() {
-        WebDriverManager.chromedriver().setup();
-        String chromeDriverPath = WebDriverManager.chromedriver().getBinaryPath();
-        System.out.println("ChromeDriver path: " + chromeDriverPath);
-        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-        return chromeDriverPath;
+    public static WebDriver createChromeDriver() {
+        return getDriverPath("chrome");
     }
 
-    public static String getPathForChromeDriverFromConnectedDevice() {
+    public static WebDriver createChromeDriverForConnectedDevice() {
         int[] versionNamesArr = getChromeVersionsFor();
         if (versionNamesArr.length > 0) {
             int highestChromeVersion = Arrays.stream(versionNamesArr).max().getAsInt();
             String message = "ChromeDriver for Chrome version " + highestChromeVersion
                     + "on device: ";
             System.out.println(message);
-            WebDriverManager.chromedriver().version(String.valueOf(highestChromeVersion)).setup();
-            String chromeDriverPath = WebDriverManager.chromedriver().getBinaryPath();
+            WebDriverManager webDriverManager = WebDriverManager.getInstance("chrome").browserVersion(String.valueOf(highestChromeVersion));
+            webDriverManager.setup();
+            String chromeDriverPath = webDriverManager.getDownloadedDriverPath();
             System.out.println("ChromeDriver path: " + chromeDriverPath);
-            return chromeDriverPath;
+            return webDriverManager.create();
         } else {
             return null;
         }
@@ -55,11 +53,17 @@ public class DriverUtils {
         return versionNamesArr;
     }
 
-    public static String getPathForFirefoxDriverFromMachine() {
-        WebDriverManager.firefoxdriver().setup();
-        String firefoxDriverPath = WebDriverManager.firefoxdriver().getBinaryPath();
-        System.out.println("FirefoxDriver path: " + firefoxDriverPath);
-        System.setProperty("webdriver.firefox.driver", firefoxDriverPath);
-        return firefoxDriverPath;
+    public static WebDriver createFirefoxDriver() {
+        return getDriverPath("firefox");
+    }
+
+    private static WebDriver getDriverPath(String browserType) {
+        WebDriverManager webDriverManager = WebDriverManager.getInstance(browserType);
+        webDriverManager.setup();
+
+        String downloadedDriverPath = webDriverManager.getDownloadedDriverPath();
+        System.out.println("Using Driver from: " + downloadedDriverPath);
+        System.setProperty("webdriver." + browserType.toLowerCase() + ".driver", downloadedDriverPath);
+        return webDriverManager.create();
     }
 }

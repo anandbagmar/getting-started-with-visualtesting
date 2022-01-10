@@ -3,15 +3,13 @@ package HelloWorld;
 import Utilities.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
 
 public class Selenium_HelloWorld_Base {
 
     @Test
     public void seleniumBaseTest() {
         int numOfSteps = 2;
-        DriverUtils.getPathForChromeDriverFromMachine();
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = DriverUtils.createChromeDriver();
 
         try {
             driver.get("https://applitools.com/helloworld");
