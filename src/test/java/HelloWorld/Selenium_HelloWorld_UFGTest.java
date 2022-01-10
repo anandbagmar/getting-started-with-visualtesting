@@ -10,7 +10,7 @@ import com.applitools.eyes.visualgrid.services.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 
-public class Selenium_HelloWorld_UFG {
+public class Selenium_HelloWorld_UFGTest {
 
     private static VisualGridRunner visualGridRunner;
     private static BatchInfo batch;

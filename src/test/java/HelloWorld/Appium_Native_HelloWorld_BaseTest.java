@@ -7,7 +7,7 @@ import org.openqa.selenium.remote.*;
 
 import java.net.*;
 
-class Appium_Native_HelloWorld_Base {
+class Appium_Native_HelloWorld_BaseTest {
 
     @Test
     public void appiumBaseTest() {

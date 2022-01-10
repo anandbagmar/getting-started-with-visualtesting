@@ -8,7 +8,7 @@ import com.applitools.eyes.selenium.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 
-public class Selenium_HelloWorld {
+public class Selenium_HelloWorldTest {
 
     @Test
     public void seleniumTest() {
