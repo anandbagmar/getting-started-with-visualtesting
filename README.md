@@ -11,10 +11,18 @@ with
 
 ## Samples included:
 
->> Selenium_HelloWorld_Base -> basic selenium test
-> 
->> Selenium_HelloWorld -> selenium test with Applitools integrated
-> 
->> Appium_Native_HelloWorld_Base -> basic appium test, *without* Applitools
-> 
->> Appium_Native_HelloWorld -> appium test, *with* Applitools integrated
+> Selenium_HelloWorld_BaseTest -> basic selenium test
+ 
+> Selenium_HelloWorldTest -> selenium test with Applitools integrated
+ 
+> Selenium_HelloWorld_UFGTest -> selenium test with Applitools UltraFast Grid integrated
+ 
+> Appium_Native_HelloWorld_BaseTest -> basic appium test, *without* Applitools
+ 
+> Appium_Native_HelloWorldTest -> appium test, *with* Applitools integrated
+
+## Running the tests
+
+You can run the test directly from any IDE, OR, you can run the test from the command line using the command:
+
+> mvn clean test -Dtest=<test_name>
