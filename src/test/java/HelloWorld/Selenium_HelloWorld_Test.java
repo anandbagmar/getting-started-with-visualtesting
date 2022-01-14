@@ -4,7 +4,7 @@ import Utilities.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 
-public class Selenium_HelloWorld_BaseTest {
+public class Selenium_HelloWorld_Test {
 
     @Test
     public void seleniumBaseTest() {

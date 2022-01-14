@@ -63,7 +63,7 @@ public class Selenium_HelloWorld_UFGTest {
     }
 
     @Test
-    public void seleniumTest() {
+    public void seleniumUFGTest() {
         double counter = 3;
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");

@@ -11,9 +11,9 @@ with
 
 ## Samples included:
 
-> Selenium_HelloWorld_BaseTest -> basic selenium test
+> Selenium_HelloWorld_Test -> basic selenium test
  
-> Selenium_HelloWorldTest -> selenium test with Applitools integrated
+> Selenium_HelloWorld_EyesTest -> selenium test with Applitools integrated
  
 > Selenium_HelloWorld_UFGTest -> selenium test with Applitools UltraFast Grid integrated
  
