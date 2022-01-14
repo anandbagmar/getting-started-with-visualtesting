@@ -42,16 +42,7 @@ class Appium_Native_Calc_EyesTest {
         driver = new AppiumDriver<>(new URL(APPIUM_SERVER_URL), capabilities);
         System.out.println(String.format("Created AppiumDriver for - %s", APPIUM_SERVER_URL));
 
-        DriverUtils.waitFor(1);
-        MobileElement upgradeAppNotificationElement = (MobileElement) driver.findElementById("android:id/button1");
-        if (null!= upgradeAppNotificationElement) {
-            upgradeAppNotificationElement.click();
-            DriverUtils.waitFor(1);
-        }
-        MobileElement gotItElement = (MobileElement) driver.findElementById("com.android2.calculator3:id/cling_dismiss");
-        if (null!= gotItElement) {
-            gotItElement.click();
-        }
+        handleUpgradePopup();
 
         eyes = new Eyes();
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
@@ -61,9 +52,22 @@ class Appium_Native_Calc_EyesTest {
         eyes.open(driver, className, testInfo.getDisplayName());
     }
 
+    private void handleUpgradePopup() {
+        DriverUtils.waitFor(1);
+        MobileElement upgradeAppNotificationElement = (MobileElement) driver.findElementById("android:id/button1");
+        if (null!= upgradeAppNotificationElement) {
+            upgradeAppNotificationElement.click();
+            DriverUtils.waitFor(1);
+        }
+        MobileElement gotItElement = (MobileElement) driver.findElementById("com.android2.calculator3:id/cling_dismiss");
+        if (null!= gotItElement) {
+            gotItElement.click();
+            DriverUtils.waitFor(1);
+        }
+    }
 
     @Test
-    public void calcEyesTest() {
+    public void appiumTest() {
         eyes.checkWindow("Calculator!");
         driver.findElement(By.id("digit" + 2)).click();
         eyes.checkWindow("digit" + 2);

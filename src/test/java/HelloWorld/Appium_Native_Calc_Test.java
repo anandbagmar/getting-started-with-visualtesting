@@ -32,6 +32,10 @@ class Appium_Native_Calc_Test {
         driver = new AppiumDriver<>(new URL(APPIUM_SERVER_URL), capabilities);
         System.out.println(String.format("Created AppiumDriver for - %s", APPIUM_SERVER_URL));
 
+        handleUpgradePopup();
+    }
+
+    private void handleUpgradePopup() {
         DriverUtils.waitFor(1);
         MobileElement upgradeAppNotificationElement = (MobileElement) driver.findElementById("android:id/button1");
         if (null!= upgradeAppNotificationElement) {
@@ -41,6 +45,7 @@ class Appium_Native_Calc_Test {
         MobileElement gotItElement = (MobileElement) driver.findElementById("com.android2.calculator3:id/cling_dismiss");
         if (null!= gotItElement) {
             gotItElement.click();
+            DriverUtils.waitFor(1);
         }
     }
 
