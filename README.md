@@ -17,9 +17,9 @@ with
  
 > Selenium_HelloWorld_UFGTest -> selenium test with Applitools UltraFast Grid integrated
  
-> Appium_Native_HelloWorld_BaseTest -> basic appium test, *without* Applitools
+> Appium_Native_Calc_Test -> basic appium test, *without* Applitools
  
-> Appium_Native_HelloWorldTest -> appium test, *with* Applitools integrated
+> Appium_Native_Cals_EyesTest -> appium test, *with* Applitools integrated
 
 ## Running the tests
 

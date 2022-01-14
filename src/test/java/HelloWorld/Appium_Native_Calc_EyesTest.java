@@ -10,9 +10,9 @@ import org.openqa.selenium.remote.*;
 
 import java.net.*;
 
-class Appium_Native_HelloWorldTest {
+class Appium_Native_Calc_EyesTest {
 
-    @Test
+//    @Test
     public void appiumTest() {
         AppiumDriver<WebElement> driver = createAppiumDriver();
 

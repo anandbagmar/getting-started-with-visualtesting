@@ -7,9 +7,9 @@ import org.openqa.selenium.remote.*;
 
 import java.net.*;
 
-class Appium_Native_HelloWorld_BaseTest {
+class Appium_Native_Calc_Test {
 
-    @Test
+//    @Test
     public void appiumBaseTest() {
         String testName = "Appium Native App test";
         AppiumDriver driver = setupNative();
