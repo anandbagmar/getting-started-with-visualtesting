@@ -5,14 +5,14 @@ import com.applitools.eyes.*;
 public class BaseTest {
 
     protected static void checkResults(com.applitools.eyes.selenium.Eyes eyes) {
-        Boolean throwtTestCompleteException = false;
-        TestResults result = eyes.close(throwtTestCompleteException);
+        Boolean throwTestCompleteException = false;
+        TestResults result = eyes.close(throwTestCompleteException);
         printResults(result);
     }
 
     protected static void checkResults(com.applitools.eyes.appium.Eyes eyes) {
-        Boolean throwtTestCompleteException = false;
-        TestResults result = eyes.close(throwtTestCompleteException);
+        Boolean throwTestCompleteException = false;
+        TestResults result = eyes.close(throwTestCompleteException);
         printResults(result);
     }
 
@@ -28,10 +28,10 @@ public class BaseTest {
         }
     }
 
-    protected void sleep(int duractionInSec) {
+    protected void sleep(int durationInSec) {
         try {
-            System.out.println(String.format("Sleep for %d sec", duractionInSec));
-            Thread.sleep(duractionInSec * 1000);
+            System.out.println(String.format("Sleep for %d sec", durationInSec));
+            Thread.sleep(durationInSec * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

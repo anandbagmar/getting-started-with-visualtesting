@@ -12,6 +12,7 @@ import org.openqa.selenium.*;
 
 public class Selenium_HelloWorld_UFGTest {
 
+    private static final String className = Selenium_HelloWorld_UFGTest.class.getSimpleName();
     private static VisualGridRunner visualGridRunner;
     private static BatchInfo batch;
     private Eyes eyes;
@@ -19,8 +20,8 @@ public class Selenium_HelloWorld_UFGTest {
 
     @BeforeAll
     public static void setUp() {
-        visualGridRunner = new VisualGridRunner();
-        batch = new BatchInfo("helloworld-ufg");
+        visualGridRunner = new VisualGridRunner(10);
+        batch = new BatchInfo(className);
     }
 
     @BeforeEach
@@ -28,12 +29,10 @@ public class Selenium_HelloWorld_UFGTest {
         System.out.println("Running test: " + testInfo.getDisplayName());
         driver = DriverUtils.createChromeDriver();
 
-        // Initialize the eyes SDK and set your private API key.
         eyes = new Eyes(visualGridRunner);
         Configuration config = eyes.getConfiguration();
 
-        // You can get your api key from the Applitools dashboard
-        config.setApiKey("APPLITOOLS_API_KEY");
+        config.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
 
         // Add browsers with different viewports
         config.addBrowser(800, 600, BrowserType.CHROME);
@@ -48,18 +47,11 @@ public class Selenium_HelloWorld_UFGTest {
         config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
 
         config.setBatch(batch);
-
-        // Set the configuration object to eyes
         eyes.setConfiguration(config);
-        eyes.setLogHandler(new StdoutLogHandler(true));
-
+//        eyes.setLogHandler(new StdoutLogHandler(true));
 //        eyes.setIsDisabled(true);
 
-        // Set the API key from the env variable. Please read the "Important Note"
-        eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
-
-        // Start the test by setting AUT's name, window or the page name that's being tested, viewport width and height
-        eyes.open(driver, "Hello world", testInfo.getDisplayName(), new RectangleSize(800, 800));
+        eyes.open(driver, className, testInfo.getDisplayName(), new RectangleSize(800, 800));
     }
 
     @Test
@@ -74,7 +66,6 @@ public class Selenium_HelloWorld_UFGTest {
             eyes.checkWindow("click-" + stepNumber);
             eyes.check("click", Target.region(linkText).matchLevel(MatchLevel.CONTENT));
         }
-        // Click the "Click me!" button.
         driver.findElement(By.tagName("button")).click();
         eyes.checkWindow("After click");
     }
