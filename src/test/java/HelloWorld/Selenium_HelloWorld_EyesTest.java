@@ -53,6 +53,6 @@ public class Selenium_HelloWorld_EyesTest {
     @AfterEach
     public void afterMethod() {
         driver.close();
-        BaseTest.checkResults(eyes);
+        ResultUtils.checkSeleniumResults(eyes);
     }
 }

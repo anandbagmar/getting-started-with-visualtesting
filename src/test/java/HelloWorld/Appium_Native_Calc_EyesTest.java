@@ -1,5 +1,6 @@
 package HelloWorld;
 
+import Utilities.*;
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.*;
 import io.appium.java_client.*;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.*;
 
+import java.io.*;
 import java.net.*;
 
 class Appium_Native_Calc_EyesTest {
@@ -32,10 +34,24 @@ class Appium_Native_Calc_EyesTest {
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        capabilities.setCapability("appPackage", "com.google.android.calculator");
-        capabilities.setCapability("appActivity", "com.android.calculator2.Calculator");
+        capabilities.setCapability("autoGrantPermissions", true);
+        capabilities.setCapability("fullReset", true);
+        capabilities.setCapability("app", new File("./sampleApps/AndroidCalculator.apk").getAbsolutePath());
+        capabilities.setCapability("appPackage", "com.android2.calculator3");
+        capabilities.setCapability("appActivity", "com.android2.calculator3.Calculator");
         driver = new AppiumDriver<>(new URL(APPIUM_SERVER_URL), capabilities);
         System.out.println(String.format("Created AppiumDriver for - %s", APPIUM_SERVER_URL));
+
+        DriverUtils.waitFor(1);
+        MobileElement upgradeAppNotificationElement = (MobileElement) driver.findElementById("android:id/button1");
+        if (null!= upgradeAppNotificationElement) {
+            upgradeAppNotificationElement.click();
+            DriverUtils.waitFor(1);
+        }
+        MobileElement gotItElement = (MobileElement) driver.findElementById("com.android2.calculator3:id/cling_dismiss");
+        if (null!= gotItElement) {
+            gotItElement.click();
+        }
 
         eyes = new Eyes();
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
@@ -47,22 +63,22 @@ class Appium_Native_Calc_EyesTest {
 
 
     @Test
-    public void appiumTest() {
-        eyes.checkWindow("Hello!");
-        driver.findElement(By.id("digit_" + 2)).click();
-        eyes.checkWindow("digit_" + 2);
-        driver.findElement(By.id("op_add")).click();
-        eyes.checkWindow("op_add");
-        driver.findElement(By.id("digit_" + 3)).click();
-        eyes.checkWindow("digit_" + 3);
-        driver.findElement(By.id("eq")).click();
+    public void calcEyesTest() {
+        eyes.checkWindow("Calculator!");
+        driver.findElement(By.id("digit" + 2)).click();
+        eyes.checkWindow("digit" + 2);
+        driver.findElement(By.id("plus")).click();
+        eyes.checkWindow("plus");
+        driver.findElement(By.id("digit" + 3)).click();
+        eyes.checkWindow("digit" + 3);
+        driver.findElement(By.id("equal")).click();
         eyes.checkWindow("Calc works!");
     }
 
     @AfterEach
     void tearDown() {
         // Close the browser.
-        BaseTest.checkResults(eyes);
+        ResultUtils.checkSeleniumResults(eyes);
         driver.quit();
     }
 }

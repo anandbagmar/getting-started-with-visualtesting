@@ -1,16 +1,16 @@
-package HelloWorld;
+package Utilities;
 
 import com.applitools.eyes.*;
 
-public class BaseTest {
+public class ResultUtils {
 
-    protected static void checkResults(com.applitools.eyes.selenium.Eyes eyes) {
+    public static void checkSeleniumResults(com.applitools.eyes.selenium.Eyes eyes) {
         Boolean throwTestCompleteException = false;
         TestResults result = eyes.close(throwTestCompleteException);
         printResults(result);
     }
 
-    protected static void checkResults(com.applitools.eyes.appium.Eyes eyes) {
+    public static void checkAppiumResults(com.applitools.eyes.appium.Eyes eyes) {
         Boolean throwTestCompleteException = false;
         TestResults result = eyes.close(throwTestCompleteException);
         printResults(result);
@@ -28,12 +28,4 @@ public class BaseTest {
         }
     }
 
-    protected void sleep(int durationInSec) {
-        try {
-            System.out.println(String.format("Sleep for %d sec", durationInSec));
-            Thread.sleep(durationInSec * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }
