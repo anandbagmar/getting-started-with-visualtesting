@@ -9,7 +9,7 @@ import org.openqa.selenium.*;
 
 public class Selenium_HelloWorld_EyesTest {
 
-    private static final String className = Selenium_HelloWorld_EyesTest.class.getSimpleName();
+    private static final String appName = Selenium_HelloWorld_EyesTest.class.getSimpleName();
     private static BatchInfo batch;
     double counter = 3;
     private WebDriver driver;
@@ -17,7 +17,7 @@ public class Selenium_HelloWorld_EyesTest {
 
     @BeforeAll
     public static void beforeAll() {
-        batch = new BatchInfo(className);
+        batch = new BatchInfo(appName);
     }
 
     @BeforeEach
@@ -29,14 +29,14 @@ public class Selenium_HelloWorld_EyesTest {
 //        eyes.setLogHandler(new StdoutLogHandler(false));
         eyes.setForceFullPageScreenshot(false);
         eyes.setStitchMode(StitchMode.CSS);
+        eyes.setMatchLevel(MatchLevel.LAYOUT);
 //        eyes.setIsDisabled(true);
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
-        eyes.open(driver, className, testInfo.getDisplayName(), new RectangleSize(800, 800));
+        eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(800, 800));
     }
 
     @Test
     public void seleniumEyesTest() {
-
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
 
