@@ -68,12 +68,12 @@
         <dependency>
             <groupId>com.applitools</groupId>
             <artifactId>eyes-selenium-java3</artifactId>
-            <version>3.210.6</version>
+            <version>3.211.0</version>
         </dependency>
         <dependency>
             <groupId>com.applitools</groupId>
             <artifactId>eyes-appium-java3</artifactId>
-            <version>3.210.6</version>
+            <version>3.211.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
