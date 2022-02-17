@@ -62,7 +62,8 @@ public class DriverUtils {
         webDriverManager.setup();
 
         String downloadedDriverPath = webDriverManager.getDownloadedDriverPath();
-        System.out.println("Using Driver from: " + downloadedDriverPath);
+        String browserVersion = webDriverManager.getDownloadedDriverVersion();
+        System.out.printf("Using Driver version: '%s' from: '%s'%n", browserVersion, downloadedDriverPath);
         System.setProperty("webdriver." + browserType.toLowerCase() + ".driver", downloadedDriverPath);
         return webDriverManager.create();
     }
