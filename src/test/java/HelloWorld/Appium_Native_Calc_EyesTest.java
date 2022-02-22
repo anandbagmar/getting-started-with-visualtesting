@@ -19,6 +19,7 @@ class Appium_Native_Calc_EyesTest {
     private AppiumDriver<WebElement> driver;
     private Eyes eyes;
     private final String APPIUM_SERVER_URL = "http://localhost:4723/wd/hub";
+    private static final String userName = System.getProperty("user.name");
 
     @BeforeAll
     public static void beforeAll() {

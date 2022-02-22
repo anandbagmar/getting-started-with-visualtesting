@@ -17,6 +17,7 @@ public class Selenium_HelloWorld_UFGTest {
     private static BatchInfo batch;
     private Eyes eyes;
     private WebDriver driver;
+    private static final String userName = System.getProperty("user.name");
 
     @BeforeAll
     public static void setUp() {

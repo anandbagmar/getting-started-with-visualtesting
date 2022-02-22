@@ -14,6 +14,7 @@ public class Selenium_HelloWorld_EyesTest {
     double counter = 3;
     private WebDriver driver;
     private Eyes eyes;
+    private static final String userName = System.getProperty("user.name");
 
     @BeforeAll
     public static void beforeAll() {
