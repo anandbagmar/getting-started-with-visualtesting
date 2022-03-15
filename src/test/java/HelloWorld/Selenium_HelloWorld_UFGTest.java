@@ -2,8 +2,11 @@ package HelloWorld;
 
 import Utilities.*;
 import com.applitools.eyes.*;
+import com.applitools.eyes.appium.*;
 import com.applitools.eyes.selenium.*;
+import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.fluent.*;
+import com.applitools.eyes.selenium.fluent.Target;
 import com.applitools.eyes.visualgrid.model.ScreenOrientation;
 import com.applitools.eyes.visualgrid.model.*;
 import com.applitools.eyes.visualgrid.services.*;
@@ -22,7 +25,7 @@ public class Selenium_HelloWorld_UFGTest {
     @BeforeAll
     public static void setUp() {
         visualGridRunner = new VisualGridRunner(10);
-        batch = new BatchInfo(className);
+        batch = new BatchInfo(userName + "-" + className);
     }
 
     @BeforeEach
@@ -48,6 +51,7 @@ public class Selenium_HelloWorld_UFGTest {
         config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
 
         config.setBatch(batch);
+        eyes.addProperty("username", userName);
         eyes.setConfiguration(config);
 //        eyes.setLogHandler(new StdoutLogHandler(true));
 //        eyes.setIsDisabled(true);

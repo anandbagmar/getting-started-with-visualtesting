@@ -2,7 +2,7 @@ package HelloWorld;
 
 import Utilities.*;
 import com.applitools.eyes.*;
-import com.applitools.eyes.selenium.*;
+import com.applitools.eyes.appium.*;
 import io.appium.java_client.*;
 import io.appium.java_client.remote.*;
 import org.junit.jupiter.api.*;
@@ -23,7 +23,7 @@ class Appium_Native_Calc_EyesTest {
 
     @BeforeAll
     public static void beforeAll() {
-        batch = new BatchInfo(className);
+        batch = new BatchInfo(userName + "-" + className);
     }
 
     @BeforeEach
@@ -49,7 +49,9 @@ class Appium_Native_Calc_EyesTest {
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
         eyes.setMatchLevel(MatchLevel.STRICT);
         eyes.setBatch(batch);
+        eyes.setBranchName("main");
 //        eyes.setIsDisabled(true);
+        eyes.addProperty("username", userName);
         eyes.open(driver, className, testInfo.getDisplayName());
     }
 
@@ -82,8 +84,7 @@ class Appium_Native_Calc_EyesTest {
 
     @AfterEach
     void tearDown() {
-        // Close the browser.
-        ResultUtils.checkSeleniumResults(eyes);
+        ResultUtils.checkAppiumResults(eyes);
         driver.quit();
     }
 }

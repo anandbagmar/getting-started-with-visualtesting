@@ -18,7 +18,7 @@ public class Selenium_HelloWorld_EyesTest {
 
     @BeforeAll
     public static void beforeAll() {
-        batch = new BatchInfo(appName);
+        batch = new BatchInfo(userName + "-" + appName);
     }
 
     @BeforeEach
@@ -33,6 +33,7 @@ public class Selenium_HelloWorld_EyesTest {
         eyes.setMatchLevel(MatchLevel.LAYOUT);
 //        eyes.setIsDisabled(true);
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
+        eyes.addProperty("username", userName);
         eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(800, 800));
     }
 
