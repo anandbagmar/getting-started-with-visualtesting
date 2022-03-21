@@ -46,7 +46,7 @@
         <dependency>
             <groupId>com.applitools</groupId>
             <artifactId>eyes-appium-java3</artifactId>
-            <version>3.209.0-beta</version>
+            <version>3.213.2-beta</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
