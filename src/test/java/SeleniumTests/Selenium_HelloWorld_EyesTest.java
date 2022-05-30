@@ -29,7 +29,7 @@ public class Selenium_HelloWorld_EyesTest {
 
         eyes = new Eyes();
         eyes.setBatch(batch);
-//        eyes.setLogHandler(new StdoutLogHandler(false));
+        eyes.setLogHandler(new StdoutLogHandler(true));
         eyes.setForceFullPageScreenshot(false);
         eyes.setStitchMode(StitchMode.CSS);
         eyes.setMatchLevel(MatchLevel.LAYOUT);
