@@ -1,11 +1,13 @@
 package HelloWorld;
 
-import Utilities.*;
+import Utilities.DriverUtils;
 import com.applitools.eyes.*;
-import com.applitools.eyes.selenium.*;
-import com.applitools.eyes.selenium.fluent.*;
+import com.applitools.eyes.selenium.Eyes;
+import com.applitools.eyes.selenium.StitchMode;
+import com.applitools.eyes.selenium.fluent.Target;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 public class Selenium_HelloWorld_EyesTest {
 
@@ -33,8 +35,13 @@ public class Selenium_HelloWorld_EyesTest {
         eyes.setMatchLevel(MatchLevel.LAYOUT);
 //        eyes.setIsDisabled(true);
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
-        eyes.addProperty("username", userName);
-        eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(800, 800));
+        eyes.addProperty("username",
+                         userName);
+        eyes.open(driver,
+                  appName,
+                  testInfo.getDisplayName(),
+                  new RectangleSize(800,
+                                    800));
     }
 
     @Test
@@ -44,17 +51,22 @@ public class Selenium_HelloWorld_EyesTest {
 
         for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
-            driver.findElement(linkText).click();
+            driver.findElement(linkText)
+                  .click();
             eyes.checkWindow("click-" + stepNumber);
-            eyes.check("click", Target.region(linkText).matchLevel(MatchLevel.CONTENT));
+            eyes.check("click",
+                       Target.region(linkText)
+                             .matchLevel(MatchLevel.CONTENT));
         }
-        driver.findElement(By.tagName("button")).click();
+        driver.findElement(By.tagName("button"))
+              .click();
         eyes.checkWindow("After click");
     }
 
     @AfterEach
     public void afterMethod() {
         driver.close();
-        ResultUtils.checkSeleniumResults(eyes);
+        TestResults result = eyes.close(false);
+        System.out.println(result);
     }
 }
