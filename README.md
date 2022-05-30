@@ -1,3 +1,6 @@
+This repo contains Selenium-java tests with Applitools integrated for Visual Testing.
+See this repo for Appium-java tests with Applitools - https://github.com/anandbagmar/getting-started-with-mobile-visualtesting
+
 # getting-started-with-visualtesting
 
 * Set APPLITOOLS_API_KEY as an environment variable, OR, replace the line:
