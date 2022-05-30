@@ -1,6 +1,6 @@
 package HelloWorld;
 
-import Utilities.DriverUtils;
+import Utilities.Driver;
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.StitchMode;
@@ -25,7 +25,7 @@ public class Selenium_HelloWorld_EyesTest {
 
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
-        driver = DriverUtils.createChromeDriver();
+        driver = Driver.createChromeDriver();
 
         eyes = new Eyes();
         eyes.setBatch(batch);
@@ -33,7 +33,7 @@ public class Selenium_HelloWorld_EyesTest {
         eyes.setForceFullPageScreenshot(false);
         eyes.setStitchMode(StitchMode.CSS);
         eyes.setMatchLevel(MatchLevel.LAYOUT);
-//        eyes.setIsDisabled(true);
+        eyes.setIsDisabled(false);
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
         eyes.addProperty("username",
                          userName);

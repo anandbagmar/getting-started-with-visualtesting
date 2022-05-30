@@ -1,6 +1,6 @@
 package HelloWorld;
 
-import Utilities.DriverUtils;
+import Utilities.Driver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class Selenium_HelloWorld_Test {
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
         System.out.println("Starting test: " + testInfo.getDisplayName());
-        driver = DriverUtils.createChromeDriver();
+        driver = Driver.createChromeDriver();
     }
 
     @Test

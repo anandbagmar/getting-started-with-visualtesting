@@ -1,6 +1,6 @@
 package HelloWorld;
 
-import Utilities.DriverUtils;
+import Utilities.Driver;
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.BrowserType;
 import com.applitools.eyes.selenium.Configuration;
@@ -31,7 +31,7 @@ public class Selenium_HelloWorld_UFGTest {
     @BeforeEach
     public void beforeEach(TestInfo testInfo) {
         System.out.println("Running test: " + testInfo.getDisplayName());
-        driver = DriverUtils.createChromeDriver();
+        driver = Driver.createChromeDriver();
 
         eyes = new Eyes(visualGridRunner);
         Configuration config = eyes.getConfiguration();
