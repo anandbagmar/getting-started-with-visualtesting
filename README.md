@@ -9,9 +9,6 @@ See this repo for Appium-java tests with Applitools - https://github.com/anandba
 with 
 > eyes.setApiKey("<replace_me>");
 
-* If running Appium tests, you need to connect your device / start emulator
-* Start appium on the local machine
-
 ## Samples included:
 
 > Selenium_HelloWorld_Test -> basic selenium test
@@ -19,10 +16,6 @@ with
 > Selenium_HelloWorld_EyesTest -> selenium test with Applitools integrated
  
 > Selenium_HelloWorld_UFGTest -> selenium test with Applitools UltraFast Grid integrated
- 
-> Appium_Native_Calc_Test -> basic appium test, *without* Applitools
- 
-> Appium_Native_Cals_EyesTest -> appium test, *with* Applitools integrated
 
 ## Running the tests
 
