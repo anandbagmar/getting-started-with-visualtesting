@@ -1,4 +1,4 @@
-package HelloWorld;
+package SeleniumTests;
 
 import Utilities.Driver;
 import org.junit.jupiter.api.AfterEach;

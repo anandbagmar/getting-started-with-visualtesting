@@ -1,4 +1,4 @@
-package HelloWorld;
+package SeleniumTests;
 
 import Utilities.Driver;
 import com.applitools.eyes.*;
