@@ -32,16 +32,11 @@ public class Selenium_HelloWorld_EyesTest {
         eyes.setLogHandler(new StdoutLogHandler(true));
         eyes.setForceFullPageScreenshot(false);
         eyes.setStitchMode(StitchMode.CSS);
-        eyes.setMatchLevel(MatchLevel.LAYOUT);
+        eyes.setMatchLevel(MatchLevel.LAYOUT2);
         eyes.setIsDisabled(false);
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
-        eyes.addProperty("username",
-                         userName);
-        eyes.open(driver,
-                  appName,
-                  testInfo.getDisplayName(),
-                  new RectangleSize(800,
-                                    800));
+        eyes.addProperty("username", userName);
+        eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(800, 800));
     }
 
     @Test
@@ -49,14 +44,13 @@ public class Selenium_HelloWorld_EyesTest {
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
 
-        for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
+        for(int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
             driver.findElement(linkText)
                   .click();
             eyes.checkWindow("click-" + stepNumber);
-            eyes.check("click",
-                       Target.region(linkText)
-                             .matchLevel(MatchLevel.CONTENT));
+            eyes.check("click", Target.region(linkText)
+                                      .matchLevel(MatchLevel.CONTENT));
         }
         driver.findElement(By.tagName("button"))
               .click();

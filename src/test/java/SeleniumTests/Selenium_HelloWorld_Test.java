@@ -16,7 +16,8 @@ public class Selenium_HelloWorld_Test {
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
         System.out.println("Starting test: " + testInfo.getDisplayName());
-        driver = Driver.createChromeDriver();
+        //        driver = Driver.createChromeDriver();
+        driver = Driver.createFirefoxDriver();
     }
 
     @Test
@@ -24,7 +25,7 @@ public class Selenium_HelloWorld_Test {
                                    InterruptedException {
         driver.get("https://applitools.com/helloworld");
 
-        for (int stepNumber = 0; stepNumber < numOfSteps; stepNumber++) {
+        for(int stepNumber = 0; stepNumber < numOfSteps; stepNumber++) {
             driver.findElement(By.linkText("?diff1"))
                   .click();
             Thread.sleep(1000);

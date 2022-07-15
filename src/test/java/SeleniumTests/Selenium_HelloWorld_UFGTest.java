@@ -8,6 +8,7 @@ import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.fluent.Target;
 import com.applitools.eyes.visualgrid.model.DeviceName;
 import com.applitools.eyes.visualgrid.model.ScreenOrientation;
+import com.applitools.eyes.visualgrid.services.RunnerOptions;
 import com.applitools.eyes.visualgrid.services.VisualGridRunner;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
@@ -24,7 +25,7 @@ public class Selenium_HelloWorld_UFGTest {
 
     @BeforeAll
     public static void setUp() {
-        visualGridRunner = new VisualGridRunner(10);
+        visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
         batch = new BatchInfo(userName + "-" + className);
     }
 
@@ -34,47 +35,30 @@ public class Selenium_HelloWorld_UFGTest {
         driver = Driver.createChromeDriver();
 
         eyes = new Eyes(visualGridRunner);
-        Configuration config = eyes.getConfiguration();
+        Configuration config = new Configuration();
 
         config.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
 
         // Add browsers with different viewports
-        config.addBrowser(800,
-                          600,
-                          BrowserType.CHROME);
-        config.addBrowser(700,
-                          500,
-                          BrowserType.FIREFOX);
-        config.addBrowser(1600,
-                          1200,
-                          BrowserType.IE_11);
-        config.addBrowser(1024,
-                          768,
-                          BrowserType.EDGE_CHROMIUM);
-        config.addBrowser(800,
-                          600,
-                          BrowserType.SAFARI);
+        config.addBrowser(800, 600, BrowserType.CHROME);
+        config.addBrowser(700, 500, BrowserType.FIREFOX);
+        config.addBrowser(1600, 1200, BrowserType.IE_11);
+        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
+        config.addBrowser(800, 600, BrowserType.SAFARI);
 
         // Add mobile emulation devices in Portrait mode
-        config.addDeviceEmulation(DeviceName.iPhone_X,
-                                  ScreenOrientation.PORTRAIT);
-        config.addDeviceEmulation(DeviceName.Pixel_2,
-                                  ScreenOrientation.PORTRAIT);
-        config.addDeviceEmulation(DeviceName.Galaxy_Note_2,
-                                  ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
 
         config.setBatch(batch);
-        eyes.addProperty("username",
-                         userName);
+        config.setMatchLevel(MatchLevel.STRICT);
+        config.addProperty("username", userName);
+        config.setIsDisabled(false);
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
-        eyes.setIsDisabled(false);
 
-        eyes.open(driver,
-                  className,
-                  testInfo.getDisplayName(),
-                  new RectangleSize(800,
-                                    800));
+        eyes.open(driver, className, testInfo.getDisplayName(), new RectangleSize(750, 750));
     }
 
     @Test
@@ -83,23 +67,27 @@ public class Selenium_HelloWorld_UFGTest {
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
 
-        for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
+        for(int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
             driver.findElement(linkText)
                   .click();
-            eyes.checkWindow("click-" + stepNumber);
-            eyes.check("click",
-                       Target.region(linkText)
-                             .matchLevel(MatchLevel.CONTENT));
+            eyes.check("click-" + stepNumber, Target.window()
+                                                    .fully()
+                                                    .layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
-        driver.findElement(By.tagName("button"))
+        By button = By.tagName("button");
+        driver.findElement(button)
               .click();
         eyes.checkWindow("After click");
+        eyes.check("combo", Target.window()
+                                  .fully()
+                                  .layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
     }
 
     @AfterEach
     public void tearDown() {
         driver.quit();
+        eyes.closeAsync();
         TestResultsSummary allTestResults = visualGridRunner.getAllTestResults(false);
         System.out.println(allTestResults);
     }
