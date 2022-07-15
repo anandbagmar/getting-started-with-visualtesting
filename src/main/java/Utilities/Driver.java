@@ -2,17 +2,23 @@ package Utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.AbstractDriverOptions;
 
 public class Driver {
     public static WebDriver createChromeDriver() {
-        return getDriverPath("chrome");
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+        return getDriverPath("chrome", options);
     }
 
     public static WebDriver createFirefoxDriver() {
-        return getDriverPath("firefox");
+        FirefoxOptions options = new FirefoxOptions();
+        return getDriverPath("firefox", options);
     }
 
-    private static WebDriver getDriverPath(String browserType) {
+    private static WebDriver getDriverPath(String browserType, AbstractDriverOptions options) {
         WebDriverManager webDriverManager = WebDriverManager.getInstance(browserType);
         webDriverManager.setup();
 
@@ -23,6 +29,7 @@ public class Driver {
                           downloadedDriverPath);
         System.setProperty("webdriver." + browserType.toLowerCase() + ".driver",
                            downloadedDriverPath);
+        webDriverManager.capabilities(options);
         return webDriverManager.create();
     }
 }
