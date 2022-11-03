@@ -41,7 +41,7 @@
         <dependency>
             <groupId>com.applitools</groupId>
             <artifactId>eyes-selenium-java5</artifactId>
-            <version>5.28.0</version>
+            <version>5.33.0</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
