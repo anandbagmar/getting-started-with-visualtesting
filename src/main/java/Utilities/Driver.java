@@ -27,8 +27,6 @@ public class Driver {
         System.out.printf("Using Driver version: '%s' from: '%s'%n",
                           browserVersion,
                           downloadedDriverPath);
-        System.setProperty("webdriver." + browserType.toLowerCase() + ".driver",
-                           downloadedDriverPath);
         webDriverManager.capabilities(options);
         return webDriverManager.create();
     }
