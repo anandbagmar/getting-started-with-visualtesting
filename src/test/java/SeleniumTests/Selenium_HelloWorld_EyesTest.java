@@ -50,7 +50,7 @@ public class Selenium_HelloWorld_EyesTest {
                   .click();
             eyes.checkWindow("click-" + stepNumber);
             eyes.check("click", Target.region(linkText)
-                                      .matchLevel(MatchLevel.CONTENT));
+                                      .matchLevel(MatchLevel.IGNORE_COLORS));
         }
         driver.findElement(By.tagName("button"))
               .click();

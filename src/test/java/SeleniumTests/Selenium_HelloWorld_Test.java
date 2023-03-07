@@ -16,13 +16,12 @@ public class Selenium_HelloWorld_Test {
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
         System.out.println("Starting test: " + testInfo.getDisplayName());
-        //        driver = Driver.createChromeDriver();
-        driver = Driver.createFirefoxDriver();
+        driver = Driver.createChromeDriver();
+        //        driver = Driver.createFirefoxDriver();
     }
 
     @Test
-    public void seleniumBaseTest() throws
-                                   InterruptedException {
+    public void seleniumBaseTest() throws InterruptedException {
         driver.get("https://applitools.com/helloworld");
 
         for(int stepNumber = 0; stepNumber < numOfSteps; stepNumber++) {
