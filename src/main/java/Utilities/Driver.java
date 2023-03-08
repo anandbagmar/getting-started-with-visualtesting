@@ -34,6 +34,7 @@ public class Driver {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+        options.addArguments("--remote-allow-origins=*");
         return new ChromeDriver(options);
     }
 

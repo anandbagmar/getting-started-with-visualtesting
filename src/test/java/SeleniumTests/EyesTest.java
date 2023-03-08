@@ -60,7 +60,7 @@ public class EyesTest {
 
     @AfterEach
     public void afterMethod() {
-        driver.close();
+        driver.quit();
         TestResults result = eyes.close(false);
         System.out.println(result);
     }
