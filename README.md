@@ -11,11 +11,11 @@ with
 
 ## Samples included:
 
-> Selenium_HelloWorld_Test -> basic selenium test
+> HelloWorldTest -> basic selenium test
  
-> Selenium_HelloWorld_EyesTest -> selenium test with Applitools integrated
+> EyesTest -> selenium test with Applitools integrated
  
-> Selenium_HelloWorld_UFGTest -> selenium test with Applitools UltraFast Grid integrated
+> UFGTest -> selenium test with Applitools UltraFast Grid integrated
 
 ## Running the tests
 

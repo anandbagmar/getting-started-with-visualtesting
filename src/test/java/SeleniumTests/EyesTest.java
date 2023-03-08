@@ -9,9 +9,9 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class Selenium_HelloWorld_EyesTest {
+public class EyesTest {
 
-    private static final String appName = Selenium_HelloWorld_EyesTest.class.getSimpleName();
+    private static final String appName = EyesTest.class.getSimpleName();
     private static BatchInfo batch;
     double counter = 3;
     private WebDriver driver;

@@ -14,9 +14,9 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class Selenium_HelloWorld_UFGTest {
+public class UFGTest {
 
-    private static final String className = Selenium_HelloWorld_UFGTest.class.getSimpleName();
+    private static final String className = UFGTest.class.getSimpleName();
     private static VisualGridRunner visualGridRunner;
     private static BatchInfo batch;
     private Eyes eyes;
@@ -27,6 +27,7 @@ public class Selenium_HelloWorld_UFGTest {
     public static void setUp() {
         visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
         batch = new BatchInfo(userName + "-" + className);
+        batch.setSequenceName(UFGTest.class.getSimpleName());
     }
 
     @BeforeEach

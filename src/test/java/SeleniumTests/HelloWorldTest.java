@@ -8,7 +8,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class Selenium_HelloWorld_Test {
+public class HelloWorldTest {
 
     int numOfSteps = 2;
     private WebDriver driver;
