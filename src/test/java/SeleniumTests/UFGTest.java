@@ -48,9 +48,9 @@ public class UFGTest {
 //        config.addBrowser(800, 600, BrowserType.SAFARI);
 
         // Add mobile emulation devices in Portrait mode
-        config.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
-        config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
-        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
+//        config.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
+//        config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
+//        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
 
         config.setBatch(batch);
         config.setMatchLevel(MatchLevel.STRICT);
