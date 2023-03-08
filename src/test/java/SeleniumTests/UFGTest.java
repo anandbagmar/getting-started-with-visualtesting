@@ -33,8 +33,7 @@ public class UFGTest {
     @BeforeEach
     public void beforeEach(TestInfo testInfo) {
         System.out.println("Running test: " + testInfo.getDisplayName());
-//        driver = Driver.createChromeDriver();
-        driver = Driver.createFirefoxDriver();
+        driver = Driver.create();
 
         eyes = new Eyes(visualGridRunner);
         Configuration config = new Configuration();
