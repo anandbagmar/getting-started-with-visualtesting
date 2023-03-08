@@ -6,6 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 
 public class Driver {
     public static WebDriver create() {
@@ -18,6 +20,9 @@ public class Driver {
                 break;
             case "firefox":
                 driver = Driver.createFirefoxDriver();
+                break;
+            case "safari":
+                driver = Driver.createSafariDriver();
                 break;
             default:
                 throw new RuntimeException(browser + " is not yet supported");
@@ -34,7 +39,13 @@ public class Driver {
 
     private static WebDriver createFirefoxDriver() {
         FirefoxOptions options = new FirefoxOptions();
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.firefoxdriver().setup();
         return new FirefoxDriver(options);
+    }
+
+    private static WebDriver createSafariDriver() {
+        SafariOptions options = new SafariOptions();
+        WebDriverManager.safaridriver().setup();
+        return new SafariDriver(options);
     }
 }

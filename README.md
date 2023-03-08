@@ -35,6 +35,8 @@ Running with different browsers:
 
 > BROWSER=firefox mvn clean test -Dtest=<test_name>
 
+> BROWSER=safari mvn clean test -Dtest=<test_name>
+
 # Machine setup instructions
 Follow the below steps to get your machine setup ready. These steps are for Selenium-Java based Test Automation. If you are using any other combination, please contact anand.bagmar@essenceoftesting.com
 - Install JDK 11 or higher
