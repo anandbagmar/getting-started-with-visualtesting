@@ -15,7 +15,7 @@ with
  
 > EyesTest -> selenium test with Applitools integrated
  
-> UFGTest -> selenium test with Applitools UltraFast Grid integrated
+> UFGTest -> selenium test with Applitools UltraFast Grid integrgated
 
 ## Running the tests
 

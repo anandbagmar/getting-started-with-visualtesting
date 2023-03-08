@@ -25,7 +25,8 @@ public class EyesTest {
 
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
-        driver = Driver.createChromeDriver();
+//        driver = Driver.createChromeDriver();
+        driver = Driver.createFirefoxDriver();
 
         eyes = new Eyes();
         eyes.setBatch(batch);
