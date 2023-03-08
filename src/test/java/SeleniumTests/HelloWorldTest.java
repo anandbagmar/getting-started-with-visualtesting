@@ -16,22 +16,22 @@ public class HelloWorldTest {
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
         System.out.println("Starting test: " + testInfo.getDisplayName());
-        driver = Driver.createChromeDriver();
-//                driver = Driver.createFirefoxDriver();
+//        driver = Driver.createChromeDriver();
+        driver = Driver.createFirefoxDriver();
     }
 
     @Test
     public void seleniumBaseTest() throws InterruptedException {
         driver.get("https://applitools.com/helloworld");
 
-        for(int stepNumber = 0; stepNumber < numOfSteps; stepNumber++) {
+        for (int stepNumber = 0; stepNumber < numOfSteps; stepNumber++) {
             driver.findElement(By.linkText("?diff1"))
-                  .click();
+                    .click();
             Thread.sleep(1000);
         }
 
         driver.findElement(By.tagName("button"))
-              .click();
+                .click();
     }
 
     @AfterEach
