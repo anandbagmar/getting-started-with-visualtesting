@@ -25,6 +25,7 @@ public class EyesTest {
 
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
+        System.out.println("Running test: " + testInfo.getDisplayName());
         driver = Driver.create();
 
         eyes = new Eyes();
