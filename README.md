@@ -30,6 +30,8 @@ ex:
 
 > mvn clean test -Dtest=UFGTest
 
+> INJECT=true mvn clean test -Dtest=ExecutionCloudTest
+
 Running with different browsers:
 > BROWSER=chrome mvn clean test -Dtest=<test_name>
 

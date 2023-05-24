@@ -1,33 +1,52 @@
 package Utilities;
 
+import com.applitools.eyes.selenium.Eyes;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Driver {
     public static WebDriver create() {
         String browser = (null == System.getenv("BROWSER")) ? "chrome" : System.getenv("BROWSER");
+        return createDriverFor(browser);
+    }
+
+    public static WebDriver createDriverFor(String browser) {
         System.out.println("Running test with browser - " + browser);
-        WebDriver driver = null;
         switch (browser.toLowerCase()) {
             case "chrome":
-                driver = Driver.createChromeDriver();
-                break;
+                return Driver.createChromeDriver();
             case "firefox":
-                driver = Driver.createFirefoxDriver();
-                break;
+                return Driver.createFirefoxDriver();
             case "safari":
-                driver = Driver.createSafariDriver();
-                break;
+                return Driver.createSafariDriver();
+            case "self_healing":
+                return createExecutionCloudRemoteDriver();
             default:
                 throw new RuntimeException(browser + " is not yet supported");
         }
-        return driver;
+    }
+
+    private static WebDriver createExecutionCloudRemoteDriver() {
+        WebDriver innerDriver;
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setBrowserName("chrome");
+        try {
+            innerDriver = new RemoteWebDriver(new URL(Eyes.getExecutionCloudURL()), caps);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        return innerDriver;
     }
 
     private static WebDriver createChromeDriver() {

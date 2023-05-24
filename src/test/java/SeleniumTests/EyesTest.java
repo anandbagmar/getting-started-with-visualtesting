@@ -7,6 +7,7 @@ import com.applitools.eyes.selenium.StitchMode;
 import com.applitools.eyes.selenium.fluent.Target;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 public class EyesTest {
@@ -34,7 +35,7 @@ public class EyesTest {
         eyes.setForceFullPageScreenshot(false);
         eyes.setStitchMode(StitchMode.CSS);
         eyes.setMatchLevel(MatchLevel.LAYOUT2);
-        eyes.setIsDisabled(false);
+        eyes.setIsDisabled(true);
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
         eyes.addProperty("username", userName);
         eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(800, 800));
@@ -44,7 +45,8 @@ public class EyesTest {
     public void seleniumEyesTest() {
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
-
+        ((JavascriptExecutor) driver).executeScript("document.querySelector(\"a\")" +
+                                                            ".text=\"?diffChanged\"");
         for(int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
             driver.findElement(linkText)
