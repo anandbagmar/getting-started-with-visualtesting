@@ -66,12 +66,6 @@ public class ExecutionCloudTest {
         double counter = 1;
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
-        if (isInject()) {
-            System.out.println("Injecting a change");
-            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"div.section" +
-                                                                ".button-section\")" +
-                                                                ".className=\"bytton-section\"");
-        }
 
         for(int stepNumber = 0; stepNumber < counter; stepNumber++) {
             driver.findElement(By.xpath("//a[@href='?diff1']"))
@@ -80,9 +74,12 @@ public class ExecutionCloudTest {
                                                     .fully()
                                                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
-        By button = By.className("div.section.button-section");
-//        By button = By.tagName("button");
-        driver.findElement(button)
+        if (isInject()) {
+            System.out.println("Injecting a change");
+            ((JavascriptExecutor) driver).executeScript("document.querySelector(\".section.button-section\").className=\"section bytton-section\" ");
+        }
+        //        By button = By.tagName("button");
+        driver.findElement(By.xpath("//div[@class='section button-section']"))
               .click();
         eyes.check("combo", Target.window()
                                   .fully()
