@@ -34,7 +34,7 @@ public class EyesTest {
         eyes.setForceFullPageScreenshot(false);
         eyes.setStitchMode(StitchMode.CSS);
         eyes.setMatchLevel(MatchLevel.LAYOUT2);
-        eyes.setIsDisabled(true);
+        eyes.setIsDisabled(false);
         eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
         eyes.addProperty("username", userName);
         eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(800, 800));
