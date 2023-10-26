@@ -39,24 +39,13 @@
         <dependency>
             <groupId>com.applitools</groupId>
             <artifactId>eyes-selenium-java5</artifactId>
-            <version>5.52.0</version>
+            <version>5.64.7</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.0-M1</version>
+            <version>5.10.0</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>5.3.3</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>

@@ -42,15 +42,18 @@ public class UFGTest {
 
         // Add browsers with different viewports
         config.addBrowser(800, 600, BrowserType.CHROME);
+        config.addBrowser(800, 600, BrowserType.CHROME_ONE_VERSION_BACK);
         config.addBrowser(700, 500, BrowserType.FIREFOX);
-//        config.addBrowser(1600, 1200, BrowserType.IE_11);
-//        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
-//        config.addBrowser(800, 600, BrowserType.SAFARI);
+        config.addBrowser(700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
+        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
+        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
+        config.addBrowser(800, 600, BrowserType.SAFARI);
+        config.addBrowser(800, 600, BrowserType.SAFARI_ONE_VERSION_BACK);
 
         // Add mobile emulation devices in Portrait mode
-//        config.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
-//        config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
-//        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.iPad_Pro, ScreenOrientation.LANDSCAPE);
+        config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
 
         config.setBatch(batch);
         config.setMatchLevel(MatchLevel.STRICT);
@@ -64,7 +67,7 @@ public class UFGTest {
 
     @Test
     public void seleniumUFGTest() {
-        double counter = 3;
+        double counter = 1;
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
 

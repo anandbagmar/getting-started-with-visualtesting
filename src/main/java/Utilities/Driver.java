@@ -1,7 +1,6 @@
 package Utilities;
 
 import com.applitools.eyes.selenium.Eyes;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -50,7 +49,6 @@ public class Driver {
     }
 
     private static WebDriver createChromeDriver() {
-        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         options.addArguments("--remote-allow-origins=*");
@@ -59,13 +57,11 @@ public class Driver {
 
     private static WebDriver createFirefoxDriver() {
         FirefoxOptions options = new FirefoxOptions();
-        WebDriverManager.firefoxdriver().setup();
         return new FirefoxDriver(options);
     }
 
     private static WebDriver createSafariDriver() {
         SafariOptions options = new SafariOptions();
-        WebDriverManager.safaridriver().setup();
         return new SafariDriver(options);
     }
 }

@@ -7,6 +7,7 @@ import com.applitools.eyes.selenium.StitchMode;
 import com.applitools.eyes.selenium.fluent.Target;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 public class EyesTest {
@@ -43,6 +44,7 @@ public class EyesTest {
     @Test
     public void seleniumEyesTest() {
         driver.get("https://applitools.com/helloworld");
+        ((JavascriptExecutor) driver).executeScript("document.querySelector(\".section.button-section\").id=\"clickButton\" ");
         eyes.checkWindow("home");
         for(int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
@@ -52,7 +54,7 @@ public class EyesTest {
             eyes.check("click", Target.region(linkText)
                                       .matchLevel(MatchLevel.IGNORE_COLORS));
         }
-        driver.findElement(By.tagName("button"))
+        driver.findElement(By.id("clickButton"))
               .click();
         eyes.checkWindow("After click");
     }

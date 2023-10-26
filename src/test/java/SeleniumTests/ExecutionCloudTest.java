@@ -74,12 +74,14 @@ public class ExecutionCloudTest {
                                                     .fully()
                                                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
+
         if (isInject()) {
             System.out.println("Injecting a change");
-            ((JavascriptExecutor) driver).executeScript("document.querySelector(\".section.button-section\").className=\"section bytton-section\" ");
+            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clkBtn1\"");
+        } else {
+            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clickButton\"");
         }
-        //        By button = By.tagName("button");
-        driver.findElement(By.xpath("//div[@class='section button-section']"))
+        driver.findElement(By.id("clickButton"))
               .click();
         eyes.check("combo", Target.window()
                                   .fully()
