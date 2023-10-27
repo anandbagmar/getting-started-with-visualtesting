@@ -90,8 +90,8 @@ public class UFGTest {
 
     @AfterEach
     public void tearDown() {
-        driver.quit();
         eyes.closeAsync();
+        driver.quit();
         TestResultsSummary allTestResults = visualGridRunner.getAllTestResults(false);
         System.out.println(allTestResults);
     }
