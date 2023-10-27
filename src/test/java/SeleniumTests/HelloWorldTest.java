@@ -16,7 +16,7 @@ public class HelloWorldTest {
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
         System.out.println("Starting test: " + testInfo.getDisplayName());
-        driver = Driver.create();
+        driver = Driver.createDriverFor("chrome");
     }
 
     @Test

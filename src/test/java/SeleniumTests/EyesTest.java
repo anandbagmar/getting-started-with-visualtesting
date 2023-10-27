@@ -27,7 +27,7 @@ public class EyesTest {
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
         System.out.println("Running test: " + testInfo.getDisplayName());
-        driver = Driver.create();
+        driver = Driver.createDriverFor("chrome");
 
         eyes = new Eyes();
         eyes.setBatch(batch);
@@ -44,7 +44,6 @@ public class EyesTest {
     @Test
     public void seleniumEyesTest() {
         driver.get("https://applitools.com/helloworld");
-        ((JavascriptExecutor) driver).executeScript("document.querySelector(\".section.button-section\").id=\"clickButton\" ");
         eyes.checkWindow("home");
         for(int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
@@ -54,6 +53,7 @@ public class EyesTest {
             eyes.check("click", Target.region(linkText)
                                       .matchLevel(MatchLevel.IGNORE_COLORS));
         }
+        ((JavascriptExecutor) driver).executeScript("document.querySelector(\".section.button-section\").id=\"clickButton\" ");
         driver.findElement(By.id("clickButton"))
               .click();
         eyes.checkWindow("After click");

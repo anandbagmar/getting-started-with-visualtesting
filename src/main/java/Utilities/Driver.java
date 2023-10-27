@@ -4,6 +4,8 @@ import com.applitools.eyes.selenium.Eyes;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -27,6 +29,8 @@ public class Driver {
                 return Driver.createChromeDriver();
             case "firefox":
                 return Driver.createFirefoxDriver();
+            case "edge":
+                return Driver.createEdgeDriver();
             case "safari":
                 return Driver.createSafariDriver();
             case "self_healing":
@@ -34,6 +38,11 @@ public class Driver {
             default:
                 throw new RuntimeException(browser + " is not yet supported");
         }
+    }
+
+    private static WebDriver createEdgeDriver() {
+        EdgeOptions options = new EdgeOptions();
+        return new EdgeDriver(options);
     }
 
     private static WebDriver createExecutionCloudRemoteDriver() {
