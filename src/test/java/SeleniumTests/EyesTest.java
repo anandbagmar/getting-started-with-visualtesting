@@ -10,11 +10,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class EyesTest {
 
     private static final String appName = EyesTest.class.getSimpleName();
     private static BatchInfo batch;
-    double counter = 3;
+    double counter = 1;
     private WebDriver driver;
     private Eyes eyes;
     private static final String userName = System.getProperty("user.name");
@@ -22,6 +24,13 @@ public class EyesTest {
     @BeforeAll
     public static void beforeAll() {
         batch = new BatchInfo(userName + "-" + appName);
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        if (null!=batch) {
+            batch.setCompleted(true);
+        }
     }
 
     @BeforeEach
@@ -41,8 +50,27 @@ public class EyesTest {
         eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(800, 800));
     }
 
+    @AfterEach
+    public void afterMethod(TestInfo testInfo) {
+        System.out.println("AfterEach: Test - " + testInfo.getDisplayName());
+        boolean isPass = true;
+        TestResults testResults = null;
+        if (null!=eyes) {
+            eyes.closeAsync();
+            testResults = eyes.close(false);
+            TestResultsStatus testResultsStatus = testResults.getStatus();
+            if (testResultsStatus.equals(TestResultsStatus.Failed) || testResultsStatus.equals(TestResultsStatus.Unresolved)) {
+                isPass = false;
+            }
+        }
+        if (null != driver) {
+            driver.quit();
+        }
+        Assertions.assertTrue(isPass, "Visual differences found.\n" + testResults);
+    }
+
     @Test
-    public void seleniumEyesTest() {
+    void seleniumEyesTest() {
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
         for(int stepNumber = 0; stepNumber < counter; stepNumber++) {
@@ -57,12 +85,5 @@ public class EyesTest {
         driver.findElement(By.id("clickButton"))
               .click();
         eyes.checkWindow("After click");
-    }
-
-    @AfterEach
-    public void afterMethod() {
-        driver.quit();
-        TestResults result = eyes.close(false);
-        System.out.println(result);
     }
 }

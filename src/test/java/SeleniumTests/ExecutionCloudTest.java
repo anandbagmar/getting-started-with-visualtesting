@@ -13,6 +13,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class ExecutionCloudTest {
 
     private static final String className = ExecutionCloudTest.class.getSimpleName();
@@ -29,6 +31,18 @@ public class ExecutionCloudTest {
         batch.setSequenceName(ExecutionCloudTest.class.getSimpleName());
     }
 
+    @AfterAll
+    public static void afterAll() {
+        if (null != visualGridRunner) {
+            System.out.println("Closing VisualGridRunner");
+            visualGridRunner.close();
+        }
+        if (null != batch) {
+            System.out.println("Mark batch completed");
+            batch.setCompleted(true);
+        }
+    }
+
     @BeforeEach
     public void beforeEach(TestInfo testInfo) {
         System.out.println("Running test: " + testInfo.getDisplayName());
@@ -43,7 +57,7 @@ public class ExecutionCloudTest {
         config.addBrowser(800, 600, BrowserType.CHROME);
         config.addBrowser(700, 500, BrowserType.FIREFOX);
 
-        // Add mobile emulation devices in Portrait mode
+        // Add mobile emulation devices in Portrait/Landscape mode
 //        config.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
 //        config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
 
@@ -57,22 +71,43 @@ public class ExecutionCloudTest {
         eyes.open(driver, className, testInfo.getDisplayName(), new RectangleSize(750, 750));
     }
 
+    @AfterEach
+    void tearDown(TestInfo testInfo) {
+        System.out.println("AfterEach: Test - " + testInfo.getDisplayName());
+        AtomicBoolean isPass = new AtomicBoolean(true);
+        if (null != eyes) {
+            eyes.closeAsync();
+            TestResultsSummary allTestResults = visualGridRunner.getAllTestResults(false);
+            allTestResults.forEach(testResultContainer -> {
+                System.out.printf("Test: %s\n%s%n", testResultContainer.getTestResults().getName(), testResultContainer);
+                TestResultsStatus testResultsStatus = testResultContainer.getTestResults().getStatus();
+                if (testResultsStatus.equals(TestResultsStatus.Failed) || testResultsStatus.equals(TestResultsStatus.Unresolved)) {
+                    isPass.set(false);
+                }
+            });
+        }
+        if (null != driver) {
+            driver.quit();
+        }
+        Assertions.assertTrue(isPass.get(), "Visual differences found.");
+    }
+
     private static boolean isInject() {
         return null == System.getenv("INJECT") ? false : Boolean.parseBoolean(System.getenv("INJECT"));
     }
 
     @Test
-    public void executionCloudTest() {
+    void executionCloudTest() {
         double counter = 1;
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
 
-        for(int stepNumber = 0; stepNumber < counter; stepNumber++) {
+        for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
             driver.findElement(By.xpath("//a[@href='?diff1']"))
-                  .click();
+                    .click();
             eyes.check("click-" + stepNumber, Target.window()
-                                                    .fully()
-                                                    .layout(By.xpath("//span[contains(@class,'random-number')]")));
+                    .fully()
+                    .layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
 
         if (isInject()) {
@@ -82,17 +117,9 @@ public class ExecutionCloudTest {
             ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clickButton\"");
         }
         driver.findElement(By.id("clickButton"))
-              .click();
+                .click();
         eyes.check("combo", Target.window()
-                                  .fully()
-                                  .layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
-    }
-
-    @AfterEach
-    public void tearDown() {
-        driver.quit();
-        eyes.closeAsync();
-        TestResultsSummary allTestResults = visualGridRunner.getAllTestResults(false);
-        System.out.println(allTestResults);
+                .fully()
+                .layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
     }
 }
