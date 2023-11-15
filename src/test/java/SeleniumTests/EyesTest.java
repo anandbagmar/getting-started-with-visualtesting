@@ -56,7 +56,6 @@ public class EyesTest {
         boolean isPass = true;
         TestResults testResults = null;
         if (null!=eyes) {
-            eyes.closeAsync();
             testResults = eyes.close(false);
             TestResultsStatus testResultsStatus = testResults.getStatus();
             if (testResultsStatus.equals(TestResultsStatus.Failed) || testResultsStatus.equals(TestResultsStatus.Unresolved)) {
