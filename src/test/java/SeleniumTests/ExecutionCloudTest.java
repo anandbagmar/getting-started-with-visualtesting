@@ -23,6 +23,7 @@ public class ExecutionCloudTest {
     private Eyes eyes;
     private WebDriver driver;
     private static final String userName = System.getProperty("user.name");
+    private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
 
     @BeforeAll
     public static void setUp() {
@@ -51,7 +52,7 @@ public class ExecutionCloudTest {
         eyes = new Eyes(visualGridRunner);
         Configuration config = new Configuration();
 
-        config.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
+        config.setApiKey(APPLITOOLS_API_KEY);
 
         // Add browsers with different viewports
         config.addBrowser(800, 600, BrowserType.CHROME);

@@ -17,6 +17,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Driver {
+    private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
+
     public static WebDriver create() {
         String browser = (null == System.getenv("BROWSER")) ? "chrome" : System.getenv("BROWSER");
         return createDriverFor(browser);
@@ -47,10 +49,12 @@ public class Driver {
 
     private static WebDriver createExecutionCloudRemoteDriver() {
         WebDriver innerDriver;
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setBrowserName("chrome");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        DesiredCapabilities capabilities = new DesiredCapabilities(chromeOptions);
+        capabilities.setCapability("applitools:apiKey", APPLITOOLS_API_KEY);
+
         try {
-            innerDriver = new RemoteWebDriver(new URL(Eyes.getExecutionCloudURL()), caps);
+            innerDriver = new RemoteWebDriver(new URL(Eyes.getExecutionCloudURL()), capabilities);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

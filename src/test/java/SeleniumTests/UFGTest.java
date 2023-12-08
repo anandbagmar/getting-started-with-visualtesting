@@ -22,6 +22,7 @@ public class UFGTest {
     private Eyes eyes;
     private WebDriver driver;
     private static final String userName = System.getProperty("user.name");
+    private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
 
     @BeforeAll
     public static void setUp() {
@@ -70,6 +71,7 @@ public class UFGTest {
         config.setMatchLevel(MatchLevel.STRICT);
         config.addProperty("username", userName);
         config.setIsDisabled(false);
+        config.setApiKey(APPLITOOLS_API_KEY);
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
 

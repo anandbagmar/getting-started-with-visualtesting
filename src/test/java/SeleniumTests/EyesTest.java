@@ -20,6 +20,7 @@ public class EyesTest {
     private WebDriver driver;
     private Eyes eyes;
     private static final String userName = System.getProperty("user.name");
+    private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
 
     @BeforeAll
     public static void beforeAll() {
@@ -45,7 +46,7 @@ public class EyesTest {
         eyes.setStitchMode(StitchMode.CSS);
         eyes.setMatchLevel(MatchLevel.LAYOUT2);
         eyes.setIsDisabled(false);
-        eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
+        eyes.setApiKey(APPLITOOLS_API_KEY);
         eyes.addProperty("username", userName);
         eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(800, 800));
     }
