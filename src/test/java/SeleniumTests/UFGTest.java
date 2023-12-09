@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utilities.Driver;
 
+import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static utilities.EyesResults.displayVisualValidationResults;
@@ -31,6 +32,7 @@ public class UFGTest {
         visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
         batch = new BatchInfo(userName + "-" + className);
         batch.setSequenceName(UFGTest.class.getSimpleName());
+        batch.addProperty("Repo", new File(System.getProperty("user.dir")).getName());
     }
 
     @AfterAll

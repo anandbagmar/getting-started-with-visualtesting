@@ -10,6 +10,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import utilities.Driver;
 
+import java.io.File;
+
 public class EyesTest {
 
     private static final String appName = EyesTest.class.getSimpleName();
@@ -23,6 +25,7 @@ public class EyesTest {
     @BeforeAll
     public static void beforeAll() {
         batch = new BatchInfo(userName + "-" + appName);
+        batch.addProperty("Repo", new File(System.getProperty("user.dir")).getName());
     }
 
     @AfterAll
