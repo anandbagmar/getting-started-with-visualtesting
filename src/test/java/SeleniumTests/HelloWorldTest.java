@@ -1,17 +1,13 @@
 package SeleniumTests;
 
-import Utilities.Driver;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import utilities.Driver;
 
-import static Utilities.Wait.waitFor;
+import static utilities.Wait.waitFor;
 
-public class HelloWorldTest {
+class HelloWorldTest {
 
     int numOfSteps = 2;
     private WebDriver driver;
@@ -23,7 +19,7 @@ public class HelloWorldTest {
     }
 
     @Test
-    public void seleniumBaseTest() throws InterruptedException {
+    void seleniumBaseTest() throws InterruptedException {
         driver.get("https://applitools.com/helloworld");
 
         String actualDefaultNumber = driver.findElement(By.xpath("//span[@class='primary']")).getText();

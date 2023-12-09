@@ -1,6 +1,7 @@
-package Utilities;
+package utilities;
 
 import com.applitools.eyes.selenium.Eyes;
+import exceptions.TestExecutionException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,10 +15,14 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class Driver {
     private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
+
+    private Driver() {
+    }
 
     public static WebDriver create() {
         String browser = (null == System.getenv("BROWSER")) ? "chrome" : System.getenv("BROWSER");
@@ -53,10 +58,11 @@ public class Driver {
         DesiredCapabilities capabilities = new DesiredCapabilities(chromeOptions);
         capabilities.setCapability("applitools:apiKey", APPLITOOLS_API_KEY);
 
+        String executionCloudURL = Eyes.getExecutionCloudURL();
         try {
-            innerDriver = new RemoteWebDriver(new URL(Eyes.getExecutionCloudURL()), capabilities);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            innerDriver = new RemoteWebDriver(new URI(executionCloudURL).toURL(), capabilities);
+        } catch (MalformedURLException | URISyntaxException e) {
+            throw new TestExecutionException("Error creating a new RemoteWebDriver for url: " + executionCloudURL, e);
         }
         return innerDriver;
     }

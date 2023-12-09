@@ -1,6 +1,5 @@
 package SeleniumTests;
 
-import Utilities.Driver;
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.BrowserType;
 import com.applitools.eyes.selenium.Configuration;
@@ -12,18 +11,21 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import utilities.Driver;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static utilities.EyesResults.displayVisualValidationResults;
 
 public class ExecutionCloudTest {
 
     private static final String className = ExecutionCloudTest.class.getSimpleName();
+    private static final String userName = System.getProperty("user.name");
+    private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static VisualGridRunner visualGridRunner;
     private static BatchInfo batch;
     private Eyes eyes;
     private WebDriver driver;
-    private static final String userName = System.getProperty("user.name");
-    private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
 
     @BeforeAll
     public static void setUp() {
@@ -42,6 +44,10 @@ public class ExecutionCloudTest {
             System.out.println("Mark batch completed");
             batch.setCompleted(true);
         }
+    }
+
+    private static boolean isInject() {
+        return null == System.getenv("INJECT") ? false : Boolean.parseBoolean(System.getenv("INJECT"));
     }
 
     @BeforeEach
@@ -81,6 +87,7 @@ public class ExecutionCloudTest {
             TestResultsSummary allTestResults = visualGridRunner.getAllTestResults(false);
             allTestResults.forEach(testResultContainer -> {
                 System.out.printf("Test: %s\n%s%n", testResultContainer.getTestResults().getName(), testResultContainer);
+                displayVisualValidationResults(testResultContainer.getTestResults());
                 TestResultsStatus testResultsStatus = testResultContainer.getTestResults().getStatus();
                 if (testResultsStatus.equals(TestResultsStatus.Failed) || testResultsStatus.equals(TestResultsStatus.Unresolved)) {
                     isPass.set(false);
@@ -91,10 +98,6 @@ public class ExecutionCloudTest {
             driver.quit();
         }
         Assertions.assertTrue(isPass.get(), "Visual differences found.");
-    }
-
-    private static boolean isInject() {
-        return null == System.getenv("INJECT") ? false : Boolean.parseBoolean(System.getenv("INJECT"));
     }
 
     @Test

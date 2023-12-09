@@ -1,6 +1,5 @@
 package SeleniumTests;
 
-import Utilities.Driver;
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.StitchMode;
@@ -9,18 +8,17 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-
-import java.util.concurrent.atomic.AtomicBoolean;
+import utilities.Driver;
 
 public class EyesTest {
 
     private static final String appName = EyesTest.class.getSimpleName();
+    private static final String userName = System.getProperty("user.name");
+    private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static BatchInfo batch;
     double counter = 1;
     private WebDriver driver;
     private Eyes eyes;
-    private static final String userName = System.getProperty("user.name");
-    private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
 
     @BeforeAll
     public static void beforeAll() {
@@ -29,7 +27,7 @@ public class EyesTest {
 
     @AfterAll
     public static void afterAll() {
-        if (null!=batch) {
+        if (null != batch) {
             batch.setCompleted(true);
         }
     }
@@ -56,7 +54,7 @@ public class EyesTest {
         System.out.println("AfterEach: Test - " + testInfo.getDisplayName());
         boolean isPass = true;
         TestResults testResults = null;
-        if (null!=eyes) {
+        if (null != eyes) {
             testResults = eyes.close(false);
             TestResultsStatus testResultsStatus = testResults.getStatus();
             if (testResultsStatus.equals(TestResultsStatus.Failed) || testResultsStatus.equals(TestResultsStatus.Unresolved)) {
@@ -73,17 +71,17 @@ public class EyesTest {
     void seleniumEyesTest() {
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
-        for(int stepNumber = 0; stepNumber < counter; stepNumber++) {
+        for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
             driver.findElement(linkText)
-                  .click();
+                    .click();
             eyes.checkWindow("click-" + stepNumber);
             eyes.check("click", Target.region(linkText)
-                                      .matchLevel(MatchLevel.IGNORE_COLORS));
+                    .matchLevel(MatchLevel.IGNORE_COLORS));
         }
         ((JavascriptExecutor) driver).executeScript("document.querySelector(\".section.button-section\").id=\"clickButton\" ");
         driver.findElement(By.id("clickButton"))
-              .click();
+                .click();
         eyes.checkWindow("After click");
     }
 }
