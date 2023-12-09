@@ -32,7 +32,7 @@ public class UFGTest {
         visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
         batch = new BatchInfo(userName + "-" + className);
         batch.setSequenceName(UFGTest.class.getSimpleName());
-        batch.addProperty("Repo", new File(System.getProperty("user.dir")).getName());
+        batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
     }
 
     @AfterAll

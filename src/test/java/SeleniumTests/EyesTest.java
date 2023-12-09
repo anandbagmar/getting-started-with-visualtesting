@@ -25,7 +25,7 @@ public class EyesTest {
     @BeforeAll
     public static void beforeAll() {
         batch = new BatchInfo(userName + "-" + appName);
-        batch.addProperty("Repo", new File(System.getProperty("user.dir")).getName());
+        batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
     }
 
     @AfterAll
