@@ -21,23 +21,23 @@ with
 
 You can run the test directly from any IDE, OR, you can run the test from the command line using the command:
 
-> mvn clean test -Dtest=<test_name>
+> ./mvnw clean test -Dtest=<test_name>
 
 ex: 
-> mvn clean test -Dtest=HelloWorldTest
+> ./mvnw clean test -Dtest=HelloWorldTest
 
-> mvn clean test -Dtest=EyesTest
+> ./mvnw clean test -Dtest=EyesTest
 
-> mvn clean test -Dtest=UFGTest
+> ./mvnw clean test -Dtest=UFGTest
 
-> INJECT=true mvn clean test -Dtest=ExecutionCloudTest
+> INJECT=true ./mvnw clean test -Dtest=ExecutionCloudTest
 
 Running with different browsers:
-> BROWSER=chrome mvn clean test -Dtest=<test_name>
+> BROWSER=chrome ./mvnw clean test -Dtest=<test_name>
 
-> BROWSER=firefox mvn clean test -Dtest=<test_name>
+> BROWSER=firefox ./mvnw clean test -Dtest=<test_name>
 
-> BROWSER=safari mvn clean test -Dtest=<test_name>
+> BROWSER=safari ./mvnw clean test -Dtest=<test_name>
 
 # Machine setup instructions
 Follow the below steps to get your machine setup ready. These steps are for Selenium-Java based Test Automation. If you are using any other combination, please contact anand.bagmar@essenceoftesting.com
@@ -45,7 +45,7 @@ Follow the below steps to get your machine setup ready. These steps are for Sele
 - Clone this git repo (https://github.com/anandbagmar/getting-started-with-visualtesting) on your laptop
 - Open the cloned project in your IDE as a Maven project. This will automatically download all the dependencies
 - Once all dependencies are downloaded, run the following command from command prompt / terminal window:
-  --> mvn clean test -Dtest=Selenium_HelloWorld_BaseTest
+  --> ./mvnw clean test -Dtest=Selenium_HelloWorld_BaseTest
 
 # Machine Connectivity Check
 
