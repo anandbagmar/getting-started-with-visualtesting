@@ -41,13 +41,14 @@ public class EyesTest {
         driver = Driver.createDriverFor("chrome");
 
         eyes = new Eyes();
+        eyes.setApiKey(APPLITOOLS_API_KEY);
         eyes.setBatch(batch);
         eyes.setLogHandler(new StdoutLogHandler(true));
         eyes.setForceFullPageScreenshot(false);
         eyes.setStitchMode(StitchMode.CSS);
         eyes.setMatchLevel(MatchLevel.LAYOUT2);
         eyes.setIsDisabled(false);
-        eyes.setApiKey(APPLITOOLS_API_KEY);
+        eyes.setSaveNewTests(false);
         eyes.addProperty("username", userName);
         eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(800, 800));
     }
@@ -78,13 +79,19 @@ public class EyesTest {
             By linkText = By.linkText("?diff1");
             driver.findElement(linkText)
                     .click();
-            eyes.checkWindow("click-" + stepNumber);
-            eyes.check("click", Target.region(linkText)
-                    .matchLevel(MatchLevel.IGNORE_COLORS));
+            eyes.check("linkText", Target.region(linkText)
+                    .matchLevel(MatchLevel.LAYOUT2));
+            eyes.check("click-" + stepNumber, Target.window()
+                    .fully()
+                    .layout(By.xpath("//span[contains(@class,'random-number')]")));
+
         }
         ((JavascriptExecutor) driver).executeScript("document.querySelector(\".section.button-section\").id=\"clickButton\" ");
         driver.findElement(By.id("clickButton"))
                 .click();
         eyes.checkWindow("After click");
+        eyes.check("combo", Target.window()
+                .fully()
+                .layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
     }
 }

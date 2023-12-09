@@ -61,6 +61,11 @@ public class ExecutionCloudTest {
         Configuration config = new Configuration();
 
         config.setApiKey(APPLITOOLS_API_KEY);
+        config.setBatch(batch);
+        config.setIsDisabled(false);
+        config.setSaveNewTests(false);
+        config.setMatchLevel(MatchLevel.STRICT);
+        config.addProperty("username", userName);
 
         // Add browsers with different viewports
         config.addBrowser(800, 600, BrowserType.CHROME);
@@ -70,10 +75,6 @@ public class ExecutionCloudTest {
 //        config.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
 //        config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
 
-        config.setBatch(batch);
-        config.setMatchLevel(MatchLevel.STRICT);
-        config.addProperty("username", userName);
-        config.setIsDisabled(false);
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
 
@@ -109,8 +110,11 @@ public class ExecutionCloudTest {
         eyes.checkWindow("home");
 
         for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
-            driver.findElement(By.xpath("//a[@href='?diff1']"))
+            By linkText = By.linkText("?diff1");
+            driver.findElement(linkText)
                     .click();
+            eyes.check("linkText", Target.region(linkText)
+                    .matchLevel(MatchLevel.LAYOUT2));
             eyes.check("click-" + stepNumber, Target.window()
                     .fully()
                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
@@ -124,6 +128,7 @@ public class ExecutionCloudTest {
         }
         driver.findElement(By.id("clickButton"))
                 .click();
+        eyes.checkWindow("After click");
         eyes.check("combo", Target.window()
                 .fully()
                 .layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));

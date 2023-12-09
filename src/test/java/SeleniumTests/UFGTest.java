@@ -55,7 +55,12 @@ public class UFGTest {
         eyes = new Eyes(visualGridRunner);
         Configuration config = new Configuration();
 
-        config.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
+        config.setApiKey(APPLITOOLS_API_KEY);
+        config.setBatch(batch);
+        config.setIsDisabled(false);
+        config.setSaveNewTests(false);
+        config.setMatchLevel(MatchLevel.STRICT);
+        config.addProperty("username", userName);
 
         // Add browsers with different viewports
         config.addBrowser(800, 600, BrowserType.CHROME);
@@ -71,11 +76,6 @@ public class UFGTest {
 //        config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
 //        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
 
-        config.setBatch(batch);
-        config.setMatchLevel(MatchLevel.STRICT);
-        config.addProperty("username", userName);
-        config.setIsDisabled(false);
-        config.setApiKey(APPLITOOLS_API_KEY);
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
 
@@ -114,6 +114,8 @@ public class UFGTest {
             By linkText = By.linkText("?diff1");
             driver.findElement(linkText)
                     .click();
+            eyes.check("linkText", Target.region(linkText)
+                    .matchLevel(MatchLevel.LAYOUT2));
             eyes.check("click-" + stepNumber, Target.window()
                     .fully()
                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
