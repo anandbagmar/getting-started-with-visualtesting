@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.applitools</groupId>
             <artifactId>eyes-selenium-java5</artifactId>
-            <version>5.66.0</version>
+            <version>5.66.2</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
