@@ -1,4 +1,4 @@
-package SeleniumTests;
+package selenium.tests;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
@@ -14,7 +14,7 @@ class HelloWorldTest {
 
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
-        System.out.println("Starting test: " + testInfo.getDisplayName());
+        System.out.println("BeforeMethod: Test: " + testInfo.getDisplayName());
         driver = Driver.createDriverFor("chrome");
     }
 
@@ -46,7 +46,8 @@ class HelloWorldTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    public void afterMethod(TestInfo testInfo) {
+        System.out.println("BeforeMethod: Test: " + testInfo.getDisplayName());
         driver.quit();
     }
 }

@@ -1,15 +1,14 @@
-package SeleniumTests;
+package selenium.tests;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.StitchMode;
 import com.applitools.eyes.selenium.fluent.Target;
-import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import utilities.Driver;
-
+import org.junit.jupiter.api.*;
 import java.io.File;
 
 public class EyesTest {
@@ -23,13 +22,13 @@ public class EyesTest {
     private Eyes eyes;
 
     @BeforeAll
-    public static void beforeAll() {
+    public static void beforeSuite() {
         batch = new BatchInfo(userName + "-" + appName);
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
     }
 
     @AfterAll
-    public static void afterAll() {
+    public static void afterSuite() {
         if (null != batch) {
             batch.setCompleted(true);
         }
@@ -37,7 +36,7 @@ public class EyesTest {
 
     @BeforeEach
     public void beforeMethod(TestInfo testInfo) {
-        System.out.println("Running test: " + testInfo.getDisplayName());
+        System.out.println("BeforeMethod: Test: " + testInfo.getDisplayName());
         driver = Driver.createDriverFor("chrome");
 
         eyes = new Eyes();
@@ -55,7 +54,7 @@ public class EyesTest {
 
     @AfterEach
     public void afterMethod(TestInfo testInfo) {
-        System.out.println("AfterEach: Test - " + testInfo.getDisplayName());
+        System.out.println("AfterMethod: Test: " + testInfo.getDisplayName());
         boolean isPass = true;
         TestResults testResults = null;
         if (null != eyes) {

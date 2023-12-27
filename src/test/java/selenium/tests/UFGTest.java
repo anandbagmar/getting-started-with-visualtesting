@@ -1,4 +1,4 @@
-package SeleniumTests;
+package selenium.tests;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.BrowserType;
@@ -9,7 +9,6 @@ import com.applitools.eyes.visualgrid.services.RunnerOptions;
 import com.applitools.eyes.visualgrid.services.VisualGridRunner;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import utilities.Driver;
 
@@ -18,9 +17,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static utilities.EyesResults.displayVisualValidationResults;
 
-public class ExecutionCloudTest {
+public class UFGTest {
 
-    private static final String className = ExecutionCloudTest.class.getSimpleName();
+    private static final String className = UFGTest.class.getSimpleName();
     private static final String userName = System.getProperty("user.name");
     private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static VisualGridRunner visualGridRunner;
@@ -29,15 +28,19 @@ public class ExecutionCloudTest {
     private WebDriver driver;
 
     @BeforeAll
-    public static void setUp() {
+    public static void beforeSuite() {
+        System.out.println("BeforeSuite");
         visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
+        visualGridRunner.setDontCloseBatches(true);
         batch = new BatchInfo(userName + "-" + className);
+        batch.setNotifyOnCompletion(false);
         batch.setSequenceName(ExecutionCloudTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
     }
 
     @AfterAll
-    public static void afterAll() {
+    public static void afterSuite() {
+        System.out.println("AfterSuite");
         if (null != visualGridRunner) {
             System.out.println("Closing VisualGridRunner");
             visualGridRunner.close();
@@ -48,14 +51,10 @@ public class ExecutionCloudTest {
         }
     }
 
-    private static boolean isInject() {
-        return null == System.getenv("INJECT") ? false : Boolean.parseBoolean(System.getenv("INJECT"));
-    }
-
     @BeforeEach
-    public void beforeEach(TestInfo testInfo) {
-        System.out.println("Running test: " + testInfo.getDisplayName());
-        driver = Driver.createDriverFor("self_healing");
+    public void beforeMethod(TestInfo testInfo) {
+        System.out.println("BeforeTest: Test: " + testInfo.getDisplayName());
+        driver = Driver.create();
 
         eyes = new Eyes(visualGridRunner);
         Configuration config = new Configuration();
@@ -70,10 +69,16 @@ public class ExecutionCloudTest {
         // Add browsers with different viewports
         config.addBrowser(800, 600, BrowserType.CHROME);
         config.addBrowser(700, 500, BrowserType.FIREFOX);
+        config.addBrowser(700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
+        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
+        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
+//        config.addBrowser(800, 600, BrowserType.SAFARI);
+//        config.addBrowser(800, 600, BrowserType.SAFARI_ONE_VERSION_BACK);
 
         // Add mobile emulation devices in Portrait/Landscape mode
-//        config.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
-//        config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
+//        config.addDeviceEmulation(DeviceName.iPad_Pro, ScreenOrientation.LANDSCAPE);
+//        config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
+//        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
 
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
@@ -82,8 +87,8 @@ public class ExecutionCloudTest {
     }
 
     @AfterEach
-    void tearDown(TestInfo testInfo) {
-        System.out.println("AfterEach: Test - " + testInfo.getDisplayName());
+    void afterMethod(TestInfo testInfo) {
+        System.out.println("AfterMethod: Test: " + testInfo.getDisplayName());
         AtomicBoolean isPass = new AtomicBoolean(true);
         if (null != eyes) {
             eyes.closeAsync();
@@ -104,7 +109,7 @@ public class ExecutionCloudTest {
     }
 
     @Test
-    void executionCloudTest() {
+    void seleniumUFGTest() {
         double counter = 1;
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
@@ -119,14 +124,8 @@ public class ExecutionCloudTest {
                     .fully()
                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
-
-        if (isInject()) {
-            System.out.println("Injecting a change");
-            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clkBtn1\"");
-        } else {
-            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clickButton\"");
-        }
-        driver.findElement(By.id("clickButton"))
+        By button = By.tagName("button");
+        driver.findElement(button)
                 .click();
         eyes.checkWindow("After click");
         eyes.check("combo", Target.window()
