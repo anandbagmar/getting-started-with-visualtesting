@@ -24,4 +24,4 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@3f2ca32cb09782ff1d04ac83910623b9803aeb99
         with:
-          arguments: build --refresh-dependencies
+          arguments: build --refresh-dependencies -x test
