@@ -1,31 +1,33 @@
+import org.codehaus.groovy.runtime.GStringImpl
 import java.text.SimpleDateFormat
-
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'maven-publish'
-apply plugin: 'eclipse'
-
-group 'com.anandbagmar'
-version '1.0-SNAPSHOT'
 
 buildscript {
     ext {
-        gradleVersionProperty = '8.5'
-        jsonSimpleVersion = '1.1.1'
+        gradleVersion = '8.5'
+        junitVersion = '5.10.1'
         applitoolsVersion = '5.66.3'
-        junitVersion = "5.10.1"
+    }
+    repositories {
+        mavenLocal()
     }
 }
 
-repositories {
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
+plugins {
+    id "java"
+    id "idea"
 }
+version '0.0.1'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+compileJava { options.encoding = "UTF-8" }
 
 dependencies {
     implementation "org.junit.jupiter:junit-jupiter:$project.junitVersion"
-    implementation 'com.applitools:eyes-selenium-java5:' + applitoolsVersion
-    implementation 'com.googlecode.json-simple:json-simple:' + jsonSimpleVersion
+    implementation "com.applitools:eyes-selenium-java5:$project.applitoolsVersion"
 }
 
 static def getCurrentDatestamp() {
@@ -40,7 +42,7 @@ static def getCurrentTimestamp() {
     return df.format(today)
 }
 
-project.ext.logDir = "${rootDir}/reports/" + getCurrentDatestamp() + "/" + getCurrentTimestamp()
+project.ext.logDir = "${rootDir}/reports/" + getCurrentDatestamp() + "/" + getCurrentTimestamp() as GStringImpl
 
 test {
     doFirst {
@@ -48,11 +50,10 @@ test {
         environment "APPLITOOLS_LOG_DIR", "${project.logDir}/applitools_logs"
     }
     useJUnitPlatform() {
-        reports.html.required = true
-        reports.html.outputLocation = file("${project.logDir}/html")
+        reports.html.destination(new File("${project.logDir}/html"))
 
-        reports.junitXml.required = true
-        reports.junitXml.outputLocation = file("${project.logDir}/junit")
+        reports.junitXml.outputPerTestCase(true)
+        reports.junitXml.destination(new File("${project.logDir}/junit"))
         testLogging {
             events "started", "passed", "skipped", "failed"
             // show standard out and standard error of the test JVM(s) on the console
@@ -63,14 +64,13 @@ test {
             showCauses = true
             showExceptions = true
         }
+        println("Log directory: ${project.logDir}")
         println("Debug mode: " + System.getProperty('debug', 'false'))
         // attach debugger
         if (System.getProperty('debug', 'false') == 'true') {
             println("In debug mode")
-            jvmArgs '-Xdebug', '-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,' +
-                    'address=*:5005'
+            jvmArgs '-Xdebug', '-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,' + 'address=*:5005'
         }
-
     }
 }
 
@@ -88,5 +88,5 @@ clean.doLast {
 }
 
 wrapper {
-    gradleVersion = project.gradleVersionProperty
+    gradleVersion = project.gradleVersion // version from gradle.properties
 }
