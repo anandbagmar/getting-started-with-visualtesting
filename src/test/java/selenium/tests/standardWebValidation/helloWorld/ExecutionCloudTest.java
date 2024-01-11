@@ -1,4 +1,4 @@
-package selenium.tests;
+package selenium.tests.standardWebValidation.helloWorld;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.BrowserType;
@@ -23,7 +23,7 @@ import static utilities.EyesResults.displayVisualValidationResults;
 
 public class ExecutionCloudTest {
 
-    private static final String className = ExecutionCloudTest.class.getSimpleName();
+    private static final String appName = ExecutionCloudTest.class.getSimpleName();
     private static final String userName = System.getProperty("user.name");
     private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static VisualGridRunner visualGridRunner;
@@ -36,10 +36,11 @@ public class ExecutionCloudTest {
         System.out.println("BeforeSuite");
         visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
         visualGridRunner.setDontCloseBatches(true);
-        batch = new BatchInfo(userName + "-" + className);
+        batch = new BatchInfo(userName + "-" + appName);
         batch.setNotifyOnCompletion(false);
         batch.setSequenceName(ExecutionCloudTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
+        batch.addProperty("APP_NAME", appName);
     }
 
     @AfterAll
@@ -85,7 +86,7 @@ public class ExecutionCloudTest {
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
 
-        eyes.open(driver, className, testInfo.getDisplayName(), new RectangleSize(750, 750));
+        eyes.open(driver, appName, testInfo.getDisplayName(), new RectangleSize(750, 750));
     }
 
     @AfterEach
@@ -202,7 +203,6 @@ public class ExecutionCloudTest {
             ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").innerText=\"2023\"");
             System.out.println("after change of 'Click me!' to '2023'");
         }
-//        driver.findElement(By.xpath("//button[contains(text(), '2023')]")).click();
         btnClick.click();
         eyes.check("After click", Target.window().layout());
         eyes.check("combo", Target.window()
