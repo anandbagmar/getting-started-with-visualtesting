@@ -5,7 +5,7 @@ buildscript {
     ext {
         gradleVersion = '8.5'
         junitVersion = '5.10.1'
-        applitoolsVersion = '5.66.4'
+        applitoolsVersion = '5.66.5'
     }
     repositories {
         mavenLocal()
