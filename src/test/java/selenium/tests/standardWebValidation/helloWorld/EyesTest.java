@@ -80,21 +80,13 @@ public class EyesTest {
         eyes.checkWindow("home");
         for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
-            driver.findElement(linkText)
-                    .click();
-            eyes.check("linkText", Target.region(linkText)
-                    .matchLevel(MatchLevel.LAYOUT2));
-            eyes.check("click-" + stepNumber, Target.window()
-                    .fully()
-                    .layout(By.xpath("//span[contains(@class,'random-number')]")));
-
+            driver.findElement(linkText).click();
+            eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
+            eyes.check("click-" + stepNumber, Target.window().fully().layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
         ((JavascriptExecutor) driver).executeScript("document.querySelector(\".section.button-section\").id=\"clickButton\" ");
-        driver.findElement(By.id("clickButton"))
-                .click();
+        driver.findElement(By.id("clickButton")).click();
         eyes.checkWindow("After click");
-        eyes.check("combo", Target.window()
-                .fully()
-                .layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
+        eyes.check("combo", Target.window().fully().layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
     }
 }
