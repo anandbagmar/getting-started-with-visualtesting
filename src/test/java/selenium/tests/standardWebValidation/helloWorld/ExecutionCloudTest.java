@@ -122,9 +122,8 @@ public class ExecutionCloudTest {
             By linkText = By.linkText("?diff1");
             driver.findElement(linkText).click();
             eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
-            eyes.check("click-" + stepNumber, Target.window()
-                    .fully()
-                    .layout(By.xpath("//span[contains(@class,'randomnumber')]")));
+            eyes.check("click-" + stepNumber, Target.window().fully()
+                    .layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
 
         if (isInject()) {
