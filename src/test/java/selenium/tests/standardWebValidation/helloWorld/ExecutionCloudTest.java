@@ -15,6 +15,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 import org.junit.jupiter.api.*;
+
 import java.io.File;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -119,13 +120,11 @@ public class ExecutionCloudTest {
 
         for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
-            driver.findElement(linkText)
-                    .click();
-            eyes.check("linkText", Target.region(linkText)
-                    .matchLevel(MatchLevel.LAYOUT2));
+            driver.findElement(linkText).click();
+            eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
             eyes.check("click-" + stepNumber, Target.window()
                     .fully()
-                    .layout(By.xpath("//span[contains(@class,'random-number')]")));
+                    .layout(By.xpath("//span[contains(@class,'randomnumber')]")));
         }
 
         if (isInject()) {
@@ -134,12 +133,12 @@ public class ExecutionCloudTest {
         } else {
             ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clickButton\"");
         }
-        driver.findElement(By.id("clickButton"))
-                .click();
+        driver.findElement(By.id("clickButton")).click();
         eyes.check("After click", Target.window().layout());
         eyes.check("combo", Target.window()
                 .fully()
-                .layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
+                .layout(By.xpath("//p[contains(text(), 'Applitools')]"),
+                        By.xpath("//span[contains(@class,'random-number')]")));
     }
 
     @Test
@@ -150,10 +149,8 @@ public class ExecutionCloudTest {
 
         for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
-            driver.findElement(linkText)
-                    .click();
-            eyes.check("linkText", Target.region(linkText)
-                    .matchLevel(MatchLevel.LAYOUT2));
+            driver.findElement(linkText).click();
+            eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
             eyes.check("click-" + stepNumber, Target.window()
                     .fully()
                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
@@ -171,7 +168,9 @@ public class ExecutionCloudTest {
         eyes.check("After click", Target.window().layout());
         eyes.check("combo", Target.window()
                 .fully()
-                .layout(By.xpath("//button[contains(text(), newInnerText)]"), By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
+                .layout(By.xpath("//button[contains(text(), newInnerText)]"),
+                        By.xpath("//p[contains(text(), 'Applitools')]"),
+                        By.xpath("//span[contains(@class,'random-number')]")));
     }
 
     @FindBy(xpath = "//button[contains(text(),'Click me!')]")
@@ -186,10 +185,8 @@ public class ExecutionCloudTest {
 
         for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
             By linkText = By.linkText("?diff1");
-            driver.findElement(linkText)
-                    .click();
-            eyes.check("linkText", Target.region(linkText)
-                    .matchLevel(MatchLevel.LAYOUT2));
+            driver.findElement(linkText).click();
+            eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
             eyes.check("click-" + stepNumber, Target.window()
                     .fully()
                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
@@ -207,6 +204,8 @@ public class ExecutionCloudTest {
         eyes.check("After click", Target.window().layout());
         eyes.check("combo", Target.window()
                 .fully()
-                .layout(By.xpath("//button[contains(text(), newInnerText)]"), By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
+                .layout(By.xpath("//button[contains(text(), newInnerText)]"),
+                        By.xpath("//p[contains(text(), 'Applitools')]"),
+                        By.xpath("//span[contains(@class,'random-number')]")));
     }
 }
