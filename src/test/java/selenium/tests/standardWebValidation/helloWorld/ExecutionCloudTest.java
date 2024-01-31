@@ -118,10 +118,11 @@ public class ExecutionCloudTest {
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
 
+        By linkText = By.linkText("?diff1");
+        eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
+
         for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
-            By linkText = By.linkText("?diff1");
             driver.findElement(linkText).click();
-            eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
             eyes.check("click-" + stepNumber, Target.window().fully()
                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
@@ -133,7 +134,6 @@ public class ExecutionCloudTest {
             ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clickButton\"");
         }
         driver.findElement(By.id("clickButton")).click();
-        eyes.check("After click", Target.window().layout());
         eyes.check("combo", Target.window()
                 .fully()
                 .layout(By.xpath("//p[contains(text(), 'Applitools')]"),
@@ -146,12 +146,12 @@ public class ExecutionCloudTest {
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
 
+        By linkText = By.linkText("?diff2");
+        eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
+
         for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
-            By linkText = By.linkText("?diff1");
             driver.findElement(linkText).click();
-            eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
-            eyes.check("click-" + stepNumber, Target.window()
-                    .fully()
+            eyes.check("click-" + stepNumber, Target.window().fully()
                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
 
@@ -164,7 +164,6 @@ public class ExecutionCloudTest {
             System.out.println("after change of 'Click me!' to '2023'");
         }
         driver.findElement(By.xpath("//button[contains(text(), '2023')]")).click();
-        eyes.check("After click", Target.window().layout());
         eyes.check("combo", Target.window()
                 .fully()
                 .layout(By.xpath("//button[contains(text(), newInnerText)]"),
@@ -182,10 +181,11 @@ public class ExecutionCloudTest {
         driver.get("https://applitools.com/helloworld");
         eyes.checkWindow("home");
 
+        By linkText = By.linkText("?diff2");
+        eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.STRICT));
+
         for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
-            By linkText = By.linkText("?diff1");
             driver.findElement(linkText).click();
-            eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
             eyes.check("click-" + stepNumber, Target.window()
                     .fully()
                     .layout(By.xpath("//span[contains(@class,'random-number')]")));
