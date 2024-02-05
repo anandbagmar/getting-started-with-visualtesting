@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 buildscript {
     ext {
         gradleVersion = '8.5'
-        junitVersion = '5.10.1'
+        junitVersion = '5.10.2'
         applitoolsVersion = '5.66.6'
     }
     repositories {
