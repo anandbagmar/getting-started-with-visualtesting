@@ -5,7 +5,7 @@ buildscript {
     ext {
         gradleVersion = '8.6'
         junitVersion = '5.10.2'
-        applitoolsVersion = '5.66.6'
+        applitoolsVersion = '5.66.7'
     }
     repositories {
         mavenLocal()
@@ -32,7 +32,13 @@ dependencies {
 
 static def getCurrentDatestamp() {
     Date today = new Date()
-    SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy")
+    SimpleDateFormat df = new SimpleDateFormat("dd-MMM")
+    return df.format(today)
+}
+
+static def getMonth() {
+    Date today = new Date()
+    SimpleDateFormat df = new SimpleDateFormat("MMM-yyyy")
     return df.format(today)
 }
 
@@ -42,7 +48,7 @@ static def getCurrentTimestamp() {
     return df.format(today)
 }
 
-project.ext.logDir = "${rootDir}/reports/" + getCurrentDatestamp() + "/" + getCurrentTimestamp() as GStringImpl
+project.ext.logDir = "${rootDir}/reports/" + getMonth() + "/" + getCurrentDatestamp() + "/" + getCurrentTimestamp() as GStringImpl
 
 test {
     doFirst {

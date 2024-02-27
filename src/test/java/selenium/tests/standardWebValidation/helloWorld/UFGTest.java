@@ -69,8 +69,8 @@ public class UFGTest {
         config.setMatchLevel(MatchLevel.STRICT);
         config.addProperty("username", userName);
         // Add browsers with different viewports
-        config.addBrowser(800, 600, BrowserType.CHROME);
-        config.addBrowser(700, 500, BrowserType.FIREFOX);
+        config.addBrowser(1400, 1000, BrowserType.CHROME);
+        config.addBrowser(1200, 1024, BrowserType.FIREFOX);
 //        config.addBrowser(700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
 //        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
 //        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
