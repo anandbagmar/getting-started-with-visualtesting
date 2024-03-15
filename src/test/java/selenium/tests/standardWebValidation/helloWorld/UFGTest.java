@@ -11,6 +11,7 @@ import com.applitools.eyes.visualgrid.services.RunnerOptions;
 import com.applitools.eyes.visualgrid.services.VisualGridRunner;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import utilities.Driver;
 
@@ -71,16 +72,16 @@ public class UFGTest {
         // Add browsers with different viewports
         config.addBrowser(1400, 1000, BrowserType.CHROME);
         config.addBrowser(1200, 1024, BrowserType.FIREFOX);
-//        config.addBrowser(700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
-//        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
-//        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
-//        config.addBrowser(800, 600, BrowserType.SAFARI);
-//        config.addBrowser(800, 600, BrowserType.SAFARI_ONE_VERSION_BACK);
+        config.addBrowser(700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
+        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
+        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
+        config.addBrowser(800, 600, BrowserType.SAFARI);
+        config.addBrowser(800, 600, BrowserType.SAFARI_ONE_VERSION_BACK);
 
         // Add mobile emulation devices in Portrait/Landscape mode
         config.addDeviceEmulation(DeviceName.iPad_Pro, ScreenOrientation.LANDSCAPE);
-//        config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
-//        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
 
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
@@ -110,6 +111,10 @@ public class UFGTest {
         Assertions.assertTrue(isPass.get(), "Visual differences found.");
     }
 
+    private static boolean isInject() {
+        return null == System.getenv("INJECT") ? false : Boolean.parseBoolean(System.getenv("INJECT"));
+    }
+
     @Test
     void seleniumUFGTest() {
         double counter = 1;
@@ -122,8 +127,13 @@ public class UFGTest {
             eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
             eyes.check("click-" + stepNumber, Target.window().fully().layout(By.xpath("//span[contains(@class,'random-number')]")));
         }
-        By button = By.tagName("button");
-        driver.findElement(button).click();
+        if (isInject()) {
+            System.out.println("Injecting a change");
+            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clkBtn1\"");
+        } else {
+            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clickButton\"");
+        }
+        driver.findElement(By.id("clickButton")).click();
         eyes.checkWindow("After click");
         eyes.check("combo", Target.window().fully().layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
     }
