@@ -6,6 +6,8 @@ buildscript {
         gradleVersion = '8.7'
         junitVersion = '5.10.2'
         applitoolsVersion = '5.66.7'
+        applitoolsImagesVersion = '5.68.1'
+        pdfBoxVersion = '3.0.2'
     }
     repositories {
         mavenLocal()
@@ -28,6 +30,10 @@ compileJava { options.encoding = "UTF-8" }
 dependencies {
     implementation "org.junit.jupiter:junit-jupiter:$project.junitVersion"
     implementation "com.applitools:eyes-selenium-java5:$project.applitoolsVersion"
+    implementation("com.applitools:eyes-images-java5:$project.applitoolsImagesVersion") {
+        exclude group: 'com.applitools', module: 'eyes-sdk-core-java5'
+    }
+    implementation "org.apache.pdfbox:pdfbox:$project.pdfBoxVersion"
 }
 
 static def getCurrentDatestamp() {
