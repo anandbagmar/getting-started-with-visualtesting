@@ -41,7 +41,15 @@ Running with different browsers:
 
 # Running the PDF test
 
-> ./gradlew clean test --test PDFJavaTest
+## Java
+
+> ./gradlew clean test --tests PDFJavaTest
+
+## JavaScript
+
+> npm install
+
+> npm test
 
 # Machine setup instructions
 Follow the below steps to get your machine setup ready. These steps are for Selenium-Java based Test Automation. If you are using any other combination, please contact anand.bagmar@essenceoftesting.com

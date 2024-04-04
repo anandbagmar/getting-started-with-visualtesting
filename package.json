@@ -1,0 +1,26 @@
+{
+  "name": "getting-started-with-visual-testing",
+  "version": "1.0.0",
+  "description": "This repo contains various java tests with Applitools integrated for Visual Testing. See this repo for Appium-java tests with Applitools - https://github.com/anandbagmar/getting-started-with-mobile-visualtesting",
+  "main": "index.js",
+  "repository": "https://github.com/anandbagmar/getting-started-with-visualtesting",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "mocha ./src/test/js/tests/pdf2pngTest.js --timeout 300000"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@applitools/eyes-images": "^4.27.1",
+    "canvas": "^2.11.2",
+    "chai": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "gulp": "^5.0.0",
+    "mocha": "10.4.0",
+    "node-fetch": "3.3.2",
+    "pdfjs-dist": "^4.0.379"
+  }
+}

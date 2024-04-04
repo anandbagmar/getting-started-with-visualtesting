@@ -30,3 +30,5 @@ build/
 reports/
 *.err
 pocs/
+node_modules/
+*.png
