@@ -49,7 +49,7 @@ Running with different browsers:
 
 > npm install
 
-> npm test
+> npm run pdftest
 
 # Machine setup instructions
 Follow the below steps to get your machine setup ready. These steps are for Selenium-Java based Test Automation. If you are using any other combination, please contact anand.bagmar@essenceoftesting.com

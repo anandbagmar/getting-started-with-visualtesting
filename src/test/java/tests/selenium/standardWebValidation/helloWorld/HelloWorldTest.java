@@ -1,4 +1,4 @@
-package selenium.tests.standardWebValidation.helloWorld;
+package tests.selenium.tests.standardWebValidation.helloWorld;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;

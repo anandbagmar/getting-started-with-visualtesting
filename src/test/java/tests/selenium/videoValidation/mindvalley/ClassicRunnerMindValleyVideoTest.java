@@ -1,4 +1,4 @@
-package selenium.tests.gameValidation;
+package tests.selenium.tests.videoValidation.mindvalley;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.ClassicRunner;
@@ -6,12 +6,7 @@ import com.applitools.eyes.selenium.Configuration;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.fluent.Target;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import selenium.tests.standardWebValidation.helloWorld.ExecutionCloudTest;
+import org.openqa.selenium.*;
 import utilities.Driver;
 
 import java.io.File;
@@ -20,9 +15,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static utilities.EyesResults.displayVisualValidationResults;
 import static utilities.Wait.waitFor;
 
-public class ClassicRunnerGameTest {
+public class ClassicRunnerMindValleyVideoTest {
 
-    private static final String appName = ClassicRunnerGameTest.class.getSimpleName();
+    private static final String appName = ClassicRunnerMindValleyVideoTest.class.getSimpleName();
     private static final String userName = System.getProperty("user.name");
     private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static EyesRunner visualGridRunner;
@@ -37,7 +32,7 @@ public class ClassicRunnerGameTest {
         visualGridRunner.setDontCloseBatches(true);
         batch = new BatchInfo(userName + "-" + appName);
         batch.setNotifyOnCompletion(false);
-        batch.setSequenceName(ExecutionCloudTest.class.getSimpleName());
+        batch.setSequenceName(ClassicRunnerMindValleyVideoTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
         batch.addProperty("APP_NAME", appName);
     }
@@ -69,7 +64,6 @@ public class ClassicRunnerGameTest {
         config.setSaveNewTests(false);
         config.setMatchLevel(MatchLevel.STRICT);
         config.addProperty("username", userName);
-        config.setAccessibilityValidation(new AccessibilitySettings(AccessibilityLevel.AAA, AccessibilityGuidelinesVersion.WCAG_2_1));
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
 
@@ -99,38 +93,62 @@ public class ClassicRunnerGameTest {
     }
 
     @Test
-    void gameTest() {
-        driver.get("https://openfairy.playco.games/");
-        waitFor(15);
-        eyes.check("1", Target.window().fully());
-        WebElement canvasElement = driver.findElement(By.id("pixi-canvas")); // Replace with the actual ID or other locator
-
-        Dimension size = driver.manage().window().getSize();
-        System.out.println("size: " + size);
-
-        // Create an instance of the Actions class
-        Actions actions = new Actions(driver);
-
-        actions.moveToLocation(200, 950).click().perform();
-        waitFor(10);
-        eyes.checkWindow("2");
-        actions.moveToLocation(250, 900).click().perform();
-        waitFor(10);
-        eyes.checkWindow("3");
-        actions.moveToLocation(250, 950).click().perform();
-        waitFor(10);
-        eyes.checkWindow("4");
-        actions.moveToLocation(600, 400).click().perform();
-        waitFor(15);
-        eyes.checkWindow("5");;
-        driver.findElement(By.xpath("//input")).sendKeys("abc");
+    void playVideoTest() {
+        driver.get("https://login.mindvalley.com/login");
         waitFor(2);
-        eyes.checkWindow("6");
-        actions.moveToLocation(600, 900).click().perform();
-        waitFor(15);
-        eyes.checkWindow("7");
-        actions.moveToLocation(400, 800).click().perform();
-        waitFor(10);
-        eyes.checkWindow("8");
+        driver.findElement(By.id("login-tab")).click();
+        waitFor(1);
+        eyes.check("Login", Target.window().fully(false));
+
+        driver.findElement(By.id("login-email")).sendKeys(System.getenv("MINDVALLEY_EMAIL"));
+        driver.findElement(By.id("login-password")).sendKeys(System.getenv("MINDVALLEY_PASSWORD"));
+        eyes.check("Login creds entered", Target.window().fully(false));
+
+        driver.findElement(By.id("btn-login")).click();
+        waitFor(4);
+        eyes.check("After login", Target.window().fully(false).layout());
+
+        try {
+            WebElement gotItPopup = driver.findElement(By.xpath("//span[contains(text(), 'Got it')]"));
+            gotItPopup.click();
+            waitFor(2);
+        } catch (NoSuchElementException e) {
+            System.out.println("pop up is not shown");
+        }
+
+        driver.findElement(By.xpath("//div[@x-show='showVideoOverlay']//span")).click();
+        waitFor(2);
+
+        String videoLocation = "document.querySelector('video')";
+
+        for (WebElement video : driver.findElements(By.tagName("video"))) {
+            // Pause video and get details
+            ((JavascriptExecutor) driver).executeScript(videoLocation + ".pause();");
+            double videoLength = (double) ((JavascriptExecutor) driver).executeScript("return " + videoLocation + ".duration;");
+            System.out.println("Video length: " + videoLength);
+
+            double duration= 0.15;
+            String state = "First Frame";
+            System.out.println("Set to " + duration*100 + "% duration " + state);
+            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength * duration + ";");
+            waitFor(2);
+            eyes.check(state + "-viewport", Target.window().fully(false).layout());
+            eyes.checkRegion(By.cssSelector("video"), state + "-css");
+
+            state = "Middle Frame";
+            System.out.println("Set to " + state);
+            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength / 2 + ";");
+            waitFor(2);
+            eyes.check(state + "-viewport", Target.window().fully(false).layout());
+            eyes.checkRegion(By.cssSelector("video"), state + "-css");
+
+            state = "Last Frame";
+            duration= 0.95;
+            System.out.println("Set to " + duration*100 + "% duration " + state);
+            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength * duration + ";");
+            waitFor(2);
+            eyes.check(state + "-viewport", Target.window().fully(false).layout());
+            eyes.checkRegion(By.cssSelector("video"), state + "-css");
+        }
     }
 }

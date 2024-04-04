@@ -1,14 +1,11 @@
-package selenium.tests.gameValidation;
+package tests.selenium.gameValidation;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.StitchMode;
-import com.applitools.eyes.selenium.fluent.Target;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import utilities.Driver;
 

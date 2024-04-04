@@ -47,6 +47,22 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.applitools</groupId>
+            <artifactId>eyes-images-java5</artifactId>
+            <version>5.68.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.applitools</groupId>
+                    <artifactId>eyes-sdk-core-java5</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.2</version>
+        </dependency>
     </dependencies>
 
 </project>

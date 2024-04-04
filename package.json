@@ -8,7 +8,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "mocha ./src/test/js/tests/pdf2pngTest.js --timeout 300000"
+    "pdftest": "mocha ./src/test/js/tests/pdf/pdf2pngTest.js --timeout 300000"
   },
   "author": "",
   "license": "ISC",

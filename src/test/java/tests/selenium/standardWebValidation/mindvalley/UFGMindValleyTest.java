@@ -1,10 +1,12 @@
-package selenium.tests.videoValidation.mindvalley;
+package tests.selenium.tests.standardWebValidation.mindvalley;
 
 import com.applitools.eyes.*;
-import com.applitools.eyes.selenium.ClassicRunner;
+import com.applitools.eyes.selenium.BrowserType;
 import com.applitools.eyes.selenium.Configuration;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.fluent.Target;
+import com.applitools.eyes.visualgrid.services.RunnerOptions;
+import com.applitools.eyes.visualgrid.services.VisualGridRunner;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import utilities.Driver;
@@ -15,9 +17,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static utilities.EyesResults.displayVisualValidationResults;
 import static utilities.Wait.waitFor;
 
-public class ClassicRunnerMindValleyVideoTest {
+public class UFGMindValleyTest {
 
-    private static final String appName = ClassicRunnerMindValleyVideoTest.class.getSimpleName();
+    private static final String appName = UFGMindValleyTest.class.getSimpleName();
     private static final String userName = System.getProperty("user.name");
     private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static EyesRunner visualGridRunner;
@@ -28,11 +30,11 @@ public class ClassicRunnerMindValleyVideoTest {
     @BeforeAll
     public static void beforeSuite() {
         System.out.println("BeforeSuite");
-        visualGridRunner = new ClassicRunner();
+        visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
         visualGridRunner.setDontCloseBatches(true);
         batch = new BatchInfo(userName + "-" + appName);
         batch.setNotifyOnCompletion(false);
-        batch.setSequenceName(ClassicRunnerMindValleyVideoTest.class.getSimpleName());
+        batch.setSequenceName(UFGMindValleyTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
         batch.addProperty("APP_NAME", appName);
     }
@@ -64,6 +66,20 @@ public class ClassicRunnerMindValleyVideoTest {
         config.setSaveNewTests(false);
         config.setMatchLevel(MatchLevel.STRICT);
         config.addProperty("username", userName);
+
+        // Add browsers with different viewports
+        config.addBrowser(1200, 1080, BrowserType.CHROME);
+        config.addBrowser(1080, 1080, BrowserType.FIREFOX);
+//        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
+//        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
+//        config.addBrowser(800, 600, BrowserType.SAFARI);
+//        config.addBrowser(800, 600, BrowserType.SAFARI_ONE_VERSION_BACK);
+
+        // Add mobile emulation devices in Portrait/Landscape mode
+//        config.addDeviceEmulation(DeviceName.iPad_Pro, ScreenOrientation.LANDSCAPE);
+//        config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
+//        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
+
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
 
@@ -93,62 +109,30 @@ public class ClassicRunnerMindValleyVideoTest {
     }
 
     @Test
-    void playVideoTest() {
+    void userAlreadyExistsTest() {
         driver.get("https://login.mindvalley.com/login");
         waitFor(2);
-        driver.findElement(By.id("login-tab")).click();
-        waitFor(1);
         eyes.check("Login", Target.window().fully(false));
 
-        driver.findElement(By.id("login-email")).sendKeys(System.getenv("MINDVALLEY_EMAIL"));
-        driver.findElement(By.id("login-password")).sendKeys(System.getenv("MINDVALLEY_PASSWORD"));
-        eyes.check("Login creds entered", Target.window().fully(false));
-
-        driver.findElement(By.id("btn-login")).click();
-        waitFor(4);
-        eyes.check("After login", Target.window().fully(false).layout());
-
-        try {
-            WebElement gotItPopup = driver.findElement(By.xpath("//span[contains(text(), 'Got it')]"));
-            gotItPopup.click();
-            waitFor(2);
-        } catch (NoSuchElementException e) {
-            System.out.println("pop up is not shown");
-        }
-
-        driver.findElement(By.xpath("//div[@x-show='showVideoOverlay']//span")).click();
+        driver.findElement(By.xpath("//a[contains(text(), 'Create an account')]")).click();
         waitFor(2);
+        eyes.checkWindow("Find your life mystery score");
 
-        String videoLocation = "document.querySelector('video')";
+        driver.findElement(By.id("skipbtn")).click();
+        waitFor(2);
+        eyes.checkWindow("Create account or login");
 
-        for (WebElement video : driver.findElements(By.tagName("video"))) {
-            // Pause video and get details
-            ((JavascriptExecutor) driver).executeScript(videoLocation + ".pause();");
-            double videoLength = (double) ((JavascriptExecutor) driver).executeScript("return " + videoLocation + ".duration;");
-            System.out.println("Video length: " + videoLength);
+        driver.findElement(By.id("create_account-tab")).click();
+        eyes.checkWindow("Create account");
 
-            double duration= 0.15;
-            String state = "First Frame";
-            System.out.println("Set to " + duration*100 + "% duration " + state);
-            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength * duration + ";");
-            waitFor(2);
-            eyes.check(state + "-viewport", Target.window().fully(false).layout());
-            eyes.checkRegion(By.cssSelector("video"), state + "-css");
+        driver.findElement(By.id("create_account-first-name")).sendKeys("Applitools one");
+        driver.findElement(By.id("create_account-last-name")).sendKeys("Demo");
+        driver.findElement(By.id("create_account-email")).sendKeys(System.getenv("MINDVALLEY_EMAIL"));
+        driver.findElement(By.id("create_account-password")).sendKeys(System.getenv("MINDVALLEY_PASSWORD"));
+        eyes.checkWindow("New user details filled");
 
-            state = "Middle Frame";
-            System.out.println("Set to " + state);
-            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength / 2 + ";");
-            waitFor(2);
-            eyes.check(state + "-viewport", Target.window().fully(false).layout());
-            eyes.checkRegion(By.cssSelector("video"), state + "-css");
-
-            state = "Last Frame";
-            duration= 0.95;
-            System.out.println("Set to " + duration*100 + "% duration " + state);
-            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength * duration + ";");
-            waitFor(2);
-            eyes.check(state + "-viewport", Target.window().fully(false).layout());
-            eyes.checkRegion(By.cssSelector("video"), state + "-css");
-        }
+        driver.findElement(By.id("btn-create_account")).click();
+        waitFor(2);
+        eyes.checkWindow("User already exists");
     }
 }

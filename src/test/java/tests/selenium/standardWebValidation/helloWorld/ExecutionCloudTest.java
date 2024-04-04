@@ -1,4 +1,4 @@
-package selenium.tests.standardWebValidation.helloWorld;
+package tests.selenium.tests.standardWebValidation.helloWorld;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.BrowserType;

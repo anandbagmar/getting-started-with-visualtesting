@@ -1,4 +1,4 @@
-package pdf.tests;
+package tests.pdf;
 
 import com.applitools.eyes.BatchInfo;
 import com.applitools.eyes.TestResultsSummary;

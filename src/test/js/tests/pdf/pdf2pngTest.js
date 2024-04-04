@@ -32,23 +32,26 @@ describe('PDF Rendering Test', function() {
         await createDirectory(directoryPath);
 
         const pdfPath = './src/test/resources/sample-demo.pdf'; // Replace with the path to your PDF file
+        console.log(`Validate pdf: ${pdfPath}`);
+
         const listOfSavedImageFileNames = await renderPDFToImageFiles(pdfPath, `${directoryPath}`);
 
         // Assert that images is an array
-        assert(Array.isArray(listOfSavedImageFileNames), 'Images should be an array');
+        assert(Array.isArray(listOfSavedImageFileNames), 'listOfSavedImageFileNames should be an array');
 
         // Assert that images array is not empty
-        assert(listOfSavedImageFileNames.length > 0, 'Images array should not be empty');
+        assert(listOfSavedImageFileNames.length > 0, 'listOfSavedImageFileNames array should not be empty');
 
         // Iterate over the images array
         // images.forEach((image, index) => {
         for (let pageNum = 0; pageNum < listOfSavedImageFileNames.length; pageNum++) {
-            console.log(`Processing file: ${pageNum+1}: ${listOfSavedImageFileNames[pageNum]}`)
+            console.log(`Validating file: ${pageNum+1}: ${listOfSavedImageFileNames[pageNum]}`)
             await eyes.check(`page-${pageNum+1}`, Target.image(`${listOfSavedImageFileNames[pageNum]}`));
         }
 
         console.log('Finished rendering and inspecting PDF images.');
-        await eyes.closeAsync();
+        let testResults = await eyes.close();
+        console.log(`Eyes validation results: ${testResults}`)
     });
 
     afterEach(async () => {

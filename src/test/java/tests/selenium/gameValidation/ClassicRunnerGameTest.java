@@ -1,4 +1,4 @@
-package selenium.tests.videoValidation.youtube;
+package tests.selenium.gameValidation;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.ClassicRunner;
@@ -7,10 +7,10 @@ import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.fluent.Target;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import selenium.tests.standardWebValidation.helloWorld.ExecutionCloudTest;
+import org.openqa.selenium.interactions.Actions;
 import utilities.Driver;
 
 import java.io.File;
@@ -19,9 +19,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static utilities.EyesResults.displayVisualValidationResults;
 import static utilities.Wait.waitFor;
 
-public class ClassicRunnerYouTubeTest {
+public class ClassicRunnerGameTest {
 
-    private static final String appName = ClassicRunnerYouTubeTest.class.getSimpleName();
+    private static final String appName = ClassicRunnerGameTest.class.getSimpleName();
     private static final String userName = System.getProperty("user.name");
     private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static EyesRunner visualGridRunner;
@@ -36,7 +36,7 @@ public class ClassicRunnerYouTubeTest {
         visualGridRunner.setDontCloseBatches(true);
         batch = new BatchInfo(userName + "-" + appName);
         batch.setNotifyOnCompletion(false);
-        batch.setSequenceName(ExecutionCloudTest.class.getSimpleName());
+        batch.setSequenceName(tests.selenium.tests.standardWebValidation.helloWorld.ExecutionCloudTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
         batch.addProperty("APP_NAME", appName);
     }
@@ -69,7 +69,6 @@ public class ClassicRunnerYouTubeTest {
         config.setMatchLevel(MatchLevel.STRICT);
         config.addProperty("username", userName);
         config.setAccessibilityValidation(new AccessibilitySettings(AccessibilityLevel.AAA, AccessibilityGuidelinesVersion.WCAG_2_1));
-
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
 
@@ -99,42 +98,38 @@ public class ClassicRunnerYouTubeTest {
     }
 
     @Test
-    public void visualValidateVideos() {
-        driver.get("https://youtu.be/bWtiTkrOUw8?si=DCkYc8R8oWav5NZy&t=211");
-        waitFor(3);
-        String videoLocation = "document.querySelector('video')";
+    void gameTest() {
+        driver.get("https://openfairy.playco.games/");
+        waitFor(15);
+        eyes.check("1", Target.window().fully());
+        WebElement canvasElement = driver.findElement(By.id("pixi-canvas")); // Replace with the actual ID or other locator
 
-        for (WebElement video : driver.findElements(By.tagName("video"))) {
-            // Pause video and get details
-            ((JavascriptExecutor) driver).executeScript(videoLocation + ".pause();");
-            double videoLength = (double) ((JavascriptExecutor) driver).executeScript("return " + videoLocation + ".duration;");
-            System.out.println("Video length: " + videoLength);
+        Dimension size = driver.manage().window().getSize();
+        System.out.println("size: " + size);
 
-            double duration= 0.15;
-            String state = "First Frame";
-            System.out.println("Set to " + duration*100 + "% duration " + state);
-            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength * duration + ";");
-            waitFor(2);
-//            eyes.checkWindow(state + "-full window");
-            eyes.check(state + "-viewport", Target.window().fully(false));
-            eyes.checkRegion(By.cssSelector("video"), state + "-css");
+        // Create an instance of the Actions class
+        Actions actions = new Actions(driver);
 
-            state = "Middle Frame";
-            System.out.println("Set to " + state);
-            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength / 2 + ";");
-            waitFor(2);
-//            eyes.checkWindow(state + "-full window");
-            eyes.check(state + "-viewport", Target.window().fully(false));
-            eyes.checkRegion(By.cssSelector("video"), state + "-css");
-
-            state = "Last Frame";
-            duration= 0.95;
-            System.out.println("Set to " + duration*100 + "% duration " + state);
-            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength * duration + ";");
-            waitFor(2);
-//            eyes.checkWindow(state + "-full window");
-            eyes.check(state + "-viewport", Target.window().fully(false));
-            eyes.checkRegion(By.cssSelector("video"), state + "-css");
-        }
+        actions.moveToLocation(200, 950).click().perform();
+        waitFor(10);
+        eyes.checkWindow("2");
+        actions.moveToLocation(250, 900).click().perform();
+        waitFor(10);
+        eyes.checkWindow("3");
+        actions.moveToLocation(250, 950).click().perform();
+        waitFor(10);
+        eyes.checkWindow("4");
+        actions.moveToLocation(600, 400).click().perform();
+        waitFor(15);
+        eyes.checkWindow("5");;
+        driver.findElement(By.xpath("//input")).sendKeys("abc");
+        waitFor(2);
+        eyes.checkWindow("6");
+        actions.moveToLocation(600, 900).click().perform();
+        waitFor(15);
+        eyes.checkWindow("7");
+        actions.moveToLocation(400, 800).click().perform();
+        waitFor(10);
+        eyes.checkWindow("8");
     }
 }

@@ -56,7 +56,7 @@ async function renderPDFToImageFiles(pdfPath, outputDirectory) {
 
     try {
         const pdfDocument = await loadingTask.promise;
-        console.log("# PDF document loaded.", pdfDocument.numPages);
+        console.log(`# PDF document have ${pdfDocument.numPages} pages loaded`);
         for (let pageNum = 1; pageNum <= pdfDocument.numPages; pageNum++) {
             // Get the first page.
             const page = await pdfDocument.getPage(pageNum);

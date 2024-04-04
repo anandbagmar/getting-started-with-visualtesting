@@ -1,4 +1,4 @@
-package selenium.tests.gameValidation;
+package tests.selenium.gameValidation;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
