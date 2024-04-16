@@ -108,3 +108,26 @@ clean.doLast {
 wrapper {
     gradleVersion = project.gradleVersion // version from gradle.properties
 }
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task cukes() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            environment "APPLITOOLS_DONT_CLOSE_BATCHES", "true"
+            environment "APPLITOOLS_LOG_DIR", "${project.logDir}/applitools_logs"
+            args = [
+                    '--plugin', 'pretty',
+                    '--plugin', "html:${project.logDir}/cucumber-report.html",
+                    '--glue', 'tests.cukes.steps',
+                    'src/test/resources/cukes']
+        }
+    }
+}
