@@ -19,7 +19,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class Driver {
-    private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
+    static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
+    private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     private Driver() {
     }
@@ -31,20 +32,33 @@ public class Driver {
 
     public static WebDriver createDriverFor(String browser) {
         System.out.println("Running test with browser - " + browser);
+        WebDriver driver = null;
         switch (browser.toLowerCase()) {
             case "chrome":
-                return Driver.createChromeDriver();
+                driver = Driver.createChromeDriver();
+                break;
             case "firefox":
-                return Driver.createFirefoxDriver();
+                driver = Driver.createFirefoxDriver();
+                break;
             case "edge":
-                return Driver.createEdgeDriver();
+                driver = Driver.createEdgeDriver();
+                break;
             case "safari":
-                return Driver.createSafariDriver();
+                driver = Driver.createSafariDriver();
+                break;
             case "self_healing":
-                return createExecutionCloudRemoteDriver();
+                driver = createExecutionCloudRemoteDriver();
+                break;
             default:
                 throw new RuntimeException(browser + " is not yet supported");
         }
+        // Add the created driver instance to the ThreadLocal variable
+        driverThreadLocal.set(driver);
+        return getDriver();
+    }
+
+    public static WebDriver getDriver() {
+        return driverThreadLocal.get();
     }
 
     private static WebDriver createEdgeDriver() {

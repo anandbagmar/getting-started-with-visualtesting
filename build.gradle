@@ -8,6 +8,7 @@ buildscript {
         applitoolsVersion = '5.66.7'
         applitoolsImagesVersion = '5.68.1'
         pdfBoxVersion = '3.0.2'
+        cucumberJVMVersion = '7.16.1'
     }
     repositories {
         mavenLocal()
@@ -34,6 +35,8 @@ dependencies {
         exclude group: 'com.applitools', module: 'eyes-sdk-core-java5'
     }
     implementation "org.apache.pdfbox:pdfbox:$project.pdfBoxVersion"
+    implementation "io.cucumber:cucumber-java:$project.cucumberJVMVersion"
+    implementation "io.cucumber:cucumber-testng:$project.cucumberJVMVersion"
 }
 
 static def getCurrentDatestamp() {
