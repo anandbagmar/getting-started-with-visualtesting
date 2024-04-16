@@ -37,7 +37,7 @@ public class UFGTest {
         visualGridRunner.setDontCloseBatches(true);
         batch = new BatchInfo(userName + "-" + appName);
         batch.setNotifyOnCompletion(false);
-        batch.setSequenceName(ExecutionCloudTest.class.getSimpleName());
+        batch.setSequenceName(UFGTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
         batch.addProperty("APP_NAME", appName);
     }
