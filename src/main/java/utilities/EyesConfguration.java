@@ -19,18 +19,14 @@ import static utilities.Driver.APPLITOOLS_API_KEY;
 
 public class EyesConfguration {
     private static ThreadLocal<com.applitools.eyes.selenium.Eyes> eyesThreadLocal = new ThreadLocal<>();
-    private static VisualGridRunner visualGridRunner;
+    private static ThreadLocal<VisualGridRunner> visualGridRunnerThreadLocal = new ThreadLocal<>();
+//    private static VisualGridRunner visualGridRunner;
     private static BatchInfo batch;
     private static final String appName = "Cucumber-JVM Tests";
     private static final String userName = System.getProperty("user.name");
     private static final boolean IS_EYES_ENABLED = Boolean.parseBoolean(System.getenv("IS_EYES_ENABLED")) || true;
 
     public static void createRunnerAndBatch() {
-        if (null == visualGridRunner) {
-            System.out.println("BeforeSuite");
-            visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
-            visualGridRunner.setDontCloseBatches(true);
-        }
         if (null == batch) {
             batch = new BatchInfo(userName + "-" + appName);
             batch.setNotifyOnCompletion(false);
@@ -40,7 +36,13 @@ public class EyesConfguration {
     }
 
     public static com.applitools.eyes.selenium.Eyes createEyes(WebDriver driver, Scenario scenario) {
-        com.applitools.eyes.selenium.Eyes eyes = new com.applitools.eyes.selenium.Eyes(visualGridRunner);
+        System.out.println("createEyes for: " + scenario.getName());
+        if (null == visualGridRunnerThreadLocal.get()) {
+            VisualGridRunner visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
+            visualGridRunner.setDontCloseBatches(true);
+            visualGridRunnerThreadLocal.set(visualGridRunner);
+        }
+        com.applitools.eyes.selenium.Eyes eyes = new com.applitools.eyes.selenium.Eyes(visualGridRunnerThreadLocal.get());
         Configuration config = new Configuration();
 
         config.setApiKey(APPLITOOLS_API_KEY);
@@ -71,6 +73,6 @@ public class EyesConfguration {
     }
 
     public static VisualGridRunner getRunner() {
-        return visualGridRunner;
+        return visualGridRunnerThreadLocal.get();
     }
 }

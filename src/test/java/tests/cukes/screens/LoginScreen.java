@@ -28,8 +28,10 @@ public class LoginScreen {
 
     public LoginScreen enterLoginDetails(String username, String password) {
         waitFor(2);
+        System.out.printf("Login with: '%s'::'%s'%n", username, password);
         driver.findElement(userNameId).sendKeys(username);
         driver.findElement(passwordId).sendKeys(password);
+        eyes.checkWindow("Entered credentials");
         return this;
     }
 

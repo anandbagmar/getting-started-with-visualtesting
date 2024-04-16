@@ -2,11 +2,8 @@ package tests.cukes.steps;
 
 import com.applitools.eyes.TestResultsStatus;
 import com.applitools.eyes.TestResultsSummary;
-import com.applitools.eyes.config.Configuration;
-import com.applitools.eyes.selenium.BrowserType;
 import com.applitools.eyes.selenium.Eyes;
-import com.applitools.eyes.visualgrid.model.DeviceName;
-import com.applitools.eyes.visualgrid.model.ScreenOrientation;
+import com.applitools.eyes.visualgrid.services.VisualGridRunner;
 import io.cucumber.java.*;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.junit.jupiter.api.Assertions;
@@ -46,10 +43,10 @@ public class RunTestCukes extends AbstractTestNGCucumberTests {
     public static void afterAll() {
         System.out.println("afterAll");
     }
+
     @Before
     public void beforeTestScenario(Scenario scenario) {
-        System.out.println(String.format("RunTestCukes: ThreadId: %d: in overridden beforeTestScenario%n",
-                Thread.currentThread().getId()));
+        System.out.printf("beforeTestScenario: Thread id: '%d', Test name: '%s'%n", Thread.currentThread().getId(), scenario.getName());
         WebDriver driver = Driver.createDriverFor("self_healing");
         EyesConfguration.createEyes(driver, scenario);
     }
@@ -59,9 +56,10 @@ public class RunTestCukes extends AbstractTestNGCucumberTests {
         System.out.println("AfterMethod: Test: " + scenario.getName());
         Eyes eyes = EyesConfguration.getEyes();
         AtomicBoolean isPass = new AtomicBoolean(true);
+        VisualGridRunner visualGridRunner = EyesConfguration.getRunner();
         if (null != eyes) {
             eyes.closeAsync();
-            TestResultsSummary allTestResults = EyesConfguration.getRunner().getAllTestResults(false);
+            TestResultsSummary allTestResults = visualGridRunner.getAllTestResults(false);
             allTestResults.forEach(testResultContainer -> {
                 System.out.printf("Test: %s\n%s%n", testResultContainer.getTestResults().getName(), testResultContainer);
                 displayVisualValidationResults(testResultContainer.getTestResults());

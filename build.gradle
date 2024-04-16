@@ -127,6 +127,7 @@ task cukes() {
                     '--plugin', 'pretty',
                     '--plugin', "html:${project.logDir}/cucumber-report.html",
                     '--glue', 'tests.cukes.steps',
+                    '--threads', '4', // Adjust the number of threads as needed
                     'src/test/resources/cukes']
         }
     }
