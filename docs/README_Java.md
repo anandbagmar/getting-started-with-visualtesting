@@ -45,6 +45,10 @@ Running with different browsers:
 
 > ./gradlew cukes
 
+# Running the PDF Tests
+
+> ./gradlew clean test --tests PDFJavaTest
+
 
 
 Back to main [README](../README.md)
