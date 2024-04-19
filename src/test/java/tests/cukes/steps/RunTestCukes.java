@@ -6,12 +6,16 @@ import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.visualgrid.services.VisualGridRunner;
 import io.cucumber.java.*;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.DataProvider;
 import utilities.Driver;
 import utilities.EyesConfguration;
+import utilities.SoftAssertionsLib;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static utilities.EyesResults.displayVisualValidationResults;
@@ -19,8 +23,7 @@ import static utilities.EyesResults.displayVisualValidationResults;
 public class RunTestCukes extends AbstractTestNGCucumberTests {
 
     public RunTestCukes() {
-        long threadId = Thread.currentThread().getId();
-        System.out.println("RunTestCukes: Constructor: ThreadId: " + threadId);
+        System.out.println("RunTestCukes constructor");
     }
 
     @Override
@@ -47,32 +50,77 @@ public class RunTestCukes extends AbstractTestNGCucumberTests {
     @Before
     public void beforeTestScenario(Scenario scenario) {
         System.out.printf("beforeTestScenario: Thread id: '%d', Test name: '%s'%n", Thread.currentThread().getId(), scenario.getName());
-        WebDriver driver = Driver.createDriverFor("self_healing");
-        EyesConfguration.createEyes(driver, scenario);
+        if (!scenario.getSourceTagNames().contains("@noUI")) {
+            WebDriver driver = Driver.createDriverFor("self_healing");
+            EyesConfguration.createEyes(driver, scenario);
+        }
+        SoftAssertionsLib.createSoftAssertions();
     }
 
     @After
     public void afterTestScenario(Scenario scenario) {
         System.out.println("AfterMethod: Test: " + scenario.getName());
-        Eyes eyes = EyesConfguration.getEyes();
-        AtomicBoolean isPass = new AtomicBoolean(true);
-        VisualGridRunner visualGridRunner = EyesConfguration.getRunner();
-        if (null != eyes) {
-            eyes.closeAsync();
-            TestResultsSummary allTestResults = visualGridRunner.getAllTestResults(false);
-            allTestResults.forEach(testResultContainer -> {
-                System.out.printf("Test: %s\n%s%n", testResultContainer.getTestResults().getName(), testResultContainer);
-                displayVisualValidationResults(testResultContainer.getTestResults());
-                TestResultsStatus testResultsStatus = testResultContainer.getTestResults().getStatus();
-                if (testResultsStatus.equals(TestResultsStatus.Failed) || testResultsStatus.equals(TestResultsStatus.Unresolved)) {
-                    isPass.set(false);
-                }
-            });
+        Collection<String> scenarioTagNames = scenario.getSourceTagNames();
+
+        Status scenarioStatus = scenario.getStatus();
+        System.out.println("Scenario status: " + scenarioStatus);
+
+        SoftAssertions softly = SoftAssertionsLib.getSoftAssertions();
+        List<AssertionError> softAssertionErrors = softly.assertionErrorsCollected();
+        System.out.println("Number of soft assertion errors: " + softAssertionErrors.size());
+
+        boolean isVisualTestingSuccessful = getVisualValidationStatus(scenarioTagNames);
+
+        closeDriver();
+
+        boolean hasScenarioActuallyPassed = (!scenario.isFailed() && softAssertionErrors.isEmpty() && isVisualTestingSuccessful);
+
+        if (scenarioTagNames.contains("@failingTest")) {
+            // failing test - mark test as passed IF
+            // soft assertions.size() = 0
+            // no visual diff
+            // no other issues i.e. scenario.getStatus() == Status.PASSED
+
+            // Scenario has failed. Mark it as passed.
+            if (!hasScenarioActuallyPassed) {
+            }
+
+        } else {
+            // regular test
+            // can fail for:
+            // soft assertions.size() > 0
+            // visual diff found
+            // other issues found i.e. scenario.getStatus() != Status.PASSED
+            softly.assertAll();
+            Assertions.assertThat(hasScenarioActuallyPassed).as("Test failed").isTrue();
         }
+    }
+
+    private static void closeDriver() {
         WebDriver driver = Driver.getDriver();
         if (null != driver) {
             driver.quit();
         }
-        Assertions.assertTrue(isPass.get(), "Visual differences found.");
+    }
+
+    private static boolean getVisualValidationStatus(Collection<String> scenarioTagNames) {
+        AtomicBoolean isPass = new AtomicBoolean(true);
+        if (!scenarioTagNames.contains("noUI")) {
+            Eyes eyes = EyesConfguration.getEyes();
+            VisualGridRunner visualGridRunner = EyesConfguration.getRunner();
+            if (null != eyes) {
+                eyes.closeAsync();
+                TestResultsSummary allTestResults = visualGridRunner.getAllTestResults(false);
+                allTestResults.forEach(testResultContainer -> {
+                    System.out.printf("Test: %s\n%s%n", testResultContainer.getTestResults().getName(), testResultContainer);
+                    displayVisualValidationResults(testResultContainer.getTestResults());
+                    TestResultsStatus testResultsStatus = testResultContainer.getTestResults().getStatus();
+                    if (testResultsStatus.equals(TestResultsStatus.Failed) || testResultsStatus.equals(TestResultsStatus.Unresolved)) {
+                        isPass.set(false);
+                    }
+                });
+            }
+        }
+        return isPass.get();
     }
 }

@@ -1,4 +1,4 @@
-package tests.selenium.tests.standardWebValidation.mindvalley;
+package tests.selenium.standardWebValidation.mindvalley;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.BrowserType;

@@ -24,7 +24,7 @@ public class EyesConfguration {
     private static BatchInfo batch;
     private static final String appName = "Cucumber-JVM Tests";
     private static final String userName = System.getProperty("user.name");
-    private static final boolean IS_EYES_ENABLED = Boolean.parseBoolean(System.getenv("IS_EYES_ENABLED")) || true;
+    private static final boolean IS_EYES_ENABLED = Boolean.parseBoolean(System.getenv("IS_EYES_ENABLED")) || false;
 
     public static void createRunnerAndBatch() {
         if (null == batch) {

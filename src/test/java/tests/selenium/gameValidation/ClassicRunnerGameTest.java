@@ -36,7 +36,7 @@ public class ClassicRunnerGameTest {
         visualGridRunner.setDontCloseBatches(true);
         batch = new BatchInfo(userName + "-" + appName);
         batch.setNotifyOnCompletion(false);
-        batch.setSequenceName(tests.selenium.tests.standardWebValidation.helloWorld.ExecutionCloudTest.class.getSimpleName());
+        batch.setSequenceName(ClassicRunnerGameTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
         batch.addProperty("APP_NAME", appName);
     }
@@ -121,7 +121,7 @@ public class ClassicRunnerGameTest {
         eyes.checkWindow("4");
         actions.moveToLocation(600, 400).click().perform();
         waitFor(15);
-        eyes.checkWindow("5");;
+        eyes.checkWindow("5");
         driver.findElement(By.xpath("//input")).sendKeys("abc");
         waitFor(2);
         eyes.checkWindow("6");

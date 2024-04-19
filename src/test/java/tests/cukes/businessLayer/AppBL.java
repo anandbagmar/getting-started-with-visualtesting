@@ -1,8 +1,8 @@
 package tests.cukes.businessLayer;
 
-import org.junit.jupiter.api.Assertions;
 import tests.cukes.screens.AppLaunchScreen;
 import tests.cukes.screens.LoginScreen;
+import utilities.SoftAssertionsLib;
 
 public class AppBL {
 
@@ -20,7 +20,7 @@ public class AppBL {
         System.out.println("expectedErrorMessage: " + expectedErrorMessage);
         System.out.println("actualErrorMessage: " + actualErrorMessage);
 
-        Assertions.assertEquals(expectedErrorMessage, actualErrorMessage, "Invalid login error message is incorrect");
+        SoftAssertionsLib.getSoftAssertions().assertThat(expectedErrorMessage).as("Invalid login error message is incorrect").isEqualTo(actualErrorMessage);
         loginScreen.dismissAlert();
 
         return new AppBL();

@@ -1,4 +1,4 @@
-package tests.selenium.tests.videoValidation.mindvalley;
+package tests.selenium.videoValidation.mindvalley;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.Eyes;

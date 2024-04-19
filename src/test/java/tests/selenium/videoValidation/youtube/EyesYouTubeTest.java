@@ -1,4 +1,4 @@
-package tests.selenium.tests.videoValidation.youtube;
+package tests.selenium.videoValidation.youtube;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.Eyes;

@@ -12,7 +12,6 @@ public class TheAppSteps {
         new AppBL().provideInvalidDetailsForSignup(username, password);
     }
 
-
     @Then("I try to login again with invalid credentials - {string}, {string}")
     public void iTryToLoginAgainWithInvalidCredentials(String username, String password) {
         System.out.printf("iTryToLoginAgainWithInvalidCredentials - Username: '%s', Password:'%s'%n", username, password);

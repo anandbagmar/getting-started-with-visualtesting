@@ -1,4 +1,4 @@
-package tests.selenium.tests.videoValidation.youtube;
+package tests.selenium.videoValidation.youtube;
 
 import com.applitools.eyes.*;
 import com.applitools.eyes.selenium.ClassicRunner;
@@ -10,7 +10,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import tests.selenium.tests.standardWebValidation.helloWorld.ExecutionCloudTest;
 import utilities.Driver;
 
 import java.io.File;
@@ -36,7 +35,7 @@ public class ClassicRunnerYouTubeTest {
         visualGridRunner.setDontCloseBatches(true);
         batch = new BatchInfo(userName + "-" + appName);
         batch.setNotifyOnCompletion(false);
-        batch.setSequenceName(ExecutionCloudTest.class.getSimpleName());
+        batch.setSequenceName(ClassicRunnerYouTubeTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
         batch.addProperty("APP_NAME", appName);
     }
