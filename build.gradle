@@ -135,6 +135,8 @@ task cukes() {
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             environment "APPLITOOLS_DONT_CLOSE_BATCHES", "true"
             environment "APPLITOOLS_LOG_DIR", "${project.logDir}/applitools_logs"
+            def tags = System.getenv("CUCUMBER_FILTER_TAGS")==null ? "not @wip" : System.getenv("CUCUMBER_FILTER_TAGS") + " not @wip"
+            environment "CUCUMBER_FILTER_TAGS", tags
             args = [
                     '--plugin', 'pretty',
                     '--plugin', "html:${project.logDir}/cucumber-report.html",
