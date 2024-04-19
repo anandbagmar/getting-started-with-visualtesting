@@ -1,4 +1,6 @@
-# Applitools Example: Robot Framework
+Back to main [README](../README.md)
+
+# Running tests with Robot framework
 
 This is the example project for the [Robot Framework tutorial](https://applitools.com/tutorials/quickstart/web/robot-framework).
 It shows how to start automating visual tests
@@ -26,7 +28,7 @@ To run this example project, you'll need:
 4. An up-to-date version of [Google Chrome](https://www.google.com/chrome/downloads/)
 5. A corresponding version of [ChromeDriver](https://chromedriver.chromium.org/downloads)
 
-To install dependencies, run:
+# Install dependencies
 
 ```
 python3 -m pip install -r src/test/robot/requirements.txt
@@ -40,15 +42,17 @@ To execute tests, set the `APPLITOOLS_API_KEY` environment variable
 to your [account's API key](https://applitools.com/tutorials/guides/getting-started/registering-an-account),
 and then run:
 
-### Run tests in Execution Cloud 
+## Run tests in Execution Cloud 
 ```
 APPLITOOLS_LOG_DIR=reports/robot/applitools-logs robot --outputdir reports/robot src/test/robot/acme_bank.robot
 ```
 
-### Run tests in Execution Cloud with Self Healing
+## Run tests in Execution Cloud with Self Healing
 ```
 APPLITOOLS_LOG_DIR=reports/robot-self-healing/applitools-logs robot --outputdir reports/robot-self-healing src/test/robot/acme_bank_self_healing.robot
 ```
 
 **For full instructions on running this project, take our
 [Robot Framework tutorial](https://applitools.com/tutorials/quickstart/web/robot-framework)!**
+
+Back to main [README](../README.md)
