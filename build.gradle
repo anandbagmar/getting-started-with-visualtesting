@@ -9,9 +9,11 @@ buildscript {
         applitoolsImagesVersion = '5.68.1'
         pdfBoxVersion = '3.0.2'
         cucumberJVMVersion = '7.16.1'
+        assertJVersion = "3.25.3"
     }
     repositories {
         mavenLocal()
+        mavenCentral()
     }
 }
 
@@ -19,10 +21,19 @@ plugins {
     id "java"
     id "idea"
 }
+
+idea {
+    module {
+        // if you hate browsing Javadoc
+        downloadJavadoc = false
+        // and love reading sources :)
+        downloadSources = true
+    }
+}
 version '0.0.1'
 
 repositories {
-    mavenLocal()
+//    mavenLocal()
     mavenCentral()
 }
 
@@ -37,6 +48,7 @@ dependencies {
     implementation "org.apache.pdfbox:pdfbox:$project.pdfBoxVersion"
     implementation "io.cucumber:cucumber-java:$project.cucumberJVMVersion"
     implementation "io.cucumber:cucumber-testng:$project.cucumberJVMVersion"
+    implementation "org.assertj:assertj-core:$project.assertJVersion"
 }
 
 static def getCurrentDatestamp() {
