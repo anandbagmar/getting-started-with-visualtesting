@@ -21,6 +21,7 @@ import java.net.URISyntaxException;
 public class Driver {
     static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
+    public static boolean USE_TUNNEL = false;
 
     private Driver() {
     }
@@ -71,6 +72,10 @@ public class Driver {
         ChromeOptions chromeOptions = new ChromeOptions();
         DesiredCapabilities capabilities = new DesiredCapabilities(chromeOptions);
         capabilities.setCapability("applitools:apiKey", APPLITOOLS_API_KEY);
+        if(USE_TUNNEL) {
+            System.out.println("Using Tunnel");
+            capabilities.setCapability("applitools:tunnel", true);
+        }
 
         String executionCloudURL = Eyes.getExecutionCloudURL();
         try {
