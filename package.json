@@ -9,7 +9,8 @@
   },
   "scripts": {
     "pdftest": "mocha ./src/test/js/tests/pdf/pdf2pngTest.js --timeout 300000",
-    "imagestest": "mocha ./src/test/js/tests/images/imagesTest.js --timeout 300000"
+    "imagestest": "mocha ./src/test/js/tests/images/imagesTest.js --timeout 300000",
+    "playwright": "PLAYWRIGHT_HTML_REPORT=./reports/playwright npx playwright test --reporter=html"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +23,8 @@
     "gulp": "^5.0.0",
     "mocha": "10.4.0",
     "node-fetch": "3.3.2",
-    "pdfjs-dist": "^4.0.379"
+    "pdfjs-dist": "^4.0.379",
+    "@applitools/eyes-playwright": "^1.27.0",
+    "@playwright/test": "^1.39.0"
   }
 }

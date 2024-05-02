@@ -32,3 +32,4 @@ reports/
 pocs/
 node_modules/
 *.png
+playwright-report

@@ -10,3 +10,5 @@ See this repo for Appium-java tests with Applitools - https://github.com/anandba
 # Running the [JavaScript tests](docs/README_JS.md)
 
 # Running the [Robot tests](docs/README_Robot.md)
+
+# Running the [Playwright tests](docs/README_Playwright.md)
