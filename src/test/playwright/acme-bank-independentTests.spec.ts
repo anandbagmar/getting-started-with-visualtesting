@@ -88,8 +88,5 @@ test.describe('ACME Bank', () => {
 
 test.afterAll(async() => {
     Batch.setNotifyOnCompletion(true);
-    // Wait for Ultrast Grid Renders to finish and gather results
-    // const results = await Runner.getAllTestResults();
-    // console.log('Visual test results', results);
     console.log("afterAll")
 });
