@@ -4,9 +4,9 @@ import java.text.SimpleDateFormat
 buildscript {
     ext {
         gradleVersion = '8.7'
-        junitVersion = '5.10.2'
-        applitoolsVersion = '5.66.7'
-        applitoolsImagesVersion = '5.68.1'
+        junitVersion = '5.11.0-M2'
+        applitoolsVersion = '5.68.5'
+        applitoolsImagesVersion = '5.68.4'
         pdfBoxVersion = '3.0.2'
         cucumberJVMVersion = '7.16.1'
         assertJVersion = "3.25.3"
