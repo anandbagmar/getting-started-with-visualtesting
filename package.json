@@ -16,15 +16,15 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@applitools/eyes-images": "^4.27.1",
-    "canvas": "^2.11.2",
-    "chai": "^5.1.0",
-    "fs": "^0.0.1-security",
-    "gulp": "^5.0.0",
+    "@applitools/eyes-images": "4.28.2",
+    "canvas": "2.11.2",
+    "chai": "5.1.1",
+    "fs": "0.0.1-security",
+    "gulp": "5.0.0",
     "mocha": "10.4.0",
     "node-fetch": "3.3.2",
-    "pdfjs-dist": "^4.0.379",
-    "@applitools/eyes-playwright": "^1.27.0",
-    "@playwright/test": "^1.39.0"
+    "pdfjs-dist": "4.2.67",
+    "@applitools/eyes-playwright": "1.27.2",
+    "@playwright/test": "1.44.0"
   }
 }
