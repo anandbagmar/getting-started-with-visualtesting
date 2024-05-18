@@ -16,7 +16,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@applitools/eyes-images": "^4.27.1",
+    "@applitools/eyes-images": "^4.28.2",
     "canvas": "^2.11.2",
     "chai": "^5.1.0",
     "fs": "^0.0.1-security",
