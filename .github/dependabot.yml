@@ -17,3 +17,7 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+  - package-ecosystem: "pip" # See documentation for possible values
+    directory: "src/test/robot" # Location of package manifests
+    schedule:
+      interval: "daily"
