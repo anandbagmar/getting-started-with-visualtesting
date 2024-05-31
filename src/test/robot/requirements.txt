@@ -1,4 +1,4 @@
 eyes-robotframework==5.14.8
 robotframework==7.0
 robotframework-seleniumlibrary==6.2.0
-selenium==4.19.0
+selenium==4.21.0
