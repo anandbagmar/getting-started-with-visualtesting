@@ -5,11 +5,11 @@ buildscript {
     ext {
         gradleVersion = '8.7'
         junitVersion = '5.11.0-M2'
-        applitoolsVersion = '5.68.5'
-        applitoolsImagesVersion = '5.68.4'
+        applitoolsVersion = '5.69.0'
+        applitoolsImagesVersion = '5.69.0'
         pdfBoxVersion = '3.0.2'
         cucumberJVMVersion = '7.18.0'
-        assertJVersion = "3.25.3"
+        assertJVersion = "3.26.0"
     }
     repositories {
         mavenLocal()
