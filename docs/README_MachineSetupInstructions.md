@@ -4,7 +4,7 @@ Back to main [README](../README.md)
 Follow the below steps to get your machine setup ready. These steps are for Selenium-Java based Test Automation. If you are using any other combination, please contact anand.bagmar@essenceoftesting.com
 - Install JDK 17 or higher
 - Clone this git repo (https://github.com/anandbagmar/getting-started-with-visualtesting) on your laptop
-- Open the cloned project in your IDE as a Maven project. This will automatically download all the dependencies
+- Open the cloned project in your IDE as a Gradle project. This will automatically download all the dependencies
 - Once all dependencies are downloaded, run the following command from command prompt / terminal window:
   --> ./gradlew clean test --tests HelloWorldTest
 
