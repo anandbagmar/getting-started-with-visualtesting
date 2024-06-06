@@ -6,6 +6,7 @@ import com.applitools.eyes.selenium.StitchMode;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import utilities.Driver;
+import utilities.EyesResults;
 
 import java.io.File;
 
@@ -48,31 +49,37 @@ public class FigmaTest {
         eyes.setIsDisabled(false);
         eyes.setSaveNewTests(false);
         eyes.addProperty("username", userName);
-        eyes.setBaselineEnvName("Frame 14176_1448");
-        eyes.open(driver, "FigJam Basics", "Frame 14176", new RectangleSize(1024, 800));
     }
 
     @AfterEach
     public void afterMethod(TestInfo testInfo) {
         System.out.println("AfterMethod: Test: " + testInfo.getDisplayName());
-        boolean isPass = true;
-        TestResults testResults = null;
-        if (null != eyes) {
-            testResults = eyes.close(false);
-            TestResultsStatus testResultsStatus = testResults.getStatus();
-            if (testResultsStatus.equals(TestResultsStatus.Failed) || testResultsStatus.equals(TestResultsStatus.Unresolved)) {
-                isPass = false;
-            }
-        }
         if (null != driver) {
             driver.quit();
         }
-        Assertions.assertTrue(isPass, "Visual differences found.\n" + testResults);
+    }
+
+    private void getResults(Eyes eyes) {
+        TestResults testResults = null;
+        if (null != eyes) {
+            testResults = eyes.close(false);
+            EyesResults.displayVisualValidationResults(testResults);
+        }
     }
 
     @Test
     void testAgainstFigma() {
         driver.get("https://applitools.com/helloworld");
+        eyes.setBaselineEnvName("Frame 1_1448");
+        eyes.open(driver, "FigJam Basics", "Frame 1", new RectangleSize(1024, 800));
         eyes.checkWindow("home");
+        getResults(eyes);
+
+        driver.get("https://google.com");
+
+        eyes.setBaselineEnvName("Frame 14176_1448");
+        eyes.open(driver, "FigJam Basics", "Frame 14176", new RectangleSize(1024, 800));
+        eyes.checkWindow("home");
+        getResults(eyes);
     }
 }
