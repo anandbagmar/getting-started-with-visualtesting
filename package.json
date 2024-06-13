@@ -25,6 +25,12 @@
     "node-fetch": "3.3.2",
     "pdfjs-dist": "4.3.136",
     "@applitools/eyes-playwright": "1.28.1",
-    "@playwright/test": "1.44.1"
+    "@playwright/test": "1.44.1",
+    "@appium/doctor": "2.1.6",
+    "@appium/relaxed-caps-plugin": "1.0.6",
+    "appium": "2.10.3",
+    "appium-device-farm": "8.4.7-rc.41",
+    "appium-uiautomator2-driver": "3.5.3",
+    "appium-xcuitest-driver": "7.17.5"
   }
 }
