@@ -82,4 +82,20 @@ public class FigmaTest {
         eyes.checkWindow("home");
         getResults(eyes);
     }
+
+    @Test
+    void testDifferentViewPortsFigma() {
+        driver.get("https://applitools.com/helloworld");
+        eyes.setBaselineEnvName("Frame 1_1448");
+        eyes.open(driver, "FigJam Basics", "Frame 1", new RectangleSize(1024, 800));
+        eyes.checkWindow("home");
+        getResults(eyes);
+
+        driver.get("https://google.com");
+
+        eyes.setBaselineEnvName("Frame 14176_1448");
+        eyes.open(driver, "FigJam Basics", "Frame 14176", new RectangleSize(1024, 800));
+        eyes.checkWindow("home");
+        getResults(eyes);
+    }
 }
