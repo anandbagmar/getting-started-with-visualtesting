@@ -75,6 +75,7 @@ public class ExecutionCloudLocalAppTest {
         config.setSaveNewTests(false);
         config.setMatchLevel(MatchLevel.STRICT);
         config.addProperty("username", userName);
+        config.setAccessibilityValidation(new AccessibilitySettings(AccessibilityLevel.AA, AccessibilityGuidelinesVersion.WCAG_2_1));
 
         // Add browsers with different viewports
         config.addBrowser(800, 600, BrowserType.CHROME);
