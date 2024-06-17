@@ -1,4 +1,4 @@
-### applitools.yaml 1.2
+### applitools_ufg.yaml 1.2
 ### START `SHARED SECTION` ###
 #server_url: "https://eyesapi.applitools.com" #optional
 #api_key: YOUR_API_KEY  #Could be specified as APPLITOOLS_API_KEY env variable
@@ -17,7 +17,7 @@
 propagate_eyes_test_results: true   #Propagate Eyes results to robot `report.html`
 
 ###### START `AVAILABLE DURING `Eyes Open` CALL SECTION` ######
-app_name: RobotTest
+app_name: acme_bank
 viewport_size:
   width: 1920
   height: 1080
@@ -62,8 +62,9 @@ mobile_native:
 
 
 web_ufg:
+  app_name: acme_bank
   batch:
-    name: RobotFramework | Web UFG | Selenium
+    name: RobotFramework | Execution Cloud | Selenium
 #  runner_options:
 #    test_concurrency: 5
 #  visual_grid_options:
@@ -72,7 +73,7 @@ web_ufg:
 #  disable_browser_fetching: false
 #  enable_cross_origin_rendering: false
 #  dont_use_cookies: false
-#  layout_breakpoints: true
+  layout_breakpoints: true
   browsers:
     desktop:
       - browser_type: CHROME  # names from BrowserType

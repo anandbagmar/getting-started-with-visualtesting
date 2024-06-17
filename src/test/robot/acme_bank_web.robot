@@ -2,7 +2,8 @@
 # Use Selenium WebDriver and Applitools Eyes.
 Library     OperatingSystem
 Library     SeleniumLibrary
-Library     EyesLibrary       runner=web_ufg    config=applitools.yaml
+Library     EyesLibrary       runner=web    config=applitools_ufg.yaml
+Variables    applitools_ufg.yaml
 
 # Declare setup and teardown routines.
 Test Setup        Setup
@@ -12,9 +13,7 @@ Test Teardown     Teardown
 *** Keywords ***
 # For setup, load the demo site's login page and open Eyes to start visual testing.
 Setup
-    ${remote_url}=  Get Execution Cloud URL
-    Log           Remote url is ${remote_url}
-    Open Browser  https://demo.applitools.com  chrome  remote_url=${remote_url}
+    Open Browser  https://demo.applitools.com  chrome
     Eyes Open
 
 # For teardown, close Eyes and the browser.
@@ -33,24 +32,7 @@ Log into bank account
     # Verify the full login page loaded correctly.
     Eyes Check Window    Login Page     Fully
 
-    # Get the current id for username input box
-    ${user_id_element}      Execute Javascript    return window.document.querySelector("#username").getAttribute("id")
-    Log                     ${user_id_element}      INFO
-
-    # Update id for username input box to 'user'
-    ${user_id_element1}      Execute Javascript    window.document.querySelector("#username").id='user'
-    Log                     user_id_element1 ${user_id_element1}    INFO
-
-    # See if username input box id has been updated to 'user'
-    ${updated_element}      Execute Javascript    return window.document.querySelector("#user").getAttribute("id")
-    Log                     updated_user_id_element: ${updated_element}     INFO
-
     # Perform login.
-
-    # Works with original id
-    # Input Text              id:username    applibot
-
-    # Self-healing does not work with updated id
     Input Text              id:username    applibot
     Input Text              id:password    I<3VisualTests
     Eyes Check Window       Before Login    Fully    Match Level  STRICT
