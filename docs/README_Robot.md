@@ -42,14 +42,19 @@ To execute tests, set the `APPLITOOLS_API_KEY` environment variable
 to your [account's API key](https://applitools.com/tutorials/guides/getting-started/registering-an-account),
 and then run:
 
-## Run tests in Execution Cloud 
+## Run tests in local browser 
 ```
-APPLITOOLS_LOG_DIR=reports/robot/applitools-logs robot --outputdir reports/robot src/test/robot/acme_bank.robot
+APPLITOOLS_LOG_DIR=reports/robot/applitools-logs robot --outputdir reports/robot src/test/robot/acme_bank_web.robot
 ```
 
-## Run tests in Execution Cloud with Self Healing
+## Run tests in local browser with Applitools Ultrafast Grid
 ```
-APPLITOOLS_LOG_DIR=reports/robot-self-healing/applitools-logs robot --outputdir reports/robot-self-healing src/test/robot/acme_bank_self_healing.robot
+APPLITOOLS_LOG_DIR=reports/robot/applitools-logs robot --outputdir reports/robot src/test/robot/acme_bank_ufg.robot
+```
+
+## Run tests in Applitools Execution Cloud with Self Healing
+```
+APPLITOOLS_LOG_DIR=reports/robot-self-healing/applitools-logs robot --outputdir reports/robot-self-healing src/test/robot/acme_bank_execution_cloud_self_healing.robot
 ```
 
 **For full instructions on running this project, take our
