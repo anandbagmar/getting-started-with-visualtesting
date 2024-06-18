@@ -16,13 +16,13 @@ Setup
     Open Browser                https://demo.applitools.com  chrome  remote_url=${remote_url}
     ...     options=set_capability('applitools:useSelfHealing', ${True});set_capability('browserVersion', 'latest');set_capability('selfHealingOptions', ${selfHealingOptions})
     &{ARGS}=                    Create Dictionary  appName=${web_ufg.app_name}    testName=${TEST NAME}
-    Execute JavaScript          applitools:startTest    ARGUMENTS    ${ARGS}
+#    Execute JavaScript          applitools:startTest    ARGUMENTS    ${ARGS}
     Eyes Open
 
 
 Teardown
     &{ARGS}=  IF  "${TEST STATUS}" == "PASS"  Create Dictionary  status=Passed  ELSE  Create Dictionary  status=Failed
-    Execute JavaScript  applitools:endTest      ARGUMENTS    ${ARGS}
+#    Execute JavaScript  applitools:endTest      ARGUMENTS    ${ARGS}
     Eyes Close Async
     Close All Browsers
 
@@ -31,10 +31,12 @@ Log into bank account
     Eyes Check Window    Login Page     Fully
 
     # Simulate Self-Healing Event
-    Execute Javascript    document.getElementById('log-in').id = 'access';
+#    Execute Javascript    document.getElementById('log-in').id = 'access';
 
     Input Text        id:username    applibot
     Input Text        id:password    I<3VisualTests
+    Eyes Check              Target Region By Selector    id:username    With Name   username
+    Eyes Check              Target Region By Selector    id:password    With Name   password
     Eyes Check Window    Credentials entered    Fully    Match Level  LAYOUT
     Click Element     id:log-in
     Eyes Check Window    Main Page    Fully    Match Level  LAYOUT

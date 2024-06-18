@@ -35,6 +35,8 @@ Log into bank account
     # Perform login.
     Input Text              id:username    applibot
     Input Text              id:password    I<3VisualTests
+    Eyes Check              Target Region By Selector    id:username    With Name   username
+    Eyes Check              Target Region By Selector    id:password    With Name   password
     Eyes Check Window       Before Login    Fully    Match Level  STRICT
     Click Element           id:log-in
 
