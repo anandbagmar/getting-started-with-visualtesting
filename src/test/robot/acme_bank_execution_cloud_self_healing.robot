@@ -16,12 +16,14 @@ Setup
     Open Browser                https://demo.applitools.com  chrome  remote_url=${remote_url}
     ...     options=set_capability('applitools:useSelfHealing', ${True});set_capability('browserVersion', 'latest');set_capability('selfHealingOptions', ${selfHealingOptions})
     &{ARGS}=                    Create Dictionary  appName=${web_ufg.app_name}    testName=${TEST NAME}
+#    To disable Eyes validation, uncomment the line. It will create a new Batch
 #    Execute JavaScript          applitools:startTest    ARGUMENTS    ${ARGS}
     Eyes Open
 
 
 Teardown
     &{ARGS}=  IF  "${TEST STATUS}" == "PASS"  Create Dictionary  status=Passed  ELSE  Create Dictionary  status=Failed
+#    To disable Eyes validation, uncomment the line. It will create a new Batch
 #    Execute JavaScript  applitools:endTest      ARGUMENTS    ${ARGS}
     Eyes Close Async
     Close All Browsers
