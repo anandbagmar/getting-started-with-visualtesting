@@ -31,6 +31,6 @@
     "appium": "2.10.3",
     "appium-device-farm": "8.4.7-rc.41",
     "appium-uiautomator2-driver": "3.5.3",
-    "appium-xcuitest-driver": "7.17.5"
+    "appium-xcuitest-driver": "7.20.0"
   }
 }
