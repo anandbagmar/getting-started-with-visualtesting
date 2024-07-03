@@ -21,7 +21,7 @@
     "chai": "5.1.1",
     "fs": "0.0.1-security",
     "gulp": "5.0.0",
-    "mocha": "10.4.0",
+    "mocha": "10.6.0",
     "node-fetch": "3.3.2",
     "pdfjs-dist": "4.3.136",
     "@applitools/eyes-playwright": "1.28.1",
