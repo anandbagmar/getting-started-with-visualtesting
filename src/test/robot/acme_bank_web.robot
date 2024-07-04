@@ -31,6 +31,7 @@ Log into bank account
 
     # Verify the full login page loaded correctly.
     Eyes Check Window    Login Page     Fully
+    Eyes Check              Target Window     Ignore      By Selector     id:username   With Name   Login Page multi algos
 
     # Perform login.
     Input Text              id:username    applibot

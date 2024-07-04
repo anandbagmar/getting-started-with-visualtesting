@@ -33,7 +33,7 @@ Log into bank account
     Eyes Check Window    Login Page     Fully
 
     # Simulate Self-Healing Event
-#    Execute Javascript    document.getElementById('log-in').id = 'access';
+    Execute Javascript    document.getElementById('log-in').id = 'access';
 
     Input Text        id:username    applibot
     Input Text        id:password    I<3VisualTests
