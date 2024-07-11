@@ -26,7 +26,7 @@
     "pdfjs-dist": "4.4.168",
     "@applitools/eyes-playwright": "1.28.2",
     "@playwright/test": "1.45.1",
-    "@appium/doctor": "2.1.8",
+    "@appium/doctor": "2.1.9",
     "@appium/relaxed-caps-plugin": "1.0.6",
     "appium": "2.11.1",
     "appium-device-farm": "8.4.7-rc.46",
