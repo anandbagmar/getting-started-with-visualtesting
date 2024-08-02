@@ -6,7 +6,7 @@ buildscript {
         gradleVersion = '8.7'
         junitVersion = '5.11.0-M2'
         applitoolsVersion = '5.69.2'
-        applitoolsImagesVersion = '5.69.2'
+        applitoolsImagesVersion = '5.69.4'
         pdfBoxVersion = '3.0.2'
         cucumberJVMVersion = '7.18.0'
         assertJVersion = "3.26.0"
