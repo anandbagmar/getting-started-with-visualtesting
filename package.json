@@ -32,6 +32,8 @@
     "appium-device-farm": "9.2.8",
     "appium-uiautomator2-driver": "3.7.7",
     "appium-xcuitest-driver": "7.24.17",
-    "braces": "3.0.3"
+    "braces": "3.0.3",
+    "axios": "1.7.5",
+    "micromatch": "4.0.8"
   }
 }
