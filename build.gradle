@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat
 
 buildscript {
     ext {
-        gradleVersion = '8.7'
+        gradleVersion = '8.10'
         junitVersion = '5.11.0'
         applitoolsVersion = '5.69.5'
         applitoolsImagesVersion = '5.69.5'
@@ -42,6 +42,7 @@ compileJava { options.encoding = "UTF-8" }
 dependencies {
     implementation "org.junit.jupiter:junit-jupiter:$project.junitVersion"
     implementation "com.applitools:eyes-selenium-java5:$project.applitoolsVersion"
+    implementation "com.applitools:eyes-images-java5:$project.applitoolsVersion"
     implementation("com.applitools:eyes-images-java5:$project.applitoolsImagesVersion") {
         exclude group: 'com.applitools', module: 'eyes-sdk-core-java5'
     }
