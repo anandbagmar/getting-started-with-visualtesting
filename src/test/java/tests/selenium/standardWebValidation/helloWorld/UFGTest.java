@@ -71,17 +71,20 @@ public class UFGTest {
         config.addProperty("username", userName);
         // Add browsers with different viewports
         config.addBrowser(1400, 1000, BrowserType.CHROME);
+        config.addBrowser(1400, 1000, BrowserType.CHROME_ONE_VERSION_BACK);
+        config.addBrowser(1400, 1000, BrowserType.CHROME_TWO_VERSIONS_BACK);
         config.addBrowser(1200, 1024, BrowserType.FIREFOX);
-        config.addBrowser(700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
+        config.addBrowser(1700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
         config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
         config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
-        config.addBrowser(800, 600, BrowserType.SAFARI);
-        config.addBrowser(800, 600, BrowserType.SAFARI_ONE_VERSION_BACK);
+        config.addBrowser(1800, 600, BrowserType.SAFARI);
+        config.addBrowser(800, 1600, BrowserType.SAFARI_ONE_VERSION_BACK);
 
         // Add mobile emulation devices in Portrait/Landscape mode
         config.addDeviceEmulation(DeviceName.iPad_Pro, ScreenOrientation.LANDSCAPE);
         config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
         config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.Galaxy_Tab_S7, ScreenOrientation.LANDSCAPE);
 
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
@@ -135,6 +138,8 @@ public class UFGTest {
         }
         driver.findElement(By.id("clickButton")).click();
         eyes.checkWindow("After click");
-        eyes.check("combo", Target.window().fully().layout(By.xpath("//p[contains(text(), 'Applitools')]"), By.xpath("//span[contains(@class,'random-number')]")));
+        eyes.check("combo", Target.window().fully()
+                .layout(By.xpath("//p[contains(text(), 'Applitools')]"),
+                        By.xpath("//span[contains(@class,'random-number')]")));
     }
 }

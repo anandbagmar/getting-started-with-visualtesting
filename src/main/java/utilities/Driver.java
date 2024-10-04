@@ -78,6 +78,7 @@ public class Driver {
         }
 
         String executionCloudURL = Eyes.getExecutionCloudURL();
+        System.out.println("executionCloudURL: " + executionCloudURL);
         try {
             innerDriver = new RemoteWebDriver(new URI(executionCloudURL).toURL(), capabilities);
         } catch (MalformedURLException | URISyntaxException e) {

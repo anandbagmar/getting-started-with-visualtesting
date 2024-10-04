@@ -5,6 +5,8 @@ import com.applitools.eyes.selenium.BrowserType;
 import com.applitools.eyes.selenium.Configuration;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.fluent.Target;
+import com.applitools.eyes.visualgrid.model.DeviceName;
+import com.applitools.eyes.visualgrid.model.ScreenOrientation;
 import com.applitools.eyes.visualgrid.services.RunnerOptions;
 import com.applitools.eyes.visualgrid.services.VisualGridRunner;
 import org.junit.jupiter.api.*;
@@ -78,12 +80,19 @@ public class ExecutionCloudLocalAppTest {
         config.setAccessibilityValidation(new AccessibilitySettings(AccessibilityLevel.AA, AccessibilityGuidelinesVersion.WCAG_2_1));
 
         // Add browsers with different viewports
-        config.addBrowser(800, 600, BrowserType.CHROME);
-        config.addBrowser(700, 500, BrowserType.FIREFOX);
+        config.addBrowser(1200, 600, BrowserType.CHROME);
+        config.addBrowser(1800, 600, BrowserType.CHROME);
+        config.addBrowser(1300, 600, BrowserType.CHROME);
+        config.addBrowser(1200, 1600, BrowserType.CHROME);
+        config.addBrowser(1400, 500, BrowserType.FIREFOX);
+        config.addBrowser(1400, 500, BrowserType.EDGE);
+        config.addBrowser(1400, 500, BrowserType.SAFARI);
 
         // Add mobile emulation devices in Portrait/Landscape mode
-//        config.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
-//        config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.iPhone_X, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.Galaxy_S22_Ultra, ScreenOrientation.PORTRAIT);
+        config.addDeviceEmulation(DeviceName.iPad, ScreenOrientation.PORTRAIT);
 
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
