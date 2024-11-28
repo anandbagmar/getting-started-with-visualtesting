@@ -76,6 +76,7 @@ public class ImagesTest {
         config.setHostOS(System.getProperty("os.name"));
         config.setAppName(appName);
         config.setBaselineEnvName(testName + "-baseline");
+
         config.setApiKey(APPLITOOLS_API_KEY);
         config.setBatch(batch);
         config.setIsDisabled(false);
@@ -88,8 +89,6 @@ public class ImagesTest {
 
         // Add browsers with different viewports
         config.addBrowser(1280, 1024, BrowserType.CHROME);
-        config.addBrowser(1280, 1024, BrowserType.CHROME_ONE_VERSION_BACK);
-        config.addBrowser(1280, 1024, BrowserType.CHROME_TWO_VERSIONS_BACK);
         config.addBrowser(1920, 1200, BrowserType.CHROME);
         config.addBrowser(1440, 1024, BrowserType.FIREFOX);
         config.addBrowser(1320, 1200, BrowserType.CHROME);

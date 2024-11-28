@@ -1,28 +1,26 @@
-package tests.selenium.standardWebValidation.helloWorld;
+package tests.selenium.videoValidation.youtube;
 
 import com.applitools.eyes.*;
-import com.applitools.eyes.selenium.BrowserType;
+import com.applitools.eyes.selenium.ClassicRunner;
 import com.applitools.eyes.selenium.Configuration;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.fluent.Target;
-import com.applitools.eyes.visualgrid.model.DeviceName;
-import com.applitools.eyes.visualgrid.model.ScreenOrientation;
-import com.applitools.eyes.visualgrid.services.RunnerOptions;
-import com.applitools.eyes.visualgrid.services.VisualGridRunner;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import utilities.Driver;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static utilities.EyesResults.displayVisualValidationResults;
+import static utilities.Wait.waitFor;
 
-public class UFGTest {
+public class ClassicRunnerYouTubeTest {
 
-    private static final String appName = UFGTest.class.getSimpleName();
+    private static final String appName = ClassicRunnerYouTubeTest.class.getSimpleName();
     private static final String userName = System.getProperty("user.name");
     private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static EyesRunner visualGridRunner;
@@ -33,11 +31,11 @@ public class UFGTest {
     @BeforeAll
     public static void beforeSuite() {
         System.out.println("BeforeSuite");
-        visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
+        visualGridRunner = new ClassicRunner();
         visualGridRunner.setDontCloseBatches(true);
         batch = new BatchInfo(userName + "-" + appName);
         batch.setNotifyOnCompletion(false);
-        batch.setSequenceName(UFGTest.class.getSimpleName());
+        batch.setSequenceName(ClassicRunnerYouTubeTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
         batch.addProperty("APP_NAME", appName);
     }
@@ -69,22 +67,7 @@ public class UFGTest {
         config.setSaveNewTests(false);
         config.setMatchLevel(MatchLevel.STRICT);
         config.addProperty("username", userName);
-        // Add browsers with different viewports
-        config.addBrowser(1400, 1000, BrowserType.CHROME);
-        config.addBrowser(1400, 1000, BrowserType.CHROME_ONE_VERSION_BACK);
-        config.addBrowser(1400, 1000, BrowserType.CHROME_TWO_VERSIONS_BACK);
-        config.addBrowser(1200, 1024, BrowserType.FIREFOX);
-        config.addBrowser(1700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
-        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
-        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
-        config.addBrowser(1800, 600, BrowserType.SAFARI);
-        config.addBrowser(800, 1600, BrowserType.SAFARI_ONE_VERSION_BACK);
-
-        // Add mobile emulation devices in Portrait/Landscape mode
-        config.addDeviceEmulation(DeviceName.iPad_Pro, ScreenOrientation.LANDSCAPE);
-        config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
-        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
-        config.addDeviceEmulation(DeviceName.Galaxy_Tab_S7, ScreenOrientation.LANDSCAPE);
+        config.setAccessibilityValidation(new AccessibilitySettings(AccessibilityLevel.AAA, AccessibilityGuidelinesVersion.WCAG_2_1));
 
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
@@ -114,32 +97,43 @@ public class UFGTest {
         Assertions.assertTrue(isPass.get(), "Visual differences found.");
     }
 
-    private static boolean isInject() {
-        return null == System.getenv("INJECT") ? false : Boolean.parseBoolean(System.getenv("INJECT"));
-    }
-
     @Test
-    void seleniumUFGTest() {
-        double counter = 1;
-        driver.get("https://applitools.com/helloworld");
-        eyes.checkWindow("home");
+    public void visualValidateVideos() {
+        driver.get("https://youtu.be/bWtiTkrOUw8?si=DCkYc8R8oWav5NZy&t=211");
+        waitFor(3);
+        String videoLocation = "document.querySelector('video')";
 
-        for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
-            By linkText = By.linkText("?diff1");
-            driver.findElement(linkText).click();
-            eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
-            eyes.check("click-" + stepNumber, Target.window().fully().layout(By.xpath("//span[contains(@class,'random-number')]")));
+        for (WebElement video : driver.findElements(By.tagName("video"))) {
+            // Pause video and get details
+            ((JavascriptExecutor) driver).executeScript(videoLocation + ".pause();");
+            double videoLength = (double) ((JavascriptExecutor) driver).executeScript("return " + videoLocation + ".duration;");
+            System.out.println("Video length: " + videoLength);
+
+            double duration= 0.15;
+            String state = "First Frame";
+            System.out.println("Set to " + duration*100 + "% duration " + state);
+            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength * duration + ";");
+            waitFor(2);
+//            eyes.checkWindow(state + "-full window");
+            eyes.check(state + "-viewport", Target.window().fully(false));
+            eyes.checkRegion(By.cssSelector("video"), state + "-css");
+
+            state = "Middle Frame";
+            System.out.println("Set to " + state);
+            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength / 2 + ";");
+            waitFor(2);
+//            eyes.checkWindow(state + "-full window");
+            eyes.check(state + "-viewport", Target.window().fully(false));
+            eyes.checkRegion(By.cssSelector("video"), state + "-css");
+
+            state = "Last Frame";
+            duration= 0.95;
+            System.out.println("Set to " + duration*100 + "% duration " + state);
+            ((JavascriptExecutor) driver).executeScript(videoLocation + ".currentTime = " + videoLength * duration + ";");
+            waitFor(2);
+//            eyes.checkWindow(state + "-full window");
+            eyes.check(state + "-viewport", Target.window().fully(false));
+            eyes.checkRegion(By.cssSelector("video"), state + "-css");
         }
-        if (isInject()) {
-            System.out.println("Injecting a change");
-            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clkBtn1\"");
-        } else {
-            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clickButton\"");
-        }
-        driver.findElement(By.id("clickButton")).click();
-        eyes.checkWindow("After click");
-        eyes.check("combo", Target.window().fully()
-                .layout(By.xpath("//p[contains(text(), 'Applitools')]"),
-                        By.xpath("//span[contains(@class,'random-number')]")));
     }
 }

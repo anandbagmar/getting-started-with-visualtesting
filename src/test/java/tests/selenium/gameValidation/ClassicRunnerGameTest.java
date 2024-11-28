@@ -1,28 +1,27 @@
-package tests.selenium.standardWebValidation.helloWorld;
+package tests.selenium.gameValidation;
 
 import com.applitools.eyes.*;
-import com.applitools.eyes.selenium.BrowserType;
+import com.applitools.eyes.selenium.ClassicRunner;
 import com.applitools.eyes.selenium.Configuration;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.fluent.Target;
-import com.applitools.eyes.visualgrid.model.DeviceName;
-import com.applitools.eyes.visualgrid.model.ScreenOrientation;
-import com.applitools.eyes.visualgrid.services.RunnerOptions;
-import com.applitools.eyes.visualgrid.services.VisualGridRunner;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import utilities.Driver;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static utilities.EyesResults.displayVisualValidationResults;
+import static utilities.Wait.waitFor;
 
-public class UFGTest {
+public class ClassicRunnerGameTest {
 
-    private static final String appName = UFGTest.class.getSimpleName();
+    private static final String appName = ClassicRunnerGameTest.class.getSimpleName();
     private static final String userName = System.getProperty("user.name");
     private static final String APPLITOOLS_API_KEY = System.getenv("APPLITOOLS_API_KEY");
     private static EyesRunner visualGridRunner;
@@ -33,11 +32,11 @@ public class UFGTest {
     @BeforeAll
     public static void beforeSuite() {
         System.out.println("BeforeSuite");
-        visualGridRunner = new VisualGridRunner(new RunnerOptions().testConcurrency(10));
+        visualGridRunner = new ClassicRunner();
         visualGridRunner.setDontCloseBatches(true);
         batch = new BatchInfo(userName + "-" + appName);
         batch.setNotifyOnCompletion(false);
-        batch.setSequenceName(UFGTest.class.getSimpleName());
+        batch.setSequenceName(ClassicRunnerGameTest.class.getSimpleName());
         batch.addProperty("REPOSITORY_NAME", new File(System.getProperty("user.dir")).getName());
         batch.addProperty("APP_NAME", appName);
     }
@@ -69,23 +68,7 @@ public class UFGTest {
         config.setSaveNewTests(false);
         config.setMatchLevel(MatchLevel.STRICT);
         config.addProperty("username", userName);
-        // Add browsers with different viewports
-        config.addBrowser(1400, 1000, BrowserType.CHROME);
-        config.addBrowser(1400, 1000, BrowserType.CHROME_ONE_VERSION_BACK);
-        config.addBrowser(1400, 1000, BrowserType.CHROME_TWO_VERSIONS_BACK);
-        config.addBrowser(1200, 1024, BrowserType.FIREFOX);
-        config.addBrowser(1700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
-        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
-        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
-        config.addBrowser(1800, 600, BrowserType.SAFARI);
-        config.addBrowser(800, 1600, BrowserType.SAFARI_ONE_VERSION_BACK);
-
-        // Add mobile emulation devices in Portrait/Landscape mode
-        config.addDeviceEmulation(DeviceName.iPad_Pro, ScreenOrientation.LANDSCAPE);
-        config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
-        config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
-        config.addDeviceEmulation(DeviceName.Galaxy_Tab_S7, ScreenOrientation.LANDSCAPE);
-
+        config.setAccessibilityValidation(new AccessibilitySettings(AccessibilityLevel.AAA, AccessibilityGuidelinesVersion.WCAG_2_1));
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));
 
@@ -114,32 +97,39 @@ public class UFGTest {
         Assertions.assertTrue(isPass.get(), "Visual differences found.");
     }
 
-    private static boolean isInject() {
-        return null == System.getenv("INJECT") ? false : Boolean.parseBoolean(System.getenv("INJECT"));
-    }
-
     @Test
-    void seleniumUFGTest() {
-        double counter = 1;
-        driver.get("https://applitools.com/helloworld");
-        eyes.checkWindow("home");
+    void gameTest() {
+        driver.get("https://openfairy.playco.games/");
+        waitFor(15);
+        eyes.check("1", Target.window().fully());
+        WebElement canvasElement = driver.findElement(By.id("pixi-canvas")); // Replace with the actual ID or other locator
 
-        for (int stepNumber = 0; stepNumber < counter; stepNumber++) {
-            By linkText = By.linkText("?diff1");
-            driver.findElement(linkText).click();
-            eyes.check("linkText", Target.region(linkText).matchLevel(MatchLevel.LAYOUT2));
-            eyes.check("click-" + stepNumber, Target.window().fully().layout(By.xpath("//span[contains(@class,'random-number')]")));
-        }
-        if (isInject()) {
-            System.out.println("Injecting a change");
-            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clkBtn1\"");
-        } else {
-            ((JavascriptExecutor) driver).executeScript("document.querySelector(\"button\").id=\"clickButton\"");
-        }
-        driver.findElement(By.id("clickButton")).click();
-        eyes.checkWindow("After click");
-        eyes.check("combo", Target.window().fully()
-                .layout(By.xpath("//p[contains(text(), 'Applitools')]"),
-                        By.xpath("//span[contains(@class,'random-number')]")));
+        Dimension size = driver.manage().window().getSize();
+        System.out.println("size: " + size);
+
+        // Create an instance of the Actions class
+        Actions actions = new Actions(driver);
+
+        actions.moveToLocation(200, 950).click().perform();
+        waitFor(10);
+        eyes.checkWindow("2");
+        actions.moveToLocation(250, 900).click().perform();
+        waitFor(10);
+        eyes.checkWindow("3");
+        actions.moveToLocation(250, 950).click().perform();
+        waitFor(10);
+        eyes.checkWindow("4");
+        actions.moveToLocation(600, 400).click().perform();
+        waitFor(15);
+        eyes.checkWindow("5");
+        driver.findElement(By.xpath("//input")).sendKeys("abc");
+        waitFor(2);
+        eyes.checkWindow("6");
+        actions.moveToLocation(600, 900).click().perform();
+        waitFor(15);
+        eyes.checkWindow("7");
+        actions.moveToLocation(400, 800).click().perform();
+        waitFor(10);
+        eyes.checkWindow("8");
     }
 }
