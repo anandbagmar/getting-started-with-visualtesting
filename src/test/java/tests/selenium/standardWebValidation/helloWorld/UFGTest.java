@@ -14,6 +14,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import utilities.Driver;
+import utilities.Wait;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -68,23 +69,27 @@ public class UFGTest {
         config.setIsDisabled(false);
         config.setSaveNewTests(false);
         config.setMatchLevel(MatchLevel.STRICT);
+        config.setEnablePatterns(true);
+        config.setDisableBrowserFetching(true);
+        config.setLayoutBreakpoints(1000, 1200);
         config.addProperty("username", userName);
         // Add browsers with different viewports
         config.addBrowser(1400, 1000, BrowserType.CHROME);
-        config.addBrowser(1400, 1000, BrowserType.CHROME_ONE_VERSION_BACK);
-        config.addBrowser(1400, 1000, BrowserType.CHROME_TWO_VERSIONS_BACK);
-        config.addBrowser(1200, 1024, BrowserType.FIREFOX);
-        config.addBrowser(1700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
-        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
-        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
-        config.addBrowser(1800, 600, BrowserType.SAFARI);
-        config.addBrowser(800, 1600, BrowserType.SAFARI_ONE_VERSION_BACK);
+        config.addBrowser(1012, 1023, BrowserType.CHROME);
+//        config.addBrowser(1400, 1000, BrowserType.CHROME_ONE_VERSION_BACK);
+//        config.addBrowser(1400, 1000, BrowserType.CHROME_TWO_VERSIONS_BACK);
+//        config.addBrowser(1200, 1024, BrowserType.FIREFOX);
+//        config.addBrowser(1700, 500, BrowserType.FIREFOX_ONE_VERSION_BACK);
+//        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM);
+//        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM_ONE_VERSION_BACK);
+//        config.addBrowser(1800, 600, BrowserType.SAFARI);
+//        config.addBrowser(800, 1600, BrowserType.SAFARI_ONE_VERSION_BACK);
 
         // Add mobile emulation devices in Portrait/Landscape mode
-        config.addDeviceEmulation(DeviceName.iPad_Pro, ScreenOrientation.LANDSCAPE);
+//        config.addDeviceEmulation(DeviceName.iPad_Pro, ScreenOrientation.LANDSCAPE);
         config.addDeviceEmulation(DeviceName.iPhone_11, ScreenOrientation.PORTRAIT);
         config.addDeviceEmulation(DeviceName.Galaxy_Note_2, ScreenOrientation.PORTRAIT);
-        config.addDeviceEmulation(DeviceName.Galaxy_Tab_S7, ScreenOrientation.LANDSCAPE);
+//        config.addDeviceEmulation(DeviceName.Galaxy_Tab_S7, ScreenOrientation.LANDSCAPE);
 
         eyes.setConfiguration(config);
         eyes.setLogHandler(new StdoutLogHandler(true));

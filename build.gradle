@@ -5,8 +5,8 @@ buildscript {
     ext {
         gradleVersion = '8.10'
         junitVersion = '5.11.0'
-        applitoolsVersion = '5.69.5'
-        applitoolsImagesVersion = '5.69.5'
+        applitoolsVersion = '5.72.0'
+        applitoolsImagesVersion = '5.72.0'
         pdfBoxVersion = '3.0.2'
         cucumberJVMVersion = '7.18.1'
         assertJVersion = "3.26.3"
