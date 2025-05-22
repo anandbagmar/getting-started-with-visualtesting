@@ -5,8 +5,8 @@ buildscript {
     ext {
         gradleVersion = '8.10'
         junitVersion = '5.11.0'
-        applitoolsVersion = '5.69.5'
-        applitoolsImagesVersion = '5.69.5'
+        applitoolsVersion = '5.80.0'
+        applitoolsImagesVersion = '5.77.1'
         pdfBoxVersion = '3.0.2'
         cucumberJVMVersion = '7.18.1'
         assertJVersion = "3.26.3"
@@ -42,10 +42,10 @@ compileJava { options.encoding = "UTF-8" }
 dependencies {
     implementation "org.junit.jupiter:junit-jupiter:$project.junitVersion"
     implementation "com.applitools:eyes-selenium-java5:$project.applitoolsVersion"
-    implementation "com.applitools:eyes-images-java5:$project.applitoolsVersion"
-    implementation("com.applitools:eyes-images-java5:$project.applitoolsImagesVersion") {
-        exclude group: 'com.applitools', module: 'eyes-sdk-core-java5'
-    }
+    implementation "com.applitools:eyes-images-java5:$project.applitoolsImagesVersion"
+//    implementation("com.applitools:eyes-images-java5:$project.applitoolsImagesVersion") {
+//        exclude group: 'com.applitools', module: 'eyes-sdk-core-java5'
+//    }
     implementation "org.apache.pdfbox:pdfbox:$project.pdfBoxVersion"
     implementation "io.cucumber:cucumber-java:$project.cucumberJVMVersion"
     implementation "io.cucumber:cucumber-testng:$project.cucumberJVMVersion"

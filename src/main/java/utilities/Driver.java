@@ -31,6 +31,10 @@ public class Driver {
         return createDriverFor(browser);
     }
 
+    public static WebDriver createDriverFor(Browser browser) {
+        return createDriverFor(browser.name());
+    }
+
     public static WebDriver createDriverFor(String browser) {
         System.out.println("Running test with browser - " + browser);
         WebDriver driver = null;
