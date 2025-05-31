@@ -16,7 +16,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@applitools/eyes-images": "4.28.7",
+    "@applitools/eyes-images": "4.28.8",
     "canvas": "2.11.2",
     "chai": "5.1.1",
     "fs": "0.0.1-security",
@@ -24,7 +24,7 @@
     "mocha": "10.7.3",
     "node-fetch": "3.3.2",
     "pdfjs-dist": "4.5.136",
-    "@applitools/eyes-playwright": "1.28.4",
+    "@applitools/eyes-playwright": "1.28.5",
     "@playwright/test": "1.46.1",
     "@appium/doctor": "2.1.10",
     "@appium/relaxed-caps-plugin": "1.0.6",
